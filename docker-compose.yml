@@ -13,7 +13,9 @@ services:
       WORDPRESS_DB_PASSWORD: 8KqmDshn!mtQekRrQ8B4kH
       WORDPRESS_DB_NAME: wp_bethchernes
     volumes:
-      - "./site:/var/www/html"
+      - "./project/profix:/var/www/html/wp-content/themes/profix:rw"
+      - "./project/profix-bethchernes:/var/www/html/wp-content/themes/profix-bethchernes:rw"
+      - "./site:/var/www/html:rw"
 
   db:
     image: mysql:5.7
