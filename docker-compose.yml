@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 3030:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: bc_site
+      WORDPRESS_DB_PASSWORD: 8KqmDshn!mtQekRrQ8B4kH
+      WORDPRESS_DB_NAME: wp_bethchernes
+    volumes:
+      - "./site:/var/www/html"
+
+  db:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 4306:3306
+    environment:
+      MYSQL_DATABASE: wp_bethchernes
+      MYSQL_USER: bc_site
+      MYSQL_PASSWORD: 8KqmDshn!mtQekRrQ8B4kH
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - "./db:/var/lib/mysql"
