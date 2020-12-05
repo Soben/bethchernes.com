@@ -35,8 +35,9 @@ class Theme extends Timber\Site {
   
 	/** Custom Post Types */
 	public function register_post_types() {
-		PostTypes\Testimonials::registerCPT();
+		PostTypes\Portfolio::registerCPT();
 		PostTypes\Services::registerCPT();
+		PostTypes\Testimonials::registerCPT();
 	}
 	/** Custom Taxonomies */
 	public function register_taxonomies() {
