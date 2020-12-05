@@ -19,23 +19,24 @@ class Theme extends Timber\Site {
 		add_action( "after_setup_theme", array( $this, "theme_supports" ) );
 		add_action( "init", array( $this, "register_post_types" ) );
 		add_action( "init", array( $this, "register_taxonomies" ) );
-		add_action( "wp_enqueue_scripts", "enqueue_styles" );
-		add_action( "wp_enqueue_scripts", "enqueue_scripts" );
+		add_action( "wp_enqueue_scripts", array( $this, "enqueue_styles" ) );
+		add_action( "wp_enqueue_scripts", array( $this, "enqueue_scripts" ) );
 
 		parent::__construct();
 	}
 	
 	public function enqueue_styles() {
-		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri("assets/css/main.css"), array(), "20201204" );
+		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", array(), "20201204" );
 	}
 	
 	public function enqueue_scripts() {
-		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri("assets/js/main.js"), array("jquery"), "20201204", true );
+		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", array("jquery"), "20201204", true );
 	}
   
 	/** Custom Post Types */
 	public function register_post_types() {
-
+		PostTypes\Testimonials::registerCPT();
+		PostTypes\Services::registerCPT();
 	}
 	/** Custom Taxonomies */
 	public function register_taxonomies() {
