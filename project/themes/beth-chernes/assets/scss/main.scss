@@ -8,7 +8,18 @@
 }
 
 .layout-header {
-  background-color: $highlight;
+  width: 100%;
+
+  position: absolute;
+  z-index: 10;
+}
+
+.masthead {
+  min-height: 300px;
+  background-color: $light-gray;
+
+  padding: 75px 0;
+  margin-bottom: 50px;
 }
 
 .layout-footer {
