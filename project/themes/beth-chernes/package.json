@@ -1,0 +1,9 @@
+{
+  "name": "beth-chernes",
+  "version": "1.0.0",
+  "main": "assets/js/main.js",
+  "repository": "https://github.com/soben/bethchernes.com",
+  "author": "Chris Lagasse <chrislagasse@protonmail.com",
+  "license": "MIT",
+  "private": true
+}

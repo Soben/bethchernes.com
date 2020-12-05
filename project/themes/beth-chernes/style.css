@@ -1,0 +1,19 @@
+/*
+  Theme Name: Beth's Fancy All-Around Awesome Wordpress Theme
+  Theme URI: https://github.com/soben/bethchernes.com
+  Author: Chris Lagasse
+  Author URI: https://chrislagasse.com/
+  Description: Theme built for my wife, Beth. Based off the Profix theme.
+  Requires PHP: 7.2
+  Version: 1.0
+*/
+
+/* Styles can be found in assets/css */
+
+// https://codex.wordpress.org/Styling_Images_in_Posts_and_Pages
+img.alignright {float:right; margin:0 0 1em 1em}
+img.alignleft {float:left; margin:0 1em 1em 0}
+img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+a img.alignright {float:right; margin:0 0 1em 1em}
+a img.alignleft {float:left; margin:0 1em 1em 0}
+a img.aligncenter {display: block; margin-left: auto; margin-right: auto}

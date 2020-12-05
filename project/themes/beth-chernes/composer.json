@@ -1,0 +1,19 @@
+{
+    "name": "poutine/beth-chernes",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Chris Lagasse",
+            "email": "chrislagasse@protonmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "timber/timber": "^1.18"
+    },
+    "autoload": {
+        "psr-4": {
+            "Poutine\\BethChernes\\": "src/"
+        }
+    }
+}
