@@ -5,5 +5,14 @@
   "repository": "https://github.com/soben/bethchernes.com",
   "author": "Chris Lagasse <chrislagasse@protonmail.com",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "watch": "sass --watch assets/scss:assets/css",
+    "prettier": "prettier"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.16.0",
+    "prettier": "^2.2.1",
+    "sass": "^1.30.0"
+  }
 }
