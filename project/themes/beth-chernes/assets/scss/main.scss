@@ -1,5 +1,16 @@
+@import 'vendor/bootstrap';
 @import 'fonts';
+@import 'variables';
 
-html {
-  // background-color: fuchsia;
+.wrapper {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+.layout-header {
+  background-color: $highlight;
+}
+
+.layout-footer {
+  background-color: $gray;
 }

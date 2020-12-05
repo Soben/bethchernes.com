@@ -26,25 +26,24 @@
   </head>
 
 	<body class="{{body_class}}">
-    <a class="skip-link screen-reader-text" href="#content">{{ _e( 'Skip to content') }}</a>
+    <a class="skip-link sr-only" href="#content">{{ _e( 'Skip to content') }}</a>
     
 		<header class="layout-header">
-			{% block header %}
-				<div class="wrapper">
-					<h1 class="header__logo" role="banner">
-						<a class="header__logo__link" href="{{ site.url }}" rel="home">{{ site.name }}</a>
-					</h1>
-					<nav class="main-navigation">
-						{% include "partials/menu.twig" with {'items': menu.get_items} %}
-					</nav><!-- #nav -->
-				</div>
-			{% endblock %}
+			<div class="wrapper">
+				Header
+			</div>
 		</header>
 
-		<section id="content" role="main" class="content-wrapper">
-			{% if title %}<h1>{{title}}</h1>{% endif %}
-      
-      <div class="wrapper {{sidebar_class}}">
+		<section class="masthead">      
+      <div class="wrapper">
+				{% block masthead %}
+					Title Tag/Details here
+				{% endblock %}
+			</div>
+		</section>
+
+		<section id="content" role="main" class="content-wrapper">      
+      <div class="wrapper">
 				{% block content %}
 					Sorry, no content
 				{% endblock %}
@@ -53,7 +52,9 @@
     </section>
     
     <footer class="layout-footer">
-
+			<div class="wrapper">
+				Footer
+			</div>
     </footer>
 
     {{ function('wp_footer') }}

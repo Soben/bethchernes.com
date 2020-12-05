@@ -30,7 +30,8 @@ class Theme extends Timber\Site {
 	}
 	
 	public function enqueue_scripts() {
-		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", array("jquery"), "20201204", true );
+		wp_enqueue_script( "bootstrap", get_stylesheet_directory_uri() . "/assets/js/vendor/boostrap.js", array("jquery"), "4.5.3", true );
+		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", array("jquery", "bootstrap"), "20201204", true );
 	}
   
 	/** Custom Post Types */
