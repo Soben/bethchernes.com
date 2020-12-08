@@ -1,0 +1,106 @@
+{
+    "key": "group_5fcedbe003aab",
+    "title": "Contact Information",
+    "fields": [
+        {
+            "key": "field_5fcedc3eb8772",
+            "label": "Email Address",
+            "name": "email_address",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "beth@bethchernes.com",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_5fcedbe4b876e",
+            "label": "Twitter",
+            "name": "link_twitter",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https:\/\/twitter.com"
+        },
+        {
+            "key": "field_5fcedc00b876f",
+            "label": "LinkedIn",
+            "name": "link_linkedin",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https:\/\/linkedin.com"
+        },
+        {
+            "key": "field_5fcedc11b8770",
+            "label": "Facebook",
+            "name": "link_facebook",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https:\/\/facebook.com"
+        },
+        {
+            "key": "field_5fcedc30b8771",
+            "label": "Instagram",
+            "name": "link_instagram",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https:\/\/instagram.com"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1607399771
+}
