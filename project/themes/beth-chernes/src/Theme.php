@@ -19,10 +19,16 @@ class Theme extends Timber\Site {
 		add_action( "after_setup_theme", array( $this, "theme_supports" ) );
 		add_action( "init", array( $this, "register_post_types" ) );
 		add_action( "init", array( $this, "register_taxonomies" ) );
+		add_action( "init", array( $this, "register_acf_fields" ) );
 		add_action( "wp_enqueue_scripts", array( $this, "enqueue_styles" ) );
 		add_action( "wp_enqueue_scripts", array( $this, "enqueue_scripts" ) );
+		add_action( "after_setup_theme", array( $this, "register_menus" ) );
 
 		parent::__construct();
+	}
+
+	public function register_menus() {
+		register_nav_menu( "top_menu", "Primary Menu" );
 	}
 	
 	public function enqueue_styles() {
@@ -30,10 +36,24 @@ class Theme extends Timber\Site {
 	}
 	
 	public function enqueue_scripts() {
-		wp_enqueue_script( "bootstrap", get_stylesheet_directory_uri() . "/assets/js/vendor/boostrap.js", array("jquery"), "4.5.3", true );
+		wp_enqueue_script( "bootstrap", get_stylesheet_directory_uri() . "/assets/js/vendor/bootstrap.js", array("jquery"), "4.5.3", true );
 		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", array("jquery", "bootstrap"), "20201204", true );
 	}
-  
+	
+	public function register_acf_fields() {
+		if (!function_exists("acf_add_options_page")) {
+			return;
+		}
+
+		acf_add_options_page([
+      "page_title" 	=> "Theme Settings",
+      "menu_title"	=> "Theme Settings",
+      "menu_slug" 	=> "theme-settings",
+      "capability"	=> "edit_posts",
+      "redirect"		=> false
+    ]);
+	}
+
 	/** Custom Post Types */
 	public function register_post_types() {
 		PostTypes\Portfolio::registerCPT();
@@ -50,7 +70,8 @@ class Theme extends Timber\Site {
 	 * @param string $context
 	 */
 	public function add_to_context( $context ) {
-		$context["menu"]  = new Timber\Menu();
+		$context["menu"]  = new Timber\Menu( 'top_menu' );
+		$context["logo"]  = new Timber\Image( get_field('logo', 'options') );
     $context["site"]  = $this;
     
 		return $context;
