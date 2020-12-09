@@ -3,71 +3,33 @@
 @import 'variables';
 
 :focus {
-  outline: 3px solid $blue;
+  outline: 1px solid $blue;
 }
 
-.layout-header {
-  background-color: $white;
-  box-shadow: 0 4px 4px 0 $gray;
+.highlight {
+  background: rgba($highlight, 0.8);
+  display: inline-block;
+  padding: 0 5px;
+  color: #000;
+}
 
-  .navbar-brand {
-    max-width: 75%;
-    @media (min-width: 768px) {
-      max-width: 40%;
-    }
+.btn {
+  border: 1px solid $dark-gray;
 
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-  }
-
-  .navbar-toggler {
-    svg {
-      color: $dark-gray;
-    }
-  }
-
-  .navbar-nav {
-    margin-top: 30px;
-
-    .nav-link {
-      text-align: center;
-      text-transform: uppercase;
-      border-top: 1px solid $light-gray;
-      font-weight: bold;
-
-      color: $dark-gray;
-
-      &:hover {
-        color: $blue;
-      }
-    }
-
-    @media (min-width: 992px) {
-      margin-top: 0;
-      .nav-link {
-        border-top: none;
-        background-color: none;
-      }
-    }
+  &:hover,
+  &:focus {
+    background-color: $highlight;
   }
 }
 
-.masthead {
-  min-height: 300px;
-  background-color: $dark-gray;
-  color: $white;
-  margin-bottom: 50px;
-
+#content {
   .container {
-    padding: 75px 0;
+    background-color: $off-white;
+    padding: 45px 20px;
   }
 }
 
-.layout-footer {
-  background-color: $dark-gray;
-  color: $white;
-  text-align: center;
-  padding: 30px 0;
-}
+@import 'global/header';
+@import 'global/masthead';
+@import 'global/footer';
+@import 'global/wysiwyg';

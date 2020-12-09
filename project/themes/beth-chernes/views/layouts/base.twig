@@ -25,7 +25,7 @@
 		
 		<nav class="navbar navbar-expand-lg layout-header sticky-top">
 			<div class="container">
-				<a class="navbar-brand" href="#"><img src="{{ logo.src }}" /></a>
+				<a class="navbar-brand" href="{{ site.home_url }}"><img src="{{ logo.src }}" /></a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle Navigation">
 					<svg viewBox="0 0 100 80" width="30" height="30">
 						<rect width="100" height="10"></rect>
@@ -47,8 +47,12 @@
 
 		<section class="masthead d-flex justify-content-center align-items-center">     
       <div class="wrapper">
+				<h1>{{ header }}</h1>
+				{% if subheader %}
+					<p class="subheader highlight">{{ subheader }}</p>
+				{% endif %}
+
 				{% block masthead %}
-					<h1>404 Page Not Found</h1>
 				{% endblock %}
 			</div>
 		</section>
@@ -56,7 +60,7 @@
 		<section id="content" role="main" class="content-wrapper">      
       <div class="container">
 				{% block content %}
-					Sorry, no content.
+					<p>Sorry, no content.</p>
 				{% endblock %}
       </div>
       
@@ -64,7 +68,7 @@
     
     <footer class="layout-footer">
 			<div class="wrapper">
-				Footer
+				&copy; {{ "now"|date('Y') }} {{ copyright }}
 			</div>
     </footer>
 

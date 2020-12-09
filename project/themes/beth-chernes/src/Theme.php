@@ -20,11 +20,17 @@ class Theme extends Timber\Site {
 		add_action( "init", array( $this, "register_post_types" ) );
 		add_action( "init", array( $this, "register_taxonomies" ) );
 		add_action( "init", array( $this, "register_acf_fields" ) );
+		add_action( "init", array( $this, "register_shortcodes" ) );
 		add_action( "wp_enqueue_scripts", array( $this, "enqueue_styles" ) );
 		add_action( "wp_enqueue_scripts", array( $this, "enqueue_scripts" ) );
 		add_action( "after_setup_theme", array( $this, "register_menus" ) );
 
 		parent::__construct();
+	}
+
+	public function register_shortcodes() {
+		Shortcodes\Button::register();
+		Shortcodes\Highlight::register();
 	}
 
 	public function register_menus() {
@@ -33,6 +39,9 @@ class Theme extends Timber\Site {
 	
 	public function enqueue_styles() {
 		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", array(), "20201204" );
+		if (is_front_page()) {
+			wp_enqueue_style( self::$THEME_NAME . "-front-page", get_stylesheet_directory_uri() . "/assets/css/front_page.css", array(self::$THEME_NAME), "20201204" );
+		}
 	}
 	
 	public function enqueue_scripts() {
@@ -70,9 +79,10 @@ class Theme extends Timber\Site {
 	 * @param string $context
 	 */
 	public function add_to_context( $context ) {
-		$context["menu"]  = new Timber\Menu( 'top_menu' );
-		$context["logo"]  = new Timber\Image( get_field('logo', 'options') );
-    $context["site"]  = $this;
+		$context["menu"] = new Timber\Menu( "top_menu" );
+		$context["logo"] = new Timber\Image( get_field("logo", "options") );
+		$context["copyright"] = get_field("copyright", "options") ?: get_bloginfo('name');
+		$context["site"]  = $this;
     
 		return $context;
 	}

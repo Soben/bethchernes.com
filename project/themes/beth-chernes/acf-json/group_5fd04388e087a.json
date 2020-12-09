@@ -1,14 +1,14 @@
 {
-    "key": "group_5fcedcda38c1c",
-    "title": "Global Content",
+    "key": "group_5fd04388e087a",
+    "title": "Masthead",
     "fields": [
         {
-            "key": "field_5fcedce38cecd",
-            "label": "Logo",
-            "name": "logo",
+            "key": "field_5fd0438e16f7d",
+            "label": "Background",
+            "name": "masthead_background",
             "type": "image",
-            "instructions": "",
-            "required": 1,
+            "instructions": "If none provided, defaults to dark gray",
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -27,35 +27,30 @@
             "mime_types": ""
         },
         {
-            "key": "field_5fcedd008cece",
-            "label": "Favicon",
-            "name": "favicon",
-            "type": "image",
-            "instructions": "",
-            "required": 1,
+            "key": "field_5fd043a016f7e",
+            "label": "Header",
+            "name": "masthead_title",
+            "type": "text",
+            "instructions": "Optional. If none provided, will default to Title",
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "return_format": "array",
-            "preview_size": "thumbnail",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": 300,
-            "max_height": 300,
-            "max_size": "",
-            "mime_types": ""
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
-            "key": "field_5fcee571d3b42",
-            "label": "Footer Copyright",
-            "name": "copyright",
+            "key": "field_5fd043ea16f7f",
+            "label": "Sub Header",
+            "name": "masthead_subheader",
             "type": "text",
-            "instructions": "Will always include &copy; {current-year}, defaults to Site Name",
+            "instructions": "If provided, will show up below header in masthead with highlight background.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -73,19 +68,26 @@
     "location": [
         [
             {
-                "param": "options_page",
+                "param": "post_type",
                 "operator": "==",
-                "value": "theme-settings"
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
             }
         ]
     ],
     "menu_order": 0,
-    "position": "normal",
-    "style": "default",
+    "position": "acf_after_title",
+    "style": "seamless",
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1607485670
+    "modified": 1607484594
 }

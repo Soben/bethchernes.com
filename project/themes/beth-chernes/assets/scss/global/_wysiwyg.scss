@@ -1,0 +1,53 @@
+// https://codex.wordpress.org/Styling_Images_in_Posts_and_Pages
+
+.wysiwyg-content {
+  img.alignright {float:right; margin:0 0 1em 1em}
+  img.alignleft {float:left; margin:0 1em 1em 0}
+  img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+  a img.alignright {float:right; margin:0 0 1em 1em}
+  a img.alignleft {float:left; margin:0 1em 1em 0}
+  a img.aligncenter {display: block; margin-left: auto; margin-right: auto}
+
+  ul {
+    list-style: none;
+    counter-reset: ul-list;
+
+    li {
+      position: relative;
+      counter-increment: ol-list;
+      padding-left: 20px;
+      margin: 12px 0;
+
+      &:before {
+        position: absolute;
+        top: -1px;
+        left: 0;
+        content: "• ";
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 1;
+        color: $blue;
+      }
+    }
+  }
+
+  ol {
+    list-style: none;
+    counter-reset: ol-list;
+
+    li {
+      position: relative;
+      counter-increment: ol-list;
+      padding-left: 20px;
+      margin: 12px 0;
+
+      &:before {
+        position: absolute;
+        left: 0;
+        content: counter(ol-list) ".";
+        font-weight: bold;
+        color: $blue;
+      }
+    }
+  }
+}
