@@ -1,10 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Sansita+Swashed&display=swap');
 
+$fontSansSerif: 'Lato', sans-serif;
+$fontHeaders: $fontSansSerif;
+$fontCursive: 'Sansita Swashed', cursive;
+
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: $fontSansSerif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  // Kingsman?
-  font-family: 'Sansita Swashed', sans-serif;
+  font-family: $fontHeaders;
 }

@@ -39,14 +39,14 @@ class Theme extends Timber\Site {
 	
 	public function enqueue_styles() {
 		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", array(), "20201204" );
-		if (is_front_page()) {
-			wp_enqueue_style( self::$THEME_NAME . "-front-page", get_stylesheet_directory_uri() . "/assets/css/front_page.css", array(self::$THEME_NAME), "20201204" );
-		}
+		// if (is_front_page()) {
+		// 	wp_enqueue_style( self::$THEME_NAME . "-front-page", get_stylesheet_directory_uri() . "/assets/css/front_page.css", array(self::$THEME_NAME), "20201204" );
+		// }
 	}
 	
 	public function enqueue_scripts() {
-		wp_enqueue_script( "bootstrap", get_stylesheet_directory_uri() . "/assets/js/vendor/bootstrap.js", array("jquery"), "4.5.3", true );
-		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", array("jquery", "bootstrap"), "20201204", true );
+		// wp_enqueue_script( "bootstrap", get_stylesheet_directory_uri() . "/assets/js/vendor/bootstrap.js", array("jquery"), "4.5.3", true );
+		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", array("jquery"), "20201204", true );
 	}
 	
 	public function register_acf_fields() {

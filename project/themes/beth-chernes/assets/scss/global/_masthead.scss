@@ -1,17 +1,22 @@
 .masthead {
-  min-height: 300px;
+  min-height: remCalc(300px);
   background-color: $dark-gray;
   color: $white;
   text-align: center;
 
+  h1 {
+    font-family: $fontCursive;
+    font-size: remCalc(72px);
+  }
+
   .container {
-    padding: 75px 0;
+    padding: remCalc(75px) remCalc(10px);
   }
 
   .subheader {
     font-weight: 400;
-    font-size: 22px;
-    padding: 0 15px;
-    margin: 0 auto 30px;
+    font-size: remCalc(22px);
+    padding: 0 remCalc(15px);
+    margin: 0 auto remCalc(30px);
   }
 }

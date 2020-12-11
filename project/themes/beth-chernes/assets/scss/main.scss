@@ -1,31 +1,49 @@
 @import 'vendor/bootstrap';
+@import 'mixins';
 @import 'fonts';
 @import 'variables';
 
 :focus {
-  outline: 1px solid $blue;
+  outline: remCalc(1px) solid $blue;
+}
+
+a,
+a:visited {
+  font-weight: bold;
+  color: $accent;
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: $accent;
+    text-decoration: none;
+  }
 }
 
 .highlight {
   background: rgba($highlight, 0.8);
   display: inline-block;
-  padding: 0 5px;
+  padding: 0 remCalc(6px);
   color: #000;
-}
-
-.btn {
-  border: 1px solid $dark-gray;
-
-  &:hover,
-  &:focus {
-    background-color: $highlight;
-  }
 }
 
 #content {
   .container {
     background-color: $off-white;
-    padding: 45px 20px;
+    padding: remCalc(45px) remCalc(20px);
+  }
+
+  .btn {
+    font-weight: normal;
+    color: $dark-gray;
+    border: remCalc(1px) solid $dark-gray;
+    text-decoration: none;
+  
+    &:hover,
+    &:focus {
+      color: $dark-gray;
+      background-color: $highlight;
+    }
   }
 }
 

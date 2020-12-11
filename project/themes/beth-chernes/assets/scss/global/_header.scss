@@ -20,19 +20,33 @@
     }
   }
 
+  #nav-toggle-status {
+    display: none;
+    -webkit-appearance: none;
+
+    &:checked {
+      & ~ .navbar-collapse {
+        display: block;
+      }
+    }
+  }
+
   .navbar-nav {
     margin-top: 30px;
 
     .nav-link {
       text-align: center;
       text-transform: uppercase;
+      text-decoration: none;
       border-top: 1px solid $light-gray;
       font-weight: bold;
 
       color: $dark-gray;
 
-      &:hover {
-        color: $blue;
+      &:hover,
+      &:focus {
+        background-color: rgba($accent, 0.1);
+        color: $accent;
       }
     }
 
@@ -40,7 +54,6 @@
       margin-top: 0;
       .nav-link {
         border-top: none;
-        background-color: none;
       }
     }
   }
