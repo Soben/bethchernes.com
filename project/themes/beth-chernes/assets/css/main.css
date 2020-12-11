@@ -10432,13 +10432,20 @@ a:visited:focus {
   background-color: #4a4d4b;
   color: #fff;
   text-align: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 .masthead h1 {
   font-family: "Sansita Swashed", cursive;
   font-size: 4.5rem;
 }
-.masthead .container {
+.masthead .wrapper {
   padding: 4.6875rem 0.625rem;
+}
+.masthead.has-image .wrapper {
+  padding-top: 9.375rem;
+  padding-bottom: 9.375rem;
 }
 .masthead .subheader {
   font-weight: 400;

@@ -4,13 +4,25 @@
   color: $white;
   text-align: center;
 
+  // If Background Image is provided.
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
   h1 {
     font-family: $fontCursive;
     font-size: remCalc(72px);
   }
 
-  .container {
+  .wrapper {
     padding: remCalc(75px) remCalc(10px);
+  }
+
+  &.has-image {
+    .wrapper {
+      padding-top: remCalc(150px);
+      padding-bottom: remCalc(150px);
+    }
   }
 
   .subheader {
