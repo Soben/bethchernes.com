@@ -1,0 +1,25 @@
+{% extends "layouts/base.twig" %}
+
+{% block page %}
+    {% include "partials/masthead.twig" with {
+      header: "Blog"
+    } %}
+
+    <section id="content" role="main" class="content-wrapper">
+      <div class="container has-sidebar">
+        <div class="row">
+          <div class="column-main col-md-7 col-lg-8">
+            {% for post in posts %}
+              <article>
+                <h2><a href="{{ post.link }}">{{ post.title }}</a></h2>
+
+                {{ post.content | excerpt(30) }}
+              </article>
+            {% endfor %}
+          </div>
+
+          {{ sidebar }}
+        </div>
+      </div>
+    </section>
+{% endblock %}

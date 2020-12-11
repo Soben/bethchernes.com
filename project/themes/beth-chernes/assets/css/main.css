@@ -10338,6 +10338,45 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Lato", sans-serif;
 }
 
+.wysiwyg-content ul, .column-sidebar ul {
+  list-style: none;
+  counter-reset: ul-list;
+}
+.wysiwyg-content ul li, .column-sidebar ul li {
+  position: relative;
+  counter-increment: ol-list;
+  padding-left: 20px;
+  margin: 12px 0;
+}
+.wysiwyg-content ul li:before, .column-sidebar ul li:before {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  content: "• ";
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+  color: #7c9eb2;
+}
+
+.wysiwyg-content ol, .column-sidebar ol {
+  list-style: none;
+  counter-reset: ol-list;
+}
+.wysiwyg-content ol li, .column-sidebar ol li {
+  position: relative;
+  counter-increment: ol-list;
+  padding-left: 20px;
+  margin: 12px 0;
+}
+.wysiwyg-content ol li:before, .column-sidebar ol li:before {
+  position: absolute;
+  left: 0;
+  content: counter(ol-list) ".";
+  font-weight: bold;
+  color: #7c9eb2;
+}
+
 :focus {
   outline: 0.0625rem solid #7c9eb2;
 }
@@ -10377,6 +10416,15 @@ a:visited:focus {
   background-color: #bedcdf;
 }
 
+.column-sidebar a,
+.column-sidebar a:visited {
+  color: #555b6e;
+}
+.column-sidebar a:hover, .column-sidebar a:focus,
+.column-sidebar a:visited:hover,
+.column-sidebar a:visited:focus {
+  color: #555b6e;
+}
 .layout-header {
   background-color: #fff;
   box-shadow: 0 4px 4px 0 #d3d5d4;
@@ -10511,43 +10559,6 @@ a:visited:focus {
   display: block;
   margin-left: auto;
   margin-right: auto;
-}
-.wysiwyg-content ul {
-  list-style: none;
-  counter-reset: ul-list;
-}
-.wysiwyg-content ul li {
-  position: relative;
-  counter-increment: ol-list;
-  padding-left: 20px;
-  margin: 12px 0;
-}
-.wysiwyg-content ul li:before {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  content: "• ";
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 1;
-  color: #7c9eb2;
-}
-.wysiwyg-content ol {
-  list-style: none;
-  counter-reset: ol-list;
-}
-.wysiwyg-content ol li {
-  position: relative;
-  counter-increment: ol-list;
-  padding-left: 20px;
-  margin: 12px 0;
-}
-.wysiwyg-content ol li:before {
-  position: absolute;
-  left: 0;
-  content: counter(ol-list) ".";
-  font-weight: bold;
-  color: #7c9eb2;
 }
 
 /*# sourceMappingURL=main.css.map */

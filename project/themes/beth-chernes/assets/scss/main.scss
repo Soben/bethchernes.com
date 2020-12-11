@@ -1,7 +1,7 @@
 @import 'vendor/bootstrap';
-@import 'mixins';
 @import 'fonts';
 @import 'variables';
+@import 'mixins';
 
 :focus {
   outline: remCalc(1px) solid $blue;
@@ -44,6 +44,25 @@ a:visited {
       color: $dark-gray;
       background-color: $highlight;
     }
+  }
+
+}
+.column-sidebar {
+  a,
+  a:visited {
+    color: $blue-gray;
+
+    &:hover,
+    &:focus {
+      color: $blue-gray;
+    }
+  }
+  ul {
+    @extend %ul-override;
+  }
+  
+  ol {
+    @extend %ol-override;
   }
 }
 

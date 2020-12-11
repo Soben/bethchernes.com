@@ -21,11 +21,16 @@ class Theme extends Timber\Site {
 		add_action( "init", array( $this, "register_taxonomies" ) );
 		add_action( "init", array( $this, "register_acf_fields" ) );
 		add_action( "init", array( $this, "register_shortcodes" ) );
+		add_action( "widgets_init", array( $this, "register_sidebars" ) );
 		add_action( "wp_enqueue_scripts", array( $this, "enqueue_styles" ) );
 		add_action( "wp_enqueue_scripts", array( $this, "enqueue_scripts" ) );
 		add_action( "after_setup_theme", array( $this, "register_menus" ) );
 
 		parent::__construct();
+	}
+
+	public function register_sidebars() {
+		Sidebars\Primary::register();
 	}
 
 	public function register_shortcodes() {
