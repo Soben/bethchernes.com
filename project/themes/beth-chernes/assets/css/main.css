@@ -10439,7 +10439,12 @@ a:visited:focus {
 }
 .masthead h1 {
   font-family: "Sansita Swashed", cursive;
-  font-size: 4.5rem;
+  font-size: 3rem;
+}
+@media (min-width: 992px) {
+  .masthead h1 {
+    font-size: 4.5rem;
+  }
 }
 .masthead .wrapper {
   padding: 4.6875rem 0.625rem;
@@ -10464,9 +10469,14 @@ a:visited:focus {
 }
 .masthead .subheader {
   font-weight: 400;
-  font-size: 1.375rem;
+  font-size: 1.1875rem;
   padding: 0 0.9375rem;
   margin: 0 auto 1.875rem;
+}
+@media (min-width: 992px) {
+  .masthead .subheader {
+    font-size: 1.375rem;
+  }
 }
 
 .layout-footer {

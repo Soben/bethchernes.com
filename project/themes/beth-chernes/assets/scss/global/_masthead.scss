@@ -12,7 +12,11 @@
 
   h1 {
     font-family: $fontCursive;
-    font-size: remCalc(72px);
+    font-size: remCalc(48px);
+
+    @media (min-width: 992px) {
+      font-size: remCalc(72px);
+    }
   }
 
   .wrapper {
@@ -42,8 +46,12 @@
 
   .subheader {
     font-weight: 400;
-    font-size: remCalc(22px);
+    font-size: remCalc(19px);
     padding: 0 remCalc(15px);
     margin: 0 auto remCalc(30px);
+    
+    @media (min-width: 992px) {
+      font-size: remCalc(22px);
+    }
   }
 }
