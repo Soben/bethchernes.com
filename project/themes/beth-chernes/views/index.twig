@@ -1,12 +1,20 @@
 {% extends "layouts/base.twig" %}
 
-{% block masthead %}
-{% endblock %}
-
-{% block content %}
+{% block page %}
   {% for post in posts %}
-    <div class="wysiwyg-content">
-      {{ post.content }}
-    </div>
-  {% endfor %}
+
+    {% include "partials/masthead.twig" with {
+      header: post.get_field("masthead_title") ?: post.title,
+      subheader: post.get_field("masthead_subheader"),
+      backgroundImage: post.get_field("masthead_background")
+    } %}
+
+    <section id="content" role="main" class="content-wrapper">      
+      <div class="container">
+          <div class="wysiwyg-content">
+            {{ post.content }}
+          </div>
+      </div>
+    </section>
+    {% endfor %}
 {% endblock %}

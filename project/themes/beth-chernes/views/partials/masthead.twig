@@ -1,0 +1,18 @@
+<section 
+  class="{% if backgroundImage %}has-image{% endif %} masthead d-flex justify-content-center align-items-center"
+  {% if backgroundImage %}
+    {% set image = Image(backgroundImage) %}
+    style="background-image: url({{ image.src }});"
+  {% endif %}
+>
+  <div class="overlay"></div>
+  <div class="wrapper">
+    <h1>{{ header }}</h1>
+    {% if subheader %}
+      <p class="subheader highlight">{{ subheader }}</p>
+    {% endif %}
+
+    {% block masthead %}
+    {% endblock %}
+  </div>
+</section>
