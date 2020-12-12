@@ -16,8 +16,6 @@ class Social
   public function render( $atts, $content = "Click Me" ) {
     $atts = shortcode_atts( [
     ], $atts, "social" );
- 
-    Theme::include_fontAwesome();
     
     $context = [];
     $context['links'] = poutine_getSocialLinks();

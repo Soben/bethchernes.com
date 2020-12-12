@@ -1,0 +1,23 @@
+<section class="module-block">
+  <div class="container">
+    {% include "partials/header.twig" with {
+      title: item.module_header,
+      subTitle: item.module_subheader
+    } %}
+
+    {% if item.posts.show_latest %}
+      {% set columns = [1, 2, 3] %}
+    {% else %}
+      {% set columns = item.posts.items %}
+    {% endif %}
+
+    {{ dump(columns) }}
+    <div class="row align-items-start">
+      {% for details in columns %}
+      <div class="col">
+        <h3>Item {{ details.title }}</h3>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,5 @@
+{% for current in modules %}
+  {% include "modules/"~current.module~".twig" ignore missing with {
+    item: current
+  }%}
+{% endfor %}

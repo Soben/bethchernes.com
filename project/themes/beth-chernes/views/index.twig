@@ -4,17 +4,26 @@
   {% for post in posts %}
 
     {% include "partials/masthead.twig" with {
-      header: post.get_field("masthead_title") ?: post.title,
-      subheader: post.get_field("masthead_subheader"),
-      backgroundImage: post.get_field("masthead_background")
+      header: post.meta("masthead_title") ?: post.title,
+      subheader: post.meta("masthead_subheader"),
+      backgroundImage: post.meta("masthead_background")
     } %}
 
-    <section id="content" role="main" class="content-wrapper">      
-      <div class="container">
-          <div class="wysiwyg-content">
-            {{ post.content }}
+    <div id="content" role="main" class="content-wrapper">
+      
+      {% if post.content %}
+        <section class="content-block">      
+          <div class="container">
+              <div class="wysiwyg-content">
+                {{ post.content }}
+              </div>
           </div>
-      </div>
-    </section>
+        </section>
+      {% endif %}
+
+      {% include "partials/modules.twig" %}
+
+    </div>
+
     {% endfor %}
 {% endblock %}

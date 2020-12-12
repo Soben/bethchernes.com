@@ -1,6 +1,7 @@
 <?php
 
 require_once( __DIR__ . '/vendor/autoload.php' );
+require_once( __DIR__ . '/inc/wordpress.php' );
 
 new Poutine\BethChernes\Theme();
 
@@ -28,16 +29,4 @@ function poutine_getSocialLinks()
       "name" => "Instagram",
     ],
   ];
-}
-
-// https://www.infophilic.com/remove-jquery-migrate-wordpress/
-add_action( 'wp_default_scripts', 'poutine_removeJQueryMigrate' );
-function poutine_removeJQueryMigrate( $scripts ) {
-  if ( ! is_admin() && isset( $scripts->registered['jquery'] ) ) {
-    $script = $scripts->registered['jquery'];
-    if ( $script->deps ) { 
-      // Check whether the script has any dependencies
-      $script->deps = array_diff( $script->deps, array( 'jquery-migrate' ) );
-    }
-  }
 }

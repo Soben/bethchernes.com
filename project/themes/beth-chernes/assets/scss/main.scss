@@ -28,9 +28,10 @@ a:visited {
 }
 
 #content {
-  .container {
-    background-color: $off-white;
-    padding: remCalc(45px) remCalc(20px);
+  padding-top: remCalc(60px);
+
+  section {
+    margin-bottom: remCalc(60px);
   }
 
   .btn {
@@ -41,28 +42,37 @@ a:visited {
   
     &:hover,
     &:focus {
-      color: $dark-gray;
-      background-color: $highlight;
+      color: $white;
+      background-color: $accent;
     }
   }
 
-}
-.column-sidebar {
-  a,
-  a:visited {
-    color: $blue-gray;
+  header.section-title {
+    text-align: center;
+    margin-bottom: remCalc(25px);
+    h2 {
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
 
-    &:hover,
-    &:focus {
+  .column-sidebar {
+    a,
+    a:visited {
       color: $blue-gray;
-    }
-  }
-  ul {
-    @extend %ul-override;
-  }
   
-  ol {
-    @extend %ol-override;
+      &:hover,
+      &:focus {
+        color: $blue-gray;
+      }
+    }
+    ul {
+      @extend %ul-override;
+    }
+    
+    ol {
+      @extend %ol-override;
+    }
   }
 }
 

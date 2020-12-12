@@ -10338,17 +10338,17 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Lato", sans-serif;
 }
 
-.wysiwyg-content ul, .column-sidebar ul {
+.wysiwyg-content ul, #content .column-sidebar ul {
   list-style: none;
   counter-reset: ul-list;
 }
-.wysiwyg-content ul li, .column-sidebar ul li {
+.wysiwyg-content ul li, #content .column-sidebar ul li {
   position: relative;
   counter-increment: ol-list;
   padding-left: 20px;
   margin: 12px 0;
 }
-.wysiwyg-content ul li:before, .column-sidebar ul li:before {
+.wysiwyg-content ul li:before, #content .column-sidebar ul li:before {
   position: absolute;
   top: -1px;
   left: 0;
@@ -10359,17 +10359,17 @@ h1, h2, h3, h4, h5, h6 {
   color: #7c9eb2;
 }
 
-.wysiwyg-content ol, .column-sidebar ol {
+.wysiwyg-content ol, #content .column-sidebar ol {
   list-style: none;
   counter-reset: ol-list;
 }
-.wysiwyg-content ol li, .column-sidebar ol li {
+.wysiwyg-content ol li, #content .column-sidebar ol li {
   position: relative;
   counter-increment: ol-list;
   padding-left: 20px;
   margin: 12px 0;
 }
-.wysiwyg-content ol li:before, .column-sidebar ol li:before {
+.wysiwyg-content ol li:before, #content .column-sidebar ol li:before {
   position: absolute;
   left: 0;
   content: counter(ol-list) ".";
@@ -10401,9 +10401,11 @@ a:visited:focus {
   color: #000;
 }
 
-#content .container {
-  background-color: #f9f9f9;
-  padding: 2.8125rem 1.25rem;
+#content {
+  padding-top: 3.75rem;
+}
+#content section {
+  margin-bottom: 3.75rem;
 }
 #content .btn {
   font-weight: normal;
@@ -10412,17 +10414,24 @@ a:visited:focus {
   text-decoration: none;
 }
 #content .btn:hover, #content .btn:focus {
-  color: #4a4d4b;
-  background-color: #bedcdf;
+  color: #fff;
+  background-color: #800020;
 }
-
-.column-sidebar a,
-.column-sidebar a:visited {
+#content header.section-title {
+  text-align: center;
+  margin-bottom: 1.5625rem;
+}
+#content header.section-title h2 {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+#content .column-sidebar a,
+#content .column-sidebar a:visited {
   color: #555b6e;
 }
-.column-sidebar a:hover, .column-sidebar a:focus,
-.column-sidebar a:visited:hover,
-.column-sidebar a:visited:focus {
+#content .column-sidebar a:hover, #content .column-sidebar a:focus,
+#content .column-sidebar a:visited:hover,
+#content .column-sidebar a:visited:focus {
   color: #555b6e;
 }
 .layout-header {

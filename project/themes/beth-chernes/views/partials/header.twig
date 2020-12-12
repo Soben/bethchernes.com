@@ -1,0 +1,10 @@
+{% if title or subTitle %}
+<header class="section-title">
+  {% if title %}
+    <h2 class="section-title__primary">{{ title }}</h2>
+  {% endif %}
+  {% if subTitle %}
+    <p class="section-title__secondary highlight">{{ subTitle }}</p>
+  {% endif %}
+</header>
+{% endif %}

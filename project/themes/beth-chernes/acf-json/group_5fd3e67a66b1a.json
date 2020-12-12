@@ -38,7 +38,7 @@
                         "rich-text": "Text Content",
                         "form": "Form",
                         "services": "Services",
-                        "blog": "Articles",
+                        "blog": "Posts",
                         "portfolio": "Portfolio"
                     },
                     "default_value": "rich-text",
@@ -159,7 +159,7 @@
                         {
                             "key": "field_5fd3e8764b0a0",
                             "label": "Services",
-                            "name": "services",
+                            "name": "items",
                             "type": "relationship",
                             "instructions": "",
                             "required": 1,
@@ -179,6 +179,162 @@
                             },
                             "post_type": [
                                 "services"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search",
+                                "taxonomy"
+                            ],
+                            "elements": "",
+                            "min": 1,
+                            "max": 3,
+                            "return_format": ""
+                        }
+                    ]
+                },
+                {
+                    "key": "field_5fd44ca0fb209",
+                    "label": "Posts",
+                    "name": "posts",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5fd3e6c4f8a2d",
+                                "operator": "==",
+                                "value": "blog"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5fd44ca1fb20a",
+                            "label": "Show Latest?",
+                            "name": "show_latest",
+                            "type": "true_false",
+                            "instructions": "If \"True\" will show newest Posts. Otherwise, allowed to pick 3 top posts.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 1,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        },
+                        {
+                            "key": "field_5fd44ca1fb20b",
+                            "label": "Posts",
+                            "name": "items",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5fd44ca1fb20a",
+                                        "operator": "!=",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "post"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search",
+                                "taxonomy"
+                            ],
+                            "elements": "",
+                            "min": 1,
+                            "max": 3,
+                            "return_format": ""
+                        }
+                    ]
+                },
+                {
+                    "key": "field_5fd44d97fb20c",
+                    "label": "Portfolio",
+                    "name": "portfolio",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5fd3e6c4f8a2d",
+                                "operator": "==",
+                                "value": "portfolio"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5fd44d97fb20d",
+                            "label": "Show Latest?",
+                            "name": "show_latest",
+                            "type": "true_false",
+                            "instructions": "If \"True\" will show newest Posts. Otherwise, allowed to pick 3 top posts.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 1,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        },
+                        {
+                            "key": "field_5fd44d97fb20e",
+                            "label": "Portfolio Items",
+                            "name": "items",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5fd44d97fb20d",
+                                        "operator": "!=",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "portfolio"
                             ],
                             "taxonomy": "",
                             "filters": [
@@ -271,5 +427,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1607723312
+    "modified": 1607749118
 }

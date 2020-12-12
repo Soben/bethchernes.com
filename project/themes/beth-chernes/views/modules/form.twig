@@ -1,0 +1,13 @@
+<section class="module-block">
+  <div class="container">
+    {% include "partials/header.twig" with {
+      title: item.module_header,
+      subTitle: item.module_subheader
+    } %}
+
+    {% set formID = item.form.form.0 %}
+
+    {{ dump(formID) }}
+
+  </div>
+</section>

@@ -29,12 +29,6 @@ class Theme extends Timber\Site {
 		parent::__construct();
 	}
 
-	public static function include_fontAwesome() {
-		add_action( "wp_enqueue_scripts", function() {
-			wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", array(), "5.15.1" );
-		} );
-	}
-
 	public function register_sidebars() {
 		Sidebars\Primary::register();
 	}
@@ -58,6 +52,7 @@ class Theme extends Timber\Site {
 	
 	public function enqueue_scripts() {
 		// wp_enqueue_script( "bootstrap", get_stylesheet_directory_uri() . "/assets/js/vendor/bootstrap.js", array("jquery"), "4.5.3", true );
+		wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", array(), "5.15.1" );
 		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", array("jquery"), "20201204", true );
 	}
 	
