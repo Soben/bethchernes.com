@@ -42,6 +42,7 @@ class Theme extends Timber\Site {
 	public function register_shortcodes() {
 		Shortcodes\Button::register();
 		Shortcodes\Highlight::register();
+		Shortcodes\Social::register();
 	}
 
 	public function register_menus() {
