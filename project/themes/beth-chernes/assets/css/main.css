@@ -10525,16 +10525,11 @@ a:visited:focus {
     font-size: 1.375rem;
   }
 }
-.masthead .masthead__social {
-  font-size: 1.875rem;
-}
-.masthead .masthead__social a {
+.masthead .social-links a {
   color: #fff;
-  display: inline-block;
-  padding: 0 0.3125rem;
 }
-.masthead .masthead__social a:hover, .masthead .masthead__social a:focus {
-  color: #bedcdf;
+.masthead .social-links a:hover, .masthead .social-links a:focus {
+  background-color: rgba(128, 0, 32, 0.4);
 }
 
 .layout-footer {
@@ -10569,6 +10564,19 @@ a:visited:focus {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.social-links {
+  font-size: 1.875rem;
+}
+.social-links a {
+  display: inline-block;
+  width: 3.125rem;
+  height: 3.125rem;
+}
+.social-links a:hover, .social-links a:focus {
+  color: #fff;
+  border-radius: 0.3125rem;
+  background-color: #800020;
 }
 
 /*# sourceMappingURL=main.css.map */

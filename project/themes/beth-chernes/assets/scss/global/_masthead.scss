@@ -54,17 +54,13 @@
     }
   }
 
-  .masthead__social {
-    font-size: remCalc(30px);
-    
+  .social-links {    
     a {
       color: $white;
-      display: inline-block;
-      padding: 0 remCalc(5px);
-
+  
       &:hover,
       &:focus {
-        color: $highlight;
+        background-color: rgba($accent, 0.4);
       }
     }
   }

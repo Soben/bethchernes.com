@@ -1,0 +1,16 @@
+.social-links {
+  font-size: remCalc(30px);
+  
+  a {
+    display: inline-block;
+    width: remCalc(50px);
+    height: remCalc(50px);
+
+    &:hover,
+    &:focus {
+      color: $white;
+      border-radius: remCalc(5px);
+      background-color: $accent;
+    }
+  }
+}
