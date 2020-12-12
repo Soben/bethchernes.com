@@ -4,16 +4,9 @@
       title: item.module_header,
       subTitle: item.module_subheader
     } %}
-
-    {% if item.services.show_latest %}
-      {% set columns = [] %}
-    {% else %}
-      {% set columns = item.services.items %}
-    {% endif %}
-
-    {{ dump(columns) }}
+    
     <div class="row align-items-start">
-      {% for details in columns %}
+      {% for details in item.displayItems %}
       <div class="col">
         <h3>Item {{ details.title }}</h3>
       </div>

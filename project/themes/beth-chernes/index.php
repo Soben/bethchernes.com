@@ -8,7 +8,7 @@ if ( is_front_page() === true ) {
 }
 
 if ( is_singular() ) {
-  $context["modules"] = get_field("modules", $context["posts"][0]->ID );
+  $context["modules"] = poutine_processModules($context["posts"][0]->ID);
 }
 
 Timber\Timber::render( "index.twig", $context );
