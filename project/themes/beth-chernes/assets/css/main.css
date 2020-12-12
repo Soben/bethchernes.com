@@ -10519,12 +10519,22 @@ a:visited:focus {
   font-weight: 400;
   font-size: 1.1875rem;
   padding: 0 0.9375rem;
-  margin: 0 auto 1.875rem;
 }
 @media (min-width: 992px) {
   .masthead .subheader {
     font-size: 1.375rem;
   }
+}
+.masthead .masthead__social {
+  font-size: 1.875rem;
+}
+.masthead .masthead__social a {
+  color: #fff;
+  display: inline-block;
+  padding: 0 0.3125rem;
+}
+.masthead .masthead__social a:hover, .masthead .masthead__social a:focus {
+  color: #bedcdf;
 }
 
 .layout-footer {

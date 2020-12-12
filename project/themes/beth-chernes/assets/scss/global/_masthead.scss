@@ -48,10 +48,24 @@
     font-weight: 400;
     font-size: remCalc(19px);
     padding: 0 remCalc(15px);
-    margin: 0 auto remCalc(30px);
     
     @media (min-width: 992px) {
       font-size: remCalc(22px);
+    }
+  }
+
+  .masthead__social {
+    font-size: remCalc(30px);
+    
+    a {
+      color: $white;
+      display: inline-block;
+      padding: 0 remCalc(5px);
+
+      &:hover,
+      &:focus {
+        color: $highlight;
+      }
     }
   }
 }

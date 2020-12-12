@@ -29,6 +29,12 @@ class Theme extends Timber\Site {
 		parent::__construct();
 	}
 
+	public static function include_fontAwesome() {
+		add_action( "wp_enqueue_scripts", function() {
+			wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", array(), "5.15.1" );
+		} );
+	}
+
 	public function register_sidebars() {
 		Sidebars\Primary::register();
 	}
@@ -86,7 +92,7 @@ class Theme extends Timber\Site {
 	public function add_to_context( $context ) {
 		$context["menu"] = new Timber\Menu( "top_menu" );
 		$context["logo"] = new Timber\Image( get_field("logo", "options") );
-		$context["copyright"] = get_field("copyright", "options") ?: get_bloginfo('name');
+		$context["copyright"] = get_field("copyright", "options") ?: get_bloginfo("name");
 		$context["site"]  = $this;
     
 		return $context;

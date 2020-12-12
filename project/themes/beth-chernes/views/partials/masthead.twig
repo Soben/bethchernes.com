@@ -12,6 +12,16 @@
       <p class="subheader highlight">{{ subheader }}</p>
     {% endif %}
 
+    {% if masthead_social %}
+    <div class="masthead__social">
+      {% for social in masthead_social %}
+        {% if social.link %}
+          <a href="{{ social.link }}" target="_blank" rel="nofollow" aria-label="{{ social.name }}"><i class="{{ social.icon }}"></i></a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
     {% block masthead %}
     {% endblock %}
   </div>
