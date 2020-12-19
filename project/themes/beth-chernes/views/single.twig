@@ -1,0 +1,55 @@
+{% extends "layouts/base.twig" %}
+
+{% block page %}
+  {% for post in posts %}
+    {% include "partials/masthead.twig" with {
+      header: post.title
+    } %}
+
+    <div id="content" role="main" class="content-wrapper">
+      
+      <section class="archive-block">
+        <div class="container has-sidebar">
+          <div class="row">
+            <div class="column-main col-md-7 col-lg-8">
+              <article>
+                <header>
+                  {% if not post.thumbnail %}
+                    <img src="{{ post.thumbnail.src|resize(750, 450)}}" width="{{750}}" height="{{450}}" alt="{{ post.thumbnail.alt }}" />
+                  {% else %}
+                    <img src="http://placekitten.com/{{750}}/{{450}}" width="{{750}}" height="{{450}}" alt="No image found, displaying a kitten." />
+                  {% endif %}
+
+                  {% include "partials/content/meta.twig" with { 'details' : post } %}
+                </header>
+                <div class="post-content wysiwyg-content">
+                  {{ post.content }}
+                </div>
+                <footer class="meta">
+                  {% if post.tags %}
+                    <div class="meta__group meta__group-tags"><i class="far fa-tags"></i>
+                      {% for tag in post.tags %}
+                        <a href="{{ tag.link }}">{{ tag.name }}</a>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+
+                  {% if post.categories %}
+                    <div class="meta__group meta__group-categories"><i class="far fa-hashtag"></i>
+                      {% for category in post.categories %}
+                        <a href="{{ category.link }}">{{ category.name }}</a>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                </footer>
+              </article>
+            </div>
+
+            {{ sidebar }}
+          </div>
+        </div>
+      </section>
+
+    </div>
+  {% endfor %}
+{% endblock %}

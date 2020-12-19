@@ -10678,7 +10678,7 @@ img {
     min-height: 18.75rem;
   }
   .masthead .wrapper {
-    padding: 4.6875rem 0.625rem;
+    padding: 4.6875rem 1.875rem;
   }
   .masthead.has-image .wrapper {
     padding-top: 9.375rem;
@@ -10829,6 +10829,9 @@ nav.pagination ul li .page-number.current:hover {
   border-top: 2px solid #d3d5d4;
   font-size: 1.5625rem;
 }
+.column-sidebar ul {
+  padding-left: 15px;
+}
 .column-sidebar .form--search input[type=text] {
   flex-basis: 100%;
   margin-right: 0.625rem;
@@ -10839,21 +10842,66 @@ nav.pagination ul li .page-number.current:hover {
   }
 }
 
+body.blog .meta,
+body.single-post .meta {
+  color: #4a4d4b;
+}
+body.blog .meta .meta__group a:after,
+body.single-post .meta .meta__group a:after {
+  content: ", ";
+}
+body.blog .meta .meta__group a:last-child:after,
+body.single-post .meta .meta__group a:last-child:after {
+  content: "";
+}
+body.blog .meta .meta__date,
+body.blog .meta .meta__group-tags,
+body.blog .meta .meta__group-categories,
+body.single-post .meta .meta__date,
+body.single-post .meta .meta__group-tags,
+body.single-post .meta .meta__group-categories {
+  font-size: 0.875rem;
+}
+body.blog .meta .meta__date svg,
+body.blog .meta .meta__group-tags svg,
+body.blog .meta .meta__group-categories svg,
+body.single-post .meta .meta__date svg,
+body.single-post .meta .meta__group-tags svg,
+body.single-post .meta .meta__group-categories svg {
+  margin-right: 0.3125rem;
+}
+body.blog .meta .meta__date a,
+body.blog .meta .meta__group-tags a,
+body.blog .meta .meta__group-categories a,
+body.single-post .meta .meta__date a,
+body.single-post .meta .meta__group-tags a,
+body.single-post .meta .meta__group-categories a {
+  color: #4a4d4b;
+  font-weight: normal;
+}
+
 body.blog .column-main article {
   margin-bottom: 3.75rem;
 }
 body.blog .column-main article img {
   margin-bottom: 0.9375rem;
 }
-body.blog .column-main article .meta {
-  color: #4a4d4b;
-}
-body.blog .column-main article .meta .posted-on svg {
-  margin-right: 0.3125rem;
-}
 body.blog .column-main article footer {
   margin-top: 0.9375rem;
   align-self: flex-end;
+}
+body.single-post .column-main header {
+  border-bottom: 2px solid #ebebeb;
+  padding-bottom: 0.625rem;
+  margin-bottom: 1.25rem;
+}
+body.single-post .column-main header img {
+  margin-bottom: 0.625rem;
+}
+body.single-post .column-main footer {
+  border-top: 2px solid #ebebeb;
+  padding-top: 0.625rem;
+  margin-top: 1.25rem;
 }
 
 /*# sourceMappingURL=main.css.map */
