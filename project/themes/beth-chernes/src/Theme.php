@@ -25,8 +25,15 @@ class Theme extends Timber\Site {
 		add_action( "wp_enqueue_scripts", [$this, "enqueue_styles"] );
 		add_action( "wp_enqueue_scripts", [$this, "enqueue_scripts"] );
 		add_action( "after_setup_theme", [$this, "register_menus"] );
+		add_action( "wp_print_scripts", [$this, "include_print_scripts"] );
 
 		parent::__construct();
+	}
+
+	public function include_print_scripts() {
+		if ( (!is_admin()) && is_singular() && comments_open() && get_option('thread_comments') ) {
+			wp_enqueue_script( 'comment-reply' );
+		}
 	}
 
 	public function register_sidebars() {

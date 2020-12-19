@@ -10571,6 +10571,28 @@ img {
 #content .column-sidebar a:visited:focus {
   color: #555b6e;
 }
+.layout-footer {
+  background-color: #4a4d4b;
+  color: #fff;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.wpcf7 form.wpcf7-form .wpcf7-not-valid-tip {
+  color: #800020;
+}
+.wpcf7 form.wpcf7-form .wpcf7-response-output {
+  border-color: #bedcdf;
+}
+.wpcf7 form.wpcf7-form.invalid .wpcf7-response-output {
+  border-color: #800020;
+}
+form input,
+form select,
+form textarea {
+  border: 1px solid #000;
+  border-radius: 0.25rem;
+}
 .layout-header {
   background-color: #fff;
   box-shadow: 0 4px 4px 0 #d3d5d4;
@@ -10686,28 +10708,6 @@ img {
   }
 }
 
-.layout-footer {
-  background-color: #4a4d4b;
-  color: #fff;
-  text-align: center;
-  padding: 30px 0;
-}
-
-.wpcf7 form.wpcf7-form .wpcf7-not-valid-tip {
-  color: #800020;
-}
-.wpcf7 form.wpcf7-form .wpcf7-response-output {
-  border-color: #bedcdf;
-}
-.wpcf7 form.wpcf7-form.invalid .wpcf7-response-output {
-  border-color: #800020;
-}
-form input,
-form select,
-form textarea {
-  border: 1px solid #000;
-  border-radius: 0.25rem;
-}
 .wysiwyg-content .alignright {
   float: right;
   margin: 0 0 1em 1em;
@@ -10750,21 +10750,91 @@ form textarea {
   margin-top: 1.875rem;
 }
 
-.social-links {
-  font-size: 1.875rem;
-  margin: 1.25rem 0;
+.content-comments {
+  margin-top: 1.25rem;
+  padding-top: 0.625rem;
+  border-top: 2px solid #ebebeb;
 }
-.social-links a {
+.content-comments .comment-notes {
+  color: #800020;
+}
+.content-comments textarea,
+.content-comments input[type=email],
+.content-comments input[type=text],
+.content-comments input[type=url],
+.content-comments select {
+  width: 100%;
+}
+.content-comments label {
+  display: block;
+  margin-bottom: 0;
+}
+.content-comments label .required {
+  color: #800020;
+}
+.content-comments .comment-form-cookies-consent label {
+  display: inline-block;
+  max-width: 95%;
+  padding-left: 0.625rem;
+}
+.content-comments .comment-list {
+  padding-left: 0;
+}
+.content-comments ol {
+  list-style: none;
+}
+.content-comments ol li {
+  margin-bottom: 1.25rem;
+}
+.content-comments ol .comment {
+  padding-left: 1.25rem;
+  border-left: 1px solid #ebebeb;
+}
+.content-comments ol .comment-meta {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.125rem;
-  height: 3.125rem;
+  flex-direction: column;
+  font-size: 1.25rem;
 }
-.social-links a:hover, .social-links a:focus {
-  color: #fff;
-  border-radius: 0.3125rem;
-  background-color: #800020;
+.content-comments ol .comment-meta a {
+  color: #000;
+  text-decoration: none;
+}
+.content-comments ol .comment-meta img {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 0.625rem;
+  margin-top: 1rem;
+}
+.content-comments ol .comment-meta .comment-metadata {
+  font-size: 0.875rem;
+  margin-top: -1rem;
+  margin-left: 3.4375rem;
+}
+.content-comments ol .comment-meta .comment-metadata a {
+  color: #4a4d4b;
+}
+.content-comments ol .comment-content {
+  padding-top: 1rem;
+  padding-left: 3.4375rem;
+}
+.content-comments ol .says {
+  display: none;
+}
+.content-comments ol .reply {
+  text-align: right;
+}
+.content-comments .comment-respond,
+.content-comments #respond {
+  background-color: #ebebeb;
+  padding: 0.625rem;
+}
+.content-comments .comment-respond #cancel-comment-reply-link,
+.content-comments #respond #cancel-comment-reply-link {
+  font-size: 0.875rem;
+  display: inline-block;
+  padding-left: 0.625rem;
+  text-transform: lowercase;
 }
 
 .module-block.module--blog .col article {
@@ -10842,6 +10912,23 @@ nav.pagination ul li .page-number.current:hover {
   }
 }
 
+.social-links {
+  font-size: 1.875rem;
+  margin: 1.25rem 0;
+}
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.125rem;
+  height: 3.125rem;
+}
+.social-links a:hover, .social-links a:focus {
+  color: #fff;
+  border-radius: 0.3125rem;
+  background-color: #800020;
+}
+
 body.blog .meta,
 body.single-post .meta {
   color: #4a4d4b;
@@ -10898,7 +10985,7 @@ body.single-post .column-main header {
 body.single-post .column-main header img {
   margin-bottom: 0.625rem;
 }
-body.single-post .column-main footer {
+body.single-post .column-main footer.meta {
   border-top: 2px solid #ebebeb;
   padding-top: 0.625rem;
   margin-top: 1.25rem;
