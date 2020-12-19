@@ -1,4 +1,7 @@
 body.blog,
+body.tag,
+body.category,
+body.archive,
 body.single-post {
   .meta {
     color: $dark-gray;
@@ -34,7 +37,10 @@ body.single-post {
   }
 }
 
-body.blog {
+body.blog,
+body.tag,
+body.category,
+body.archive {
   .column-main {
     article {
       margin-bottom: remCalc(60px);

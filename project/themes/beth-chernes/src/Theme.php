@@ -26,13 +26,34 @@ class Theme extends Timber\Site {
 		add_action( "wp_enqueue_scripts", [$this, "enqueue_scripts"] );
 		add_action( "after_setup_theme", [$this, "register_menus"] );
 		add_action( "wp_print_scripts", [$this, "include_print_scripts"] );
+		add_filter( "get_the_archive_title", [$this, "cleanup_archive_title"] );
 
 		parent::__construct();
 	}
 
+	function cleanup_archive_title( $title ) {
+    if ( is_category() ) {
+        $title = single_cat_title( "", false );
+    } elseif ( is_tag() ) {
+        $title = single_tag_title( "", false );
+    } elseif ( is_author() ) {
+        $title = "<span class=\"vcard\">" . get_the_author() . "</span>";
+    } elseif ( is_post_type_archive() ) {
+        $title = post_type_archive_title( "", false );
+    } elseif ( is_tax() ) {
+        $title = single_term_title( "", false );
+		} elseif ( is_year() ) {
+        $title = get_the_date( "Y" );
+    } elseif ( is_month() ) {
+				$title = get_the_date( "F Y" );
+		}
+  
+    return $title;
+	}
+
 	public function include_print_scripts() {
-		if ( (!is_admin()) && is_singular() && comments_open() && get_option('thread_comments') ) {
-			wp_enqueue_script( 'comment-reply' );
+		if ( (!is_admin()) && is_singular() && comments_open() && get_option("thread_comments") ) {
+			wp_enqueue_script( "comment-reply" );
 		}
 	}
 
