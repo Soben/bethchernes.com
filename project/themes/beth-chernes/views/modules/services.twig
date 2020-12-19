@@ -5,9 +5,9 @@
       subTitle: item.module_subheader
     } %}
     
-    <ul class="row align-items-stretch list-unstyled flex-nowrap">
+    <ul class="row align-items-stretch list-unstyled">
       {% for details in item.displayItems %}
-      <li class="col col-4">
+      <li class="col col-12 col-md-6 col-lg-4 mt-4">
         <h3>{{ details.title }}</h3>
         <div class="wysiwyg-content">
           {{ details.content }}

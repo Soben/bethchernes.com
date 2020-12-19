@@ -1,8 +1,6 @@
 .module-block {
   &.module--blog {
     .col {
-      display: flex;
-
       article {
         background-color: $off-white;
         transition: background-color .2s;
