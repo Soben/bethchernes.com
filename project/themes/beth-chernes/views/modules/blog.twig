@@ -8,30 +8,7 @@
     <ul class="row align-items-stretch list-unstyled">
       {% for details in item.displayItems %}
       <li class="d-flex col col-12 col-md-6 col-lg-4 mt-4">
-        <article class="d-flex flex-column justify-content-between">
-          <header>
-            <a href="{{ details.link }}">
-              {% if details.thumbnail %}
-                <img src="{{ details.thumbnail.src|resize(370, 247)}}" width="370" height="247" alt="{{ details.thumbnail.alt }}" />
-              {% else %}
-                <img src="http://placekitten.com/370/247" width="370" height="247" alt="No image found, displaying a kitten." />
-              {% endif %}
-            </a>
-          </header>
-          <div class="post-details">
-            <h3>{{ details.title }}</h3>
-            <div class="wysiwyg-content">
-              {% if details.post_excerpt %}
-                {{ details.post_excerpt }}
-              {% else %}
-                {{ details.content|excerpt(15) }}
-              {% endif %}
-            </div>
-          </div>
-          <footer>
-            <a href="{{ details.link }}" aria-label="Read more about {{details.title}}">Read More</a>
-          </footer>
-        </article>
+        {% include "partials/content/post.twig" %}
       </li>
       {% endfor %}
     </ul>

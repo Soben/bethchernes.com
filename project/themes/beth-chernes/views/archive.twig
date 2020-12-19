@@ -12,11 +12,10 @@
           <div class="row">
             <div class="column-main col-md-7 col-lg-8">
               {% for post in posts %}
-                <article>
-                  <h2><a href="{{ post.link }}">{{ post.title }}</a></h2>
-
-                  {{ post.content | excerpt(30) }}
-                </article>
+                {% include 'partials/content/post.twig' with {
+                  'details' : post,
+                  'imageDimensions' : [ 750, 450 ]
+                } %}
               {% endfor %}
             </div>
 

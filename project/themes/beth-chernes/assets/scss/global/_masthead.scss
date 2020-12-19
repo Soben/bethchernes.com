@@ -1,5 +1,6 @@
 .masthead {
-  min-height: remCalc(300px);
+  min-height: rem-calc(150px);
+
   background-color: $dark-gray;
   position: relative;
   color: $white;
@@ -20,7 +21,7 @@
   }
 
   .wrapper {
-    padding: remCalc(75px) remCalc(10px);
+    padding: remCalc(45px) remCalc(10px);
   }
   .overlay {
     display: none;
@@ -39,8 +40,8 @@
     }
     .wrapper {
       z-index: 2;
-      padding-top: remCalc(150px);
-      padding-bottom: remCalc(150px);
+      padding-top: remCalc(75px);
+      padding-bottom: remCalc(75px);
     }
   }
 
@@ -61,6 +62,20 @@
       &:hover,
       &:focus {
         background-color: rgba($accent, 0.4);
+      }
+    }
+  }
+
+  @media (min-width:764px) {
+    min-height: remCalc(300px);
+    .wrapper {
+      padding: remCalc(75px) remCalc(10px);
+    }
+
+    &.has-image {
+      .wrapper {
+        padding-top: remCalc(150px);
+        padding-bottom: remCalc(150px);
       }
     }
   }

@@ -1,0 +1,27 @@
+{% if not imageDimensions %}
+  {% set imageDimensions = [ 370, 247 ]%}
+{% endif %}
+<article class="d-flex flex-column justify-content-between">
+  <header>
+    <a href="{{ details.link }}">
+      {% if not details.thumbnail %}
+        <img src="{{ details.thumbnail.src|resize(imageDimensions[0], imageDimensions[1])}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="{{ details.thumbnail.alt }}" />
+      {% else %}
+        <img src="http://placekitten.com/{{imageDimensions[0]}}/{{imageDimensions[1]}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="No image found, displaying a kitten." />
+      {% endif %}
+    </a>
+  </header>
+  <div class="post-details">
+    <h3>{{ details.title }}</h3>
+    <div class="wysiwyg-content">
+      {% if details.post_excerpt %}
+        {{ details.post_excerpt }}
+      {% else %}
+        {{ details.content|excerpt(15) }}
+      {% endif %}
+    </div>
+  </div>
+  <footer>
+    <a href="{{ details.link }}" aria-label="Read more about {{details.title}}">Read More</a>
+  </footer>
+</article>
