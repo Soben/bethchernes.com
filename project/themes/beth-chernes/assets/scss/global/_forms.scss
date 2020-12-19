@@ -19,3 +19,16 @@
     }
   }
 }
+
+form {
+  input,
+  select,
+  textarea {
+    border: 1px solid $black;
+    border-radius: 0.25rem;
+  }
+  input[type=submit],
+  button {
+    @extend .btn;
+  }
+}

@@ -1,0 +1,24 @@
+.column-sidebar {
+  border-radius: 0.25rem;
+  padding: remCalc(20px);
+
+  .widgettitle {
+    margin-top: remCalc(16px);
+    padding-top: remCalc(16px);
+
+    border-top: 2px solid $gray;
+    font-size: remCalc(25px);
+  }
+
+  .form--search {
+
+    input[type=text] {
+      flex-basis: 100%;
+      margin-right: remCalc(10px);
+    }
+  }
+
+  @media (min-width: 768px) {
+    background-color: $off-white;
+  }
+}
