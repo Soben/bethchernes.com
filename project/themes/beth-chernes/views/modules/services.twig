@@ -5,12 +5,15 @@
       subTitle: item.module_subheader
     } %}
     
-    <div class="row align-items-start">
+    <ul class="row align-items-stretch list-unstyled flex-nowrap">
       {% for details in item.displayItems %}
-      <div class="col">
-        <h3>Item {{ details.title }}</h3>
-      </div>
+      <li class="col col-4">
+        <h3>{{ details.title }}</h3>
+        <div class="wysiwyg-content">
+          {{ details.content }}
+        </div>
+      </li>
       {% endfor %}
-    </div>
+    </ul>
   </div>
 </section>

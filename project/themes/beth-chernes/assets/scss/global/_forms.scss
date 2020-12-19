@@ -1,0 +1,17 @@
+.wpcf7 {
+  form.wpcf7-form {
+    .wpcf7-not-valid-tip {
+      color: $burgundy;
+    }
+
+    .wpcf7-response-output {
+      border-color: $highlight;
+    }
+    
+    &.invalid {
+      .wpcf7-response-output {
+        border-color: $burgundy;
+      }
+    }
+  }
+}

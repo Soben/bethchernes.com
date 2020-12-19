@@ -10552,6 +10552,16 @@ a:visited:focus {
   padding: 30px 0;
 }
 
+.wpcf7 form.wpcf7-form .wpcf7-not-valid-tip {
+  color: #800020;
+}
+.wpcf7 form.wpcf7-form .wpcf7-response-output {
+  border-color: #bedcdf;
+}
+.wpcf7 form.wpcf7-form.invalid .wpcf7-response-output {
+  border-color: #800020;
+}
+
 .wysiwyg-content img.alignright {
   float: right;
   margin: 0 0 1em 1em;
@@ -10597,6 +10607,32 @@ a:visited:focus {
   color: #fff;
   border-radius: 0.3125rem;
   background-color: #800020;
+}
+
+.module-block.module--blog .col {
+  display: flex;
+}
+.module-block.module--blog .col article {
+  background-color: #f9f9f9;
+  transition: background-color 0.2s;
+}
+.module-block.module--blog .col article:hover {
+  background-color: rgba(190, 220, 223, 0.8);
+}
+.module-block.module--blog .col article:hover img {
+  transform: scale(1.02);
+}
+.module-block.module--blog .col article img {
+  transition: transform 0.2s;
+  width: 100%;
+  height: auto;
+}
+.module-block.module--blog .col article .post-details {
+  padding: 0.9375rem;
+  flex-basis: 100%;
+}
+.module-block.module--blog .col article footer {
+  padding: 0.9375rem;
 }
 
 /*# sourceMappingURL=main.css.map */

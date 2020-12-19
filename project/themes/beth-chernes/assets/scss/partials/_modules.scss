@@ -1,0 +1,35 @@
+.module-block {
+  &.module--blog {
+    .col {
+      display: flex;
+
+      article {
+        background-color: $off-white;
+        transition: background-color .2s;
+
+        &:hover {
+          background-color: rgba($light-blue, 0.8);
+
+          img {
+            transform: scale(1.02);
+          }
+        }
+
+        img {
+          transition: transform .2s;
+          width: 100%;
+          height: auto;
+        }
+
+        .post-details {
+          padding: remCalc(15px);
+          flex-basis: 100%;
+        }
+
+        footer {
+          padding: remCalc(15px);
+        }
+      }
+    }
+  }
+}
