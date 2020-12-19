@@ -10708,31 +10708,34 @@ form textarea {
   border: 1px solid #000;
   border-radius: 0.25rem;
 }
-.wysiwyg-content img.alignright {
+.wysiwyg-content .alignright {
   float: right;
   margin: 0 0 1em 1em;
 }
-.wysiwyg-content img.alignleft {
+.wysiwyg-content .alignleft {
   float: left;
   margin: 0 1em 1em 0;
 }
-.wysiwyg-content img.aligncenter {
+.wysiwyg-content .aligncenter {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-.wysiwyg-content a img.alignright {
+.wysiwyg-content a .alignright {
   float: right;
   margin: 0 0 1em 1em;
 }
-.wysiwyg-content a img.alignleft {
+.wysiwyg-content a .alignleft {
   float: left;
   margin: 0 1em 1em 0;
 }
-.wysiwyg-content a img.aligncenter {
+.wysiwyg-content a .aligncenter {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.wysiwyg-content .shortcode-icon {
+  color: #7c9eb2;
 }
 .wysiwyg-content h2, .wysiwyg-content h3, .wysiwyg-content h4, .wysiwyg-content h5, .wysiwyg-content h6 {
   margin-top: 1.875rem;
