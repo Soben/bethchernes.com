@@ -10737,6 +10737,15 @@ form textarea {
 .wysiwyg-content .shortcode-icon {
   color: #7c9eb2;
 }
+.wysiwyg-content .shortcode-icon--red {
+  color: #800020;
+}
+.wysiwyg-content .shortcode-icon--black {
+  color: #000;
+}
+.wysiwyg-content .shortcode-icon--gray {
+  color: #d3d5d4;
+}
 .wysiwyg-content h2, .wysiwyg-content h3, .wysiwyg-content h4, .wysiwyg-content h5, .wysiwyg-content h6 {
   margin-top: 1.875rem;
 }

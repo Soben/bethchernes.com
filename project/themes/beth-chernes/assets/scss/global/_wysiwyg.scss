@@ -10,6 +10,18 @@
   
   .shortcode-icon {
     color: $blue;
+
+    &--red {
+      color: $burgundy;
+    }
+
+    &--black {
+      color: $black;
+    }
+
+    &--gray {
+      color: $gray;
+    }
   }
 
   ul {

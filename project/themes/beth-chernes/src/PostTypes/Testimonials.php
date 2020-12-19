@@ -10,26 +10,26 @@ class Testimonials extends PostType
 
   public static function registerCPT()
   {
-    $labels = array(
+    $labels = [
       "name"                  => self::$plural,
       "singular_name"         => self::$singular,
-  );
+    ];
 
-  $args = array(
+    $args = [
       "labels"             => $labels,
       "public"             => true,
       "publicly_queryable" => false,
       "show_ui"            => true,
       "show_in_menu"       => true,
       "query_var"          => true,
-      "rewrite"            => array( "slug" => self::$slug ),
+      "rewrite"            => [ "slug" => self::$slug ],
       "capability_type"    => "post",
       "has_archive"        => true,
       "hierarchical"       => false,
       "menu_position"      => null,
       "menu_icon"          => "dashicons-format-status",
-      "supports"           => array( "title", "editor", "thumbnail" ),
-  );
+      "supports"           => [ "title", "editor", "thumbnail" ],
+    ];
 
   register_post_type( self::$slug, $args );
   }

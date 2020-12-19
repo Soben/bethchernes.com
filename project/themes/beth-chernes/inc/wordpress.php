@@ -15,15 +15,15 @@ function poutine_removeEmoji() {
   remove_filter( "wp_mail", "wp_staticize_emoji_for_email" );
   add_filter( "tiny_mce_plugins", function($plugins) {
     if ( is_array( $plugins ) ) {
-      return array_diff( $plugins, array( "wpemoji" ) );
+      return array_diff( $plugins, ["wpemoji"] );
     } else {
-      return array();
+      return [];
     }
   });
   add_filter( "wp_resource_hints", function($urls, $relation_type) {
     if ( "dns-prefetch" == $relation_type ) {
       $emoji_svg_url = apply_filters( "emoji_svg_url", "https://s.w.org/images/core/emoji/2/svg/" );
-      $urls = array_diff( $urls, array( $emoji_svg_url ) );
+      $urls = array_diff( $urls, [$emoji_svg_url] );
     }
 
     return $urls;
@@ -38,7 +38,7 @@ function poutine_removeJQueryMigrate( $scripts ) {
     $script = $scripts->registered["jquery"];
     if ( $script->deps ) { 
       // Check whether the script has any dependencies
-      $script->deps = array_diff( $script->deps, array( "jquery-migrate" ) );
+      $script->deps = array_diff( $script->deps, ["jquery-migrate"] );
     }
   }
 }

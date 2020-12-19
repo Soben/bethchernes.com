@@ -10,7 +10,7 @@ class Social
   public static function register()
   {
     $class = new self();
-    add_shortcode( "social", array( $class, "render" ) );
+    add_shortcode( "social", [ $class, "render" ] );
   }
 
   public function render( $atts, $content = "Click Me" ) {

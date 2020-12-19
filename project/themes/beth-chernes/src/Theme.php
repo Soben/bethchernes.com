@@ -12,19 +12,19 @@ class Theme extends Timber\Site {
 	/** Register */
 	public function __construct() {
 		// Filters
-		add_filter( "timber/context", array( $this, "add_to_context" ) );
-		add_filter( "timber/twig", array( $this, "add_to_twig" ) );
+		add_filter( "timber/context", [$this, "add_to_context"] );
+		add_filter( "timber/twig", [$this, "add_to_twig"] );
 
 		// Actions
-		add_action( "after_setup_theme", array( $this, "theme_supports" ) );
-		add_action( "init", array( $this, "register_post_types" ) );
-		add_action( "init", array( $this, "register_taxonomies" ) );
-		add_action( "init", array( $this, "register_acf_fields" ) );
-		add_action( "init", array( $this, "register_shortcodes" ) );
-		add_action( "widgets_init", array( $this, "register_sidebars" ) );
-		add_action( "wp_enqueue_scripts", array( $this, "enqueue_styles" ) );
-		add_action( "wp_enqueue_scripts", array( $this, "enqueue_scripts" ) );
-		add_action( "after_setup_theme", array( $this, "register_menus" ) );
+		add_action( "after_setup_theme", [$this, "theme_supports"] );
+		add_action( "init", [$this, "register_post_types"] );
+		add_action( "init", [$this, "register_taxonomies"] );
+		add_action( "init", [$this, "register_acf_fields"] );
+		add_action( "init", [$this, "register_shortcodes"] );
+		add_action( "widgets_init", [$this, "register_sidebars"] );
+		add_action( "wp_enqueue_scripts", [$this, "enqueue_styles"] );
+		add_action( "wp_enqueue_scripts", [$this, "enqueue_scripts"] );
+		add_action( "after_setup_theme", [$this, "register_menus"] );
 
 		parent::__construct();
 	}
@@ -45,13 +45,12 @@ class Theme extends Timber\Site {
 	}
 	
 	public function enqueue_styles() {
-		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", array(), "20201204" );
+		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", [], "20201204" );
 	}
 	
 	public function enqueue_scripts() {
-		// wp_enqueue_script( "bootstrap", get_stylesheet_directory_uri() . "/assets/js/vendor/bootstrap.js", array("jquery"), "4.5.3", true );
-		wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", array(), "5.15.1" );
-		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", array("jquery"), "20201204", true );
+		wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", [], "5.15.1" );
+		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", ["jquery"], "20201204", true );
 	}
 	
 	public function register_acf_fields() {
@@ -99,12 +98,12 @@ class Theme extends Timber\Site {
 
 		add_theme_support(
 			"html5",
-			array(
+			[
 				"comment-form",
 				"comment-list",
 				"gallery",
 				"caption",
-			)
+			]
 		);
 	}
 
@@ -114,7 +113,7 @@ class Theme extends Timber\Site {
 	 */
 	public function add_to_twig( $twig ) {
 		// $twig->addExtension( new Twig\Extension\StringLoaderExtension() );
-		// $twig->addFilter( new Twig\TwigFilter( "myfoo", array( $this, "myfoo" ) ) );
+		// $twig->addFilter( new Twig\TwigFilter( "myfoo", [$this, "myfoo"] ) );
 		return $twig;
 	}
 }
