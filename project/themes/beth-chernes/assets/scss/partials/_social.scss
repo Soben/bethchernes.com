@@ -14,7 +14,7 @@
     &:focus {
       color: $white;
       border-radius: remCalc(5px);
-      background-color: $accent;
+      background-color: rgba($accent, 0.4);
     }
   }
 }

@@ -11226,9 +11226,6 @@ form textarea {
 .masthead .social-links a {
   color: #fff;
 }
-.masthead .social-links a:hover, .masthead .social-links a:focus {
-  background-color: rgba(128, 0, 32, 0.4);
-}
 @media (min-width: 764px) {
   .masthead {
     min-height: 18.75rem;
@@ -11460,7 +11457,7 @@ nav.pagination ul li .page-number.current:hover {
 .social-links a:hover, .social-links a:focus {
   color: #fff;
   border-radius: 0.3125rem;
-  background-color: #800020;
+  background-color: rgba(128, 0, 32, 0.4);
 }
 
 body.blog .meta,

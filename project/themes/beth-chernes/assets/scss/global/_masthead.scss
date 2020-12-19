@@ -58,11 +58,6 @@
   .social-links {    
     a {
       color: $white;
-  
-      &:hover,
-      &:focus {
-        background-color: rgba($accent, 0.4);
-      }
     }
   }
 

@@ -17,14 +17,14 @@ class Portfolio extends PostType
 
     $args = [
       "labels"             => $labels,
-      "public"             => false,
-      "publicly_queryable" => true,
+      "public"             => true,
+      "publicly_queryable" => false,
       "show_ui"            => true,
       "show_in_menu"       => true,
       "query_var"          => true,
       "rewrite"            => [ "slug" => self::$slug ],
       "capability_type"    => "post",
-      "has_archive"        => false,
+      "has_archive"        => true,
       "hierarchical"       => false,
       "menu_position"      => null,
       "menu_icon"          => "dashicons-portfolio",
