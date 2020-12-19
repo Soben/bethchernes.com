@@ -18,7 +18,7 @@ class Portfolio extends PostType
     $args = [
       "labels"             => $labels,
       "public"             => true,
-      "publicly_queryable" => false,
+      "publicly_queryable" => true,
       "show_ui"            => true,
       "show_in_menu"       => true,
       "query_var"          => true,
@@ -32,11 +32,26 @@ class Portfolio extends PostType
     ];
 
     register_post_type( self::$slug, $args );
+    self::registerTaxonomies();
   }
 
   public static function registerTaxonomies()
   {
+    $labels = array(
+      'name'              => 'Groups',
+      'singular_name'     => 'Group',
+    );
 
+    $args = array(
+        'hierarchical'      => true,
+        'labels'            => $labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'show_in_rest'      => false,
+    );
+
+    register_taxonomy( 'portfolio-group', array( self::$slug ), $args );
   }
 
 }
