@@ -27,24 +27,29 @@ a:visited {
   color: #000;
 }
 
+.btn,
+.btn:visited {
+  font-weight: normal;
+  color: $dark-gray;
+  border: remCalc(1px) solid $dark-gray;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $white;
+    background-color: $accent;
+  }
+}
+
+.wpcf7-submit {
+  @extend .btn;
+}
+
 #content {
   padding-top: remCalc(60px);
 
   section {
     margin-bottom: remCalc(60px);
-  }
-
-  .btn {
-    font-weight: normal;
-    color: $dark-gray;
-    border: remCalc(1px) solid $dark-gray;
-    text-decoration: none;
-  
-    &:hover,
-    &:focus {
-      color: $white;
-      background-color: $accent;
-    }
   }
 
   header.section-title {

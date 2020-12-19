@@ -1,8 +1,12 @@
 .social-links {
   font-size: remCalc(30px);
+  margin: remCalc(20px) 0;
   
   a {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: remCalc(50px);
     height: remCalc(50px);
 
