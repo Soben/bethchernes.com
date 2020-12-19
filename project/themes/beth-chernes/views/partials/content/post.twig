@@ -10,9 +10,15 @@
         <img src="http://placekitten.com/{{imageDimensions[0]}}/{{imageDimensions[1]}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="No image found, displaying a kitten." />
       {% endif %}
     </a>
+
+    {% if showMeta %}
+      <div class="meta">
+        <span class="posted-on"><i class="far fa-clock"></i>{{ details.time('F g, Y') }}</span>
+      </div>
+    {% endif %}
   </header>
   <div class="post-details">
-    <h3>{{ details.title }}</h3>
+    <h3><a href="{{ details.link }}">{{ details.title }}</a></h3>
     <div class="wysiwyg-content">
       {% if details.post_excerpt %}
         {{ details.post_excerpt }}

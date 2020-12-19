@@ -1,7 +1,7 @@
 <?php
 
 $context = Timber\Timber::context();
-$context["posts"] = Timber\Timber::get_posts();
+$context["posts"] = new Timber\PostQuery();
 
 if ( is_front_page() === true ) {
   $context["masthead_social"] = poutine_getSocialLinks();

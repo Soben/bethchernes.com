@@ -14,9 +14,12 @@
               {% for post in posts %}
                 {% include 'partials/content/post.twig' with {
                   'details' : post,
-                  'imageDimensions' : [ 750, 450 ]
+                  'imageDimensions' : [ 750, 450 ],
+                  'showMeta' : true,
                 } %}
               {% endfor %}
+
+              {% include "partials/content/pagination.twig" %}
             </div>
 
             {{ sidebar }}

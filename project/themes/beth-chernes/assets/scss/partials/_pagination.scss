@@ -1,0 +1,32 @@
+nav.pagination {
+  border-top: 1px solid $gray;
+  border-bottom: 1px solid $gray;
+  margin-bottom: remCalc(30px);
+
+  ul {
+    margin-top: 1rem;
+    width: 100%;
+
+    li {
+      .page-number {
+        @extend .btn;
+        margin: remCalc(0px) remCalc(5px);
+        border: none;
+
+        &:hover,
+        &:focus {
+          background-color: rgba($highlight, 1);
+          color: $black;
+        }
+
+        &.current {
+          background-color: rgba($highlight, 0.8);
+          color: $black;
+          &:hover {
+            color: $black;
+          }
+        }
+      }
+    }
+  }
+}

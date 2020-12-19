@@ -45,9 +45,6 @@ class Theme extends Timber\Site {
 	
 	public function enqueue_styles() {
 		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", array(), "20201204" );
-		// if (is_front_page()) {
-		// 	wp_enqueue_style( self::$THEME_NAME . "-front-page", get_stylesheet_directory_uri() . "/assets/css/front_page.css", array(self::$THEME_NAME), "20201204" );
-		// }
 	}
 	
 	public function enqueue_scripts() {

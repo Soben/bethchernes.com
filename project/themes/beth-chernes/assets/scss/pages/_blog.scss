@@ -1,0 +1,30 @@
+body.blog {
+  .column-main {
+    article {
+      margin-bottom: remCalc(60px);
+
+      img {
+        margin-bottom: remCalc(15px);
+      }
+
+      .meta {
+        color: $dark-gray;
+
+        .posted-on {
+          svg {
+            margin-right: remCalc(5px);
+          }
+        }
+      }
+
+      footer {
+        margin-top: remCalc(15px);
+        align-self: flex-end;
+
+        a {
+          @extend .btn;
+        }
+      }
+    }
+  } 
+}
