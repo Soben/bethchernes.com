@@ -1,9 +1,5 @@
 {% extends "layouts/base.twig" %}
 
-{% if not headerTitle %}
-  {% set headerTitle = 'Blog' %}
-{% endif %}
-
 {% block page %}
     {% include "partials/masthead.twig" with {
       'header': headerTitle
