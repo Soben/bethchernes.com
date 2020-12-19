@@ -14,7 +14,7 @@
             <div class="column-main col-md-7 col-lg-8">
               <article>
                 <header>
-                  {% if not post.thumbnail %}
+                  {% if post.thumbnail %}
                     <img src="{{ post.thumbnail.src|resize(750, 450)}}" width="{{750}}" height="{{450}}" alt="{{ post.thumbnail.alt }}" />
                   {% else %}
                     <img src="http://placekitten.com/{{750}}/{{450}}" width="{{750}}" height="{{450}}" alt="No image found, displaying a kitten." />
