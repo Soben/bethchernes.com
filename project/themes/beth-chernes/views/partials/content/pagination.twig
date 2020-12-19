@@ -1,3 +1,4 @@
+{% if posts.pagination.pages %}
 <nav class="pagination" aria-label="Pagination Navigation">
 	<ul class="d-flex list-unstyled justify-content-center">
     {% if posts.pagination.prev %}
@@ -17,3 +18,4 @@
     {% endif %}
 	</ul>
 </nav>
+{% endif %}
