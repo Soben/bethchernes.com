@@ -45,6 +45,7 @@ function poutine_processModules( $postID )
         $args = [
           "posts_per_page" => 3,
           "post_type" => Poutine\BethChernes\PostTypes\Services::$slug,
+          "orderby" => "post__in",
         ];
         if ( $current["services"]["show_latest"] === false ) {
           $args["post__in"] = $current["services"]["items"];
@@ -54,7 +55,8 @@ function poutine_processModules( $postID )
       case "blog":
         $args = [
           "posts_per_page" => 3,
-          "post_type" => "post"
+          "post_type" => "post",
+          "orderby" => "post__in",
         ];
         if ( $current["posts"]["show_latest"] === false ) {
           $args["post__in"] = $current["posts"]["items"];
@@ -65,6 +67,7 @@ function poutine_processModules( $postID )
         $args = [
           "posts_per_page" => 3,
           "post_type" => Poutine\BethChernes\PostTypes\Testimonials::$slug,
+          "orderby" => "post__in",
         ];
         $args["post__in"] = $current["testimonials"]["items"];
         $current["displayItems"] = Timber\Timber::get_posts($args);
@@ -73,6 +76,7 @@ function poutine_processModules( $postID )
           $args = [
             "posts_per_page" => 3,
             "post_type" => Poutine\BethChernes\PostTypes\Portfolio::$slug,
+            "orderby" => "post__in",
           ];
           if ( $current["portfolio"]["show_latest"] === false ) {
             $args["post__in"] = $current["portfolio"]["items"];
