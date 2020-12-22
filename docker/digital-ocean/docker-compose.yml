@@ -1,0 +1,27 @@
+version: "3.1"
+
+services:
+  web:
+    image: wordpress:5.6.0
+    restart: always
+    expose:
+      - 80
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOSTS}
+      LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+      LETSENCRYPT_EMAIL: chrislagasse@protonmail.com
+      HTTPS_METHOD: redirect
+      WORDPRESS_DB_HOST: ${DB_HOST}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASS}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DEBUG: 1
+    volumes:
+      - "./project/uploads:/var/www/html/wp-content/uploads:rw"
+      - "./project/themes:/var/www/html/wp-content/themes:rw"
+      - "./project/plugins:/var/www/html/wp-content/plugins:rw"
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
