@@ -11538,6 +11538,32 @@ form textarea {
 .module-block.module--blog .col article footer {
   padding: 0.9375rem;
 }
+.module-block.module--testimonials .testimonial {
+  width: 100%;
+  /* full width */
+  margin: 0 3.125rem;
+  min-height: 6.25rem;
+}
+.module-block.module--testimonials .testimonial .testimonial__details {
+  background-color: #f9f9f9;
+  padding: 0.9375rem 3.125rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 85%;
+  margin: 0 auto;
+}
+.module-block.module--testimonials .testimonial .testimonial__details .testimonial__photo {
+  max-width: 8.75rem;
+  border: 0.3125rem solid rgba(190, 220, 223, 0.8);
+  border-radius: 50%;
+}
+.module-block.module--testimonials .flickity-button {
+  color: #bedcdf;
+}
+.module-block.module--testimonials .flickity-page-dots .dot {
+  background-color: #800020;
+}
 
 nav.pagination {
   border-top: 1px solid #d3d5d4;

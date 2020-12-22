@@ -447,7 +447,7 @@
                             "elements": "",
                             "min": 1,
                             "max": "",
-                            "return_format": "object"
+                            "return_format": "id"
                         }
                     ]
                 }
@@ -478,5 +478,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1608608337
+    "modified": 1608609386
 }

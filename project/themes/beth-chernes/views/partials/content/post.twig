@@ -4,7 +4,7 @@
 <article class="d-flex flex-column justify-content-between">
   <header>
     <a href="{{ details.link }}">
-      {% if not details.thumbnail %}
+      {% if details.thumbnail %}
         <img src="{{ details.thumbnail.src|resize(imageDimensions[0], imageDimensions[1])}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="{{ details.thumbnail.alt }}" />
       {% else %}
         <img src="https://placekitten.com/{{imageDimensions[0]}}/{{imageDimensions[1]}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="No image found, displaying a kitten." />

@@ -1,0 +1,29 @@
+<section class="module-block module--testimonials">
+  <div class="container">
+    {% include "partials/header.twig" with {
+      title: item.module_header,
+      subTitle: item.module_subheader
+    } %}
+    
+    <ul class="list-unstyled testimonial-list" data-flickity='{ "wrapAround": true }'>
+      {% for details in item.displayItems %}
+        <li class="testimonial">
+          <div class="testimonial__details">
+            {% if details.thumbnail %}
+              <img class="testimonial__photo" src="{{ details.thumbnail.src|resize(150, 150)}}" width="150" height="150" alt="{{ details.thumbnail.alt }}" />
+            {% else %}
+              <img class="testimonial__photo" src="https://placekitten.com/{{150}}/{{150}}" width="150" height="150" alt="No image found, displaying a kitten." />
+            {% endif %}
+            <div class="wysiwyg-content">
+              {{ details.content }}
+            </div>
+            <footer>
+              <h2>{{ details.get_field('name') }}</h2>
+              <h3>{{ details.get_field('title') }}</h3>
+            </footer>
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+  </div>
+</section>

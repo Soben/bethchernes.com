@@ -4,11 +4,30 @@
     "fields": [
         {
             "key": "field_5fe16847c9d28",
-            "label": "Citation",
-            "name": "citation",
+            "label": "Name",
+            "name": "name",
             "type": "text",
             "instructions": "The name that will be attributed to the quote\/testimonial",
             "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5fe175771f94e",
+            "label": "Title\/Position",
+            "name": "title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -39,5 +58,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1608607854
+    "modified": 1608611229
 }

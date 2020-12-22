@@ -37,4 +37,38 @@
       }
     }
   }
+
+  &.module--testimonials {
+    .testimonial {
+      width: 100%; /* full width */
+      margin: 0 remCalc(50px);
+      min-height: remCalc(100px);
+
+      .testimonial__details {
+        background-color: $off-white;
+        padding: remCalc(15px) remCalc(50px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 85%;
+        margin: 0 auto;
+
+        .testimonial__photo {
+          max-width: remCalc(140px);
+          border: remCalc(5px) solid rgba($highlight, 0.8);
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .flickity-button {
+      color: $highlight;
+    }
+
+    .flickity-page-dots {
+      .dot {
+        background-color: $accent;
+      }
+    }
+  }
 }
