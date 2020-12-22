@@ -5,6 +5,7 @@ namespace Poutine\BethChernes\PostTypes;
 class Portfolio extends PostType
 {
   static $slug = "portfolio";
+  static $taxonomySlug = "portfolio-group";
   static $singular = "Portfolio";
   static $plural = "Portfolio";
 
