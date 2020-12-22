@@ -8,12 +8,12 @@ services:
       - 3030:80
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: bc_site
-      WORDPRESS_DB_PASSWORD: 8KqmDshn!mtQekRrQ8B4kH
-      WORDPRESS_DB_NAME: wp_bethchernes
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
       WORDPRESS_DEBUG: 1
     volumes:
-      - "./docker/uploads:/var/www/html/wp-content/uploads:rw"
+      - "./project/uploads:/var/www/html/wp-content/uploads:rw"
       - "./project/themes:/var/www/html/wp-content/themes:rw"
       - "./project/plugins:/var/www/html/wp-content/plugins:rw"
 
@@ -23,9 +23,9 @@ services:
     ports:
       - 4306:3306
     environment:
-      MYSQL_DATABASE: wp_bethchernes
-      MYSQL_USER: bc_site
-      MYSQL_PASSWORD: 8KqmDshn!mtQekRrQ8B4kH
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_RANDOM_ROOT_PASSWORD: "1"
     volumes:
       - "./db:/var/lib/mysql"

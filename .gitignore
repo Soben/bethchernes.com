@@ -1,4 +1,7 @@
 /db
-/docker
+
+/docker-compose.yml
 
 .env
+/project/uploads/*
+!/project/uploads/.gitkeep
