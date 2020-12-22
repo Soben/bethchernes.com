@@ -39,7 +39,8 @@
                         "form": "Form",
                         "services": "Services",
                         "blog": "Posts",
-                        "portfolio": "Portfolio"
+                        "portfolio": "Portfolio",
+                        "testimonials": "Testimonial(s)"
                     },
                     "default_value": "rich-text",
                     "allow_null": 0,
@@ -142,7 +143,7 @@
                             "label": "Show Latest?",
                             "name": "show_latest",
                             "type": "true_false",
-                            "instructions": "If \"True\" will show newest Services. Otherwise, allowed to pick 3 top services.",
+                            "instructions": "If \"True\" will show the three newest Services. Otherwise, allowed to pick 3 top services.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -220,7 +221,7 @@
                             "label": "Show Latest?",
                             "name": "show_latest",
                             "type": "true_false",
-                            "instructions": "If \"True\" will show newest Posts. Otherwise, allowed to pick 3 top posts.",
+                            "instructions": "If \"True\" will show the three newest Posts. Otherwise, allowed to pick 3 top posts.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -298,7 +299,7 @@
                             "label": "Show Latest?",
                             "name": "show_latest",
                             "type": "true_false",
-                            "instructions": "If \"True\" will show newest Posts. Otherwise, allowed to pick 3 top posts.",
+                            "instructions": "If \"True\" will show the three newest Portfolio Items. Otherwise, allowed to pick 3 top Portfolio Items.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -399,6 +400,56 @@
                             "return_format": "id"
                         }
                     ]
+                },
+                {
+                    "key": "field_5fe1691bef137",
+                    "label": "Testimonials",
+                    "name": "testimonials",
+                    "type": "group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5fd3e6c4f8a2d",
+                                "operator": "==",
+                                "value": "testimonials"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5fe1694bef138",
+                            "label": "Testimonials",
+                            "name": "items",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "testimonials"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search"
+                            ],
+                            "elements": "",
+                            "min": 1,
+                            "max": "",
+                            "return_format": "object"
+                        }
+                    ]
                 }
             ]
         }
@@ -427,5 +478,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1607749118
+    "modified": 1608608337
 }

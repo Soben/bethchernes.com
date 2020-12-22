@@ -8,6 +8,7 @@ use Twig;
 class Theme extends Timber\Site {
  
 	static $THEME_NAME = "beth-chernes";
+	static $VERSION = "2020.12.21";
 	
 	/** Register */
 	public function __construct() {
@@ -73,12 +74,13 @@ class Theme extends Timber\Site {
 	}
 	
 	public function enqueue_styles() {
-		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", [], "20201204" );
+		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", [], self::$VERSION );
 	}
 	
 	public function enqueue_scripts() {
 		wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", [], "5.15.1" );
-		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", ["jquery"], "20201204", true );
+		wp_enqueue_script( "flickity", get_stylesheet_directory_uri() . "/assets/js/vendor/flickity.js", "2.2.1", true );
+		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", ["jquery", "flickity", "font-awesome"], self::$VERSION, true );
 	}
 	
 	public function register_acf_fields() {

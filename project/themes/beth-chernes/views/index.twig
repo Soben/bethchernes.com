@@ -9,7 +9,7 @@
       backgroundImage: post.meta("masthead_background")
     } %}
 
-    <div id="content" role="main" class="content-wrapper">
+    <main id="content" class="content-wrapper">
       
       {% if post.content %}
         <section class="content-block">      
@@ -23,7 +23,7 @@
 
       {% include "partials/modules.twig" %}
 
-    </div>
+      </main>
 
   {% endfor %}
 
