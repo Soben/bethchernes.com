@@ -5,3 +5,5 @@
 .env
 /project/uploads/*
 !/project/uploads/.gitkeep
+
+node_modules
