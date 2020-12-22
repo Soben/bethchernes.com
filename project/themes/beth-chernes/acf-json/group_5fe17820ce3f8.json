@@ -1,0 +1,67 @@
+{
+    "key": "group_5fe17820ce3f8",
+    "title": "Portfolio Archive",
+    "fields": [
+        {
+            "key": "field_5fe1782cace05",
+            "label": "Portfolio Taxonomy Display",
+            "name": "portfolio_ordering",
+            "type": "repeater",
+            "instructions": "You can add any number of Groups for Portfolios, but they won't show up on the website unless you specify them here.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_5fe1786bace06",
+            "min": 1,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Group",
+            "sub_fields": [
+                {
+                    "key": "field_5fe1786bace06",
+                    "label": "Taxonomy Term",
+                    "name": "term",
+                    "type": "taxonomy",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "taxonomy": "portfolio-group",
+                    "field_type": "select",
+                    "allow_null": 0,
+                    "add_term": 0,
+                    "save_terms": 0,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "multiple": 0
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1608612073
+}
