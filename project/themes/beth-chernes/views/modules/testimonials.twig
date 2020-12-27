@@ -5,23 +5,23 @@
       subTitle: item.module_subheader
     } %}
     
-    <ul class="list-unstyled testimonial-list" data-flickity='{ "wrapAround": true }'>
+    <ul class="list-unstyled testimonial-list" data-flickity='{ "wrapAround": true, "imagesLoaded": true, "lazyLoad": true, "autoPlay": 5000 }'>
       {% for details in item.displayItems %}
         <li class="testimonial">
-          <div class="testimonial__details">
-            {% if details.thumbnail %}
-              <img class="testimonial__photo" src="{{ details.thumbnail.src|resize(150, 150)}}" width="150" height="150" alt="{{ details.thumbnail.alt }}" />
-            {% else %}
-              <img class="testimonial__photo" src="https://placekitten.com/{{150}}/{{150}}" width="150" height="150" alt="No image found, displaying a kitten." />
-            {% endif %}
-            <div class="wysiwyg-content">
+          <figure class="testimonial__details quote">
+              {% if details.thumbnail %}
+                <img class="testimonial__photo" src="{{ details.thumbnail.src|resize(150, 150)}}" width="150" height="150" alt="{{ details.thumbnail.alt }}" />
+              {% else %}
+                <img class="testimonial__photo" src="https://placekitten.com/{{150}}/{{150}}" width="150" height="150" alt="No image found, displaying a kitten." />
+              {% endif %}
+            <blockquote class="wysiwyg-content">
               {{ details.content }}
-            </div>
-            <footer>
-              <h2>{{ details.get_field('name') }}</h2>
-              <h3>{{ details.get_field('title') }}</h3>
-            </footer>
-          </div>
+            </blockquote>
+            <figcaption>
+              <cite>{{ details.get_field('name') }}</cite>
+              <p class="testimonial__author-title">{{ details.get_field('title') }}</p>
+            </figcaption>
+          </figure>
         </li>
       {% endfor %}
       </ul>
