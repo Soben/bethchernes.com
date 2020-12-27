@@ -14,10 +14,10 @@
               {% else %}
                 <img class="testimonial__photo" src="https://placekitten.com/{{150}}/{{150}}" width="150" height="150" alt="No image found, displaying a kitten." />
               {% endif %}
-            <blockquote class="wysiwyg-content">
+            <blockquote class="wysiwyg-content testimonial__quote">
               {{ details.content }}
             </blockquote>
-            <figcaption>
+            <figcaption class="testimonial__author">
               <cite>{{ details.get_field('name') }}</cite>
               <p class="testimonial__author-title">{{ details.get_field('title') }}</p>
             </figcaption>

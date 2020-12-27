@@ -11538,31 +11538,53 @@ form textarea {
 .module-block.module--blog .col article footer {
   padding: 0.9375rem;
 }
-.module-block.module--testimonials .testimonial {
+.module-block.module--testimonials .testimonial-list .testimonial {
   width: 100%;
   /* full width */
-  margin: 0 3.125rem;
   min-height: 6.25rem;
 }
-.module-block.module--testimonials .testimonial .testimonial__details {
+.module-block.module--testimonials .testimonial-list .testimonial .testimonial__details {
   background-color: #f9f9f9;
   padding: 0.9375rem 3.125rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
+  font-size: 1.25rem;
+  margin: 1.25rem auto;
   max-width: 85%;
-  margin: 0 auto;
 }
-.module-block.module--testimonials .testimonial .testimonial__details .testimonial__photo {
+.module-block.module--testimonials .testimonial-list .testimonial .testimonial__details .testimonial__photo {
   max-width: 8.75rem;
   border: 0.3125rem solid rgba(190, 220, 223, 0.8);
   border-radius: 50%;
+  margin-bottom: 1.25rem;
 }
-.module-block.module--testimonials .flickity-button {
+.module-block.module--testimonials .testimonial-list .testimonial .testimonial__details .testimonial__quote {
+  font-style: italic;
+}
+.module-block.module--testimonials .testimonial-list .testimonial .testimonial__details .testimonial__author {
+  font-size: 1rem;
+}
+.module-block.module--testimonials .testimonial-list .testimonial .testimonial__details .testimonial__author cite {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 1.5rem;
+}
+.module-block.module--testimonials .testimonial-list .testimonial .testimonial__details .testimonial__author .testimonial__author-title {
+  color: #4a4d4b;
+}
+@media (min-width: 960px) {
+  .module-block.module--testimonials .testimonial-list .testimonial .testimonial__details {
+    max-width: 75%;
+  }
+}
+.module-block.module--testimonials .testimonial-list.flickity-enabled .flickity-button {
   color: #bedcdf;
 }
-.module-block.module--testimonials .flickity-page-dots .dot {
+.module-block.module--testimonials .testimonial-list.flickity-enabled .flickity-page-dots .dot {
   background-color: #800020;
+}
+.module-block.module--testimonials .testimonial-list.flickity-enabled .testimonial .testimonial__details {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 nav.pagination {
