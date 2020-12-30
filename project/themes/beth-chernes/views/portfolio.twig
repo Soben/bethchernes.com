@@ -25,7 +25,7 @@
                             {% include "partials/content/post.twig" with {
                               'details' : entry,
                               'linkTarget' : '_blank',
-                              'linkURL' : entry.get_field('portfolio_url'),
+                              'linkOverride' : entry.get_field('portfolio_url'),
                             } %}
                           </li>
                         {% endfor %}

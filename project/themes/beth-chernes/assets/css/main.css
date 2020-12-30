@@ -11761,12 +11761,15 @@ body.single-post .column-main footer.meta {
   margin-top: 1.25rem;
 }
 
-.post-type-archive-portfolio .section__title {
+.post-type-archive-portfolio #content .section-title {
+  margin-bottom: 0;
+}
+.post-type-archive-portfolio #content .section-title .section-title__primary {
   border-bottom: 2px solid #bedcdf;
   padding-bottom: 0.5rem;
-  margin-bottom: 1.375rem;
+  text-align: left;
 }
-.post-type-archive-portfolio .portfolio-entries {
+.post-type-archive-portfolio #content .portfolio-entries {
   margin: 0 1rem;
 }
 
