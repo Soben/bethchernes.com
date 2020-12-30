@@ -22,6 +22,7 @@ foreach ($taxonomiesToDisplay as $current) {
         'terms'    => $currentTermDetails->ID,
       ],
     ],
+    'posts_per_page' => 6,
   ];;
 
   array_push($portfolioItemsByTerm, [
