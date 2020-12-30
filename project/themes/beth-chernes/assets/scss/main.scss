@@ -48,6 +48,7 @@ img {
 }
 
 #content {
+  scroll-margin-top: remCalc(100px);
   padding-top: remCalc(60px);
 
   section {

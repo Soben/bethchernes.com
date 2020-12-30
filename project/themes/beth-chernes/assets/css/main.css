@@ -11227,6 +11227,7 @@ img {
 }
 
 #content {
+  scroll-margin-top: 6.25rem;
   padding-top: 3.75rem;
 }
 #content section {
