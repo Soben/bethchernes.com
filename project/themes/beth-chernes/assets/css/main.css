@@ -11227,6 +11227,7 @@ img {
 }
 
 #content {
+  scroll-margin-top: 6.25rem;
   padding-top: 3.75rem;
 }
 #content section {
@@ -11425,6 +11426,33 @@ form textarea {
   margin-top: 1.875rem;
 }
 
+.article-card {
+  background-color: #f9f9f9;
+  transition: background-color 0.2s;
+}
+.article-card:hover {
+  background-color: rgba(190, 220, 223, 0.8);
+}
+.article-card:hover img {
+  transform: scale(1.02);
+}
+.article-card h3 a {
+  text-decoration: none;
+  color: #000;
+}
+.article-card img {
+  transition: transform 0.2s;
+  width: 100%;
+  height: auto;
+}
+.article-card .post-details {
+  padding: 0.9375rem;
+  flex-basis: 100%;
+}
+.article-card footer {
+  padding: 0.9375rem;
+}
+
 .content-comments {
   margin-top: 1.25rem;
   padding-top: 0.625rem;
@@ -11512,32 +11540,6 @@ form textarea {
   text-transform: lowercase;
 }
 
-.module-block.module--blog .col article {
-  background-color: #f9f9f9;
-  transition: background-color 0.2s;
-}
-.module-block.module--blog .col article:hover {
-  background-color: rgba(190, 220, 223, 0.8);
-}
-.module-block.module--blog .col article:hover img {
-  transform: scale(1.02);
-}
-.module-block.module--blog .col article h3 a {
-  text-decoration: none;
-  color: #000;
-}
-.module-block.module--blog .col article img {
-  transition: transform 0.2s;
-  width: 100%;
-  height: auto;
-}
-.module-block.module--blog .col article .post-details {
-  padding: 0.9375rem;
-  flex-basis: 100%;
-}
-.module-block.module--blog .col article footer {
-  padding: 0.9375rem;
-}
 .module-block.module--testimonials .testimonial-list .testimonial {
   width: 100%;
   /* full width */
@@ -11757,6 +11759,18 @@ body.single-post .column-main footer.meta {
   border-top: 2px solid #ebebeb;
   padding-top: 0.625rem;
   margin-top: 1.25rem;
+}
+
+.post-type-archive-portfolio #content .section-title {
+  margin-bottom: 0;
+}
+.post-type-archive-portfolio #content .section-title .section-title__primary {
+  border-bottom: 2px solid #bedcdf;
+  padding-bottom: 0.5rem;
+  text-align: left;
+}
+.post-type-archive-portfolio #content .portfolio-entries {
+  margin: 0 1rem;
 }
 
 /*# sourceMappingURL=main.css.map */

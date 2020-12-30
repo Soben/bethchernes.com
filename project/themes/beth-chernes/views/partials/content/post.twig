@@ -1,9 +1,20 @@
 {% if not imageDimensions %}
   {% set imageDimensions = [ 370, 247 ]%}
 {% endif %}
-<article class="d-flex flex-column justify-content-between">
+
+{% if linkOverride %}
+  {% set linkURL = linkOverride %}
+{% else %}
+  {% set linkURL = details.link  %}
+{% endif %}
+
+{% if not linkTarget %}
+  {% set linkTarget = "_self" %}
+{% endif %}
+
+<article class="d-flex flex-column justify-content-between article-card">
   <header>
-    <a href="{{ details.link }}">
+    <a href="{{ linkURL }}" target="{{ linkTarget }}">
       {% if details.thumbnail %}
         <img src="{{ details.thumbnail.src|resize(imageDimensions[0], imageDimensions[1])}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="{{ details.thumbnail.alt }}" />
       {% else %}
@@ -16,7 +27,7 @@
     {% endif %}
   </header>
   <div class="post-details">
-    <h3><a href="{{ details.link }}">{{ details.title }}</a></h3>
+    <h3><a href="{{ linkURL }}" target="{{ linkTarget }}">{{ details.title }}</a></h3>
     <div class="wysiwyg-content">
       {% if details.post_excerpt %}
         {{ details.post_excerpt }}
@@ -25,7 +36,9 @@
       {% endif %}
     </div>
   </div>
+  {% if showReadMore == true %}
   <footer>
-    <a href="{{ details.link }}" aria-label="Read more about {{details.title}}">Read More</a>
+    <a href="{{ linkURL }}" target="{{ linkTarget }}" aria-label="Read more about {{details.title}}">Read More</a>
   </footer>
+  {% endif %}
 </article>

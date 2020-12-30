@@ -1,0 +1,17 @@
+.post-type-archive-portfolio {
+  #content {
+    .section-title {
+      margin-bottom: 0;
+      
+      .section-title__primary {
+        border-bottom: 2px solid $highlight;
+        padding-bottom: remCalc(8px);
+        text-align: left;
+      }
+    }
+
+    .portfolio-entries {
+      margin: 0 remCalc(16px);
+    }
+  }
+}
