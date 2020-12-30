@@ -8,7 +8,9 @@
     <ul class="row align-items-stretch list-unstyled">
       {% for details in item.displayItems %}
       <li class="d-flex col col-12 col-md-6 col-lg-4 mt-4">
-        {% include "partials/content/post.twig" %}
+        {% include "partials/content/post.twig" with {
+          'showReadMore': true
+        } %}
       </li>
       {% endfor %}
     </ul>
