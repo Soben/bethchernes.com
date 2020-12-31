@@ -26,6 +26,8 @@ I will also be hopefully taking the next step of converting this to headless, in
 Currently, the site is using [Docker](https://docker.com) for both local development and (hopefully) production.
 
 1. Checkout Repo
+1. Copy `.env.sample` as `.env` and add database credentials.
+  * If you're using an nginx proxy, add a `VIRTUAL_HOSTS` value 
 1. Copy `docker/local/docker-compose.yml` to the root of the project. Make necessary changes.
 1. Run `docker-compose up` and the site will (default) be accessible at http://localhost:3030
 
