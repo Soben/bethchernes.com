@@ -1,0 +1,30 @@
+{% if not imageDimensions %}
+  {% set imageDimensions = [ 240, 160 ]%}
+{% endif %}
+
+<section class="module-block module--gallery">
+  <div class="container">
+    {% include "partials/header.twig" with {
+      title: item.module_header,
+      subTitle: item.module_subheader
+    } %}
+
+    <ul class="row list-unstyled">
+      {% for details in item.gallery.images %}
+        {% set image = Image(details.image) %}
+        <li class="d-flex col col-6 col-md-4 col-lg-3 col-xl-2 mt-4">
+          {% if details.link %}
+            <a href="{{ details.link }}" target="_blank">
+          {% endif %}
+
+            <img src="{{ image.src|resize(imageDimensions[0], imageDimensions[1])}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="{{ image.alt }}" />
+          
+            {% if details.link %}
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+
+  </div>
+</section>
