@@ -637,26 +637,6 @@
                                     "maxlength": ""
                                 }
                             ]
-                        },
-                        {
-                            "key": "field_5ff3c27640a59",
-                            "label": "Columns",
-                            "name": "columns",
-                            "type": "range",
-                            "instructions": "Responsiveness will take over at smaller dimensions",
-                            "required": 1,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": 4,
-                            "min": 2,
-                            "max": 6,
-                            "step": "",
-                            "prepend": "",
-                            "append": ""
                         }
                     ]
                 }
