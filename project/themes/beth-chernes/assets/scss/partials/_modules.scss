@@ -1,5 +1,41 @@
 .module-block {
 
+  &.module--cta {
+    background-color: $highlight;
+    text-align: center;
+    color: $blue-gray;
+    padding: remCalc(60px) 0;
+    font-size: remCalc(30px);
+
+    .container {
+
+      .cta--content {
+        flex-basis: 40%;
+      }
+
+      .cta--button {
+        .btn {
+          font-size: remCalc(25px);
+          background-color: $off-white;
+          color: $blue-gray;
+
+          &:focus,
+          &:hover {
+            background-color: $blue-gray;
+            color: $off-white;
+          }
+        }
+      }
+
+      @media (min-width: 925px) {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
+  }
+
   &.module--testimonials {
     
     .testimonial-list {
