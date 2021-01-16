@@ -1,5 +1,48 @@
 .module-block {
 
+  &.module--columns {
+
+    .column--card {
+      width: 100%;
+      text-align: center;
+      margin-bottom: remCalc(30px);
+      transition: background-color .2s, color .2s;
+
+      header {
+        a {
+          border-radius: 50%;
+          width: remCalc(200px);
+          height: remCalc(200px);
+          margin: 0 auto remCalc(30px); 
+          background-color: $highlight;
+          color: $blue-gray;
+          
+          svg {
+            width: 65%;
+            height: 65%;
+          }
+        }
+      }
+
+      .column-details {
+        flex-basis: 100%;
+      }
+
+      footer {
+        justify-self: flex-end;
+      }
+
+      &:hover {
+        header {
+          a {
+            background-color: $blue-gray;
+            color: $highlight;
+          }
+        }
+      }
+    }
+  }
+
   &.module--cta {
     background-color: $highlight;
     text-align: center;
