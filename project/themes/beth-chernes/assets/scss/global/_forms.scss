@@ -17,6 +17,14 @@
     .wpcf7-submit {
       @extend .btn;
     }
+
+    .ajax-loader {
+      display: none;
+
+      &.is-active {
+        display: inline-block;
+      }
+    }
   }
 }
 

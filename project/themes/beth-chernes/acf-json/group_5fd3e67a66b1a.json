@@ -35,14 +35,15 @@
                         "id": ""
                     },
                     "choices": {
-                        "rich-text": "Text Content",
-                        "form": "Form",
-                        "services": "Services",
                         "blog": "Posts",
-                        "portfolio": "Portfolio",
-                        "testimonials": "Testimonial(s)",
+                        "columns": "Columns w\/ Icons",
                         "cta": "Call to Action",
-                        "gallery": "Image Gallery"
+                        "form": "Form",
+                        "gallery": "Image Gallery",
+                        "portfolio": "Portfolio",
+                        "rich-text": "Text Content",
+                        "services": "Services",
+                        "testimonials": "Testimonial(s)"
                     },
                     "default_value": "rich-text",
                     "allow_null": 0,
@@ -496,7 +497,7 @@
                             "key": "field_5ff3c1ac40a54",
                             "label": "Content",
                             "name": "content",
-                            "type": "text",
+                            "type": "wysiwyg",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -506,10 +507,10 @@
                                 "id": ""
                             },
                             "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
+                            "tabs": "visual",
+                            "toolbar": "basic",
+                            "media_upload": 0,
+                            "delay": 0
                         },
                         {
                             "key": "field_5ff3c1c940a55",
@@ -637,6 +638,184 @@
                                     "maxlength": ""
                                 }
                             ]
+                        },
+                        {
+                            "key": "field_5ff3c27640a59",
+                            "label": "Columns",
+                            "name": "columns",
+                            "type": "range",
+                            "instructions": "Responsiveness will take over at smaller dimensions",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 4,
+                            "min": 2,
+                            "max": 6,
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ]
+                },
+                {
+                    "key": "field_60025e2b2d41d",
+                    "label": "Columns w\/ Icons",
+                    "name": "columns",
+                    "type": "group",
+                    "instructions": "Supports 2, 3, or 4 column layouts",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_5fd3e6c4f8a2d",
+                                "operator": "==",
+                                "value": "columns"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_60025e412d41e",
+                            "label": "Items",
+                            "name": "items",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "field_60025e792d41f",
+                            "min": 2,
+                            "max": 4,
+                            "layout": "block",
+                            "button_label": "Add Column",
+                            "sub_fields": [
+                                {
+                                    "key": "field_60025e792d41f",
+                                    "label": "Icon",
+                                    "name": "icon",
+                                    "type": "text",
+                                    "instructions": "Choose icons from https:\/\/fontawesome.com\/icons\/ and paste the icon class here",
+                                    "required": 1,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "fab fa-pied-piper-square",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
+                                },
+                                {
+                                    "key": "field_6002604f80f70",
+                                    "label": "Title",
+                                    "name": "title",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
+                                },
+                                {
+                                    "key": "field_60025f0f2d420",
+                                    "label": "Content",
+                                    "name": "content",
+                                    "type": "wysiwyg",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "tabs": "all",
+                                    "toolbar": "basic",
+                                    "media_upload": 0,
+                                    "delay": 0
+                                },
+                                {
+                                    "key": "field_60025f4d2d421",
+                                    "label": "Call to Action",
+                                    "name": "call_to_action",
+                                    "type": "group",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "layout": "block",
+                                    "sub_fields": [
+                                        {
+                                            "key": "field_60025f622d422",
+                                            "label": "Link Text",
+                                            "name": "link_text",
+                                            "type": "text",
+                                            "instructions": "",
+                                            "required": 1,
+                                            "conditional_logic": 0,
+                                            "wrapper": {
+                                                "width": "",
+                                                "class": "",
+                                                "id": ""
+                                            },
+                                            "default_value": "Learn More",
+                                            "placeholder": "",
+                                            "prepend": "",
+                                            "append": "",
+                                            "maxlength": ""
+                                        },
+                                        {
+                                            "key": "field_60025f792d423",
+                                            "label": "Link URL",
+                                            "name": "link_url",
+                                            "type": "text",
+                                            "instructions": "Absolute or Relative URL",
+                                            "required": 1,
+                                            "conditional_logic": 0,
+                                            "wrapper": {
+                                                "width": "",
+                                                "class": "",
+                                                "id": ""
+                                            },
+                                            "default_value": "",
+                                            "placeholder": "",
+                                            "prepend": "",
+                                            "append": "",
+                                            "maxlength": ""
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }
@@ -667,5 +846,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1609810965
+    "modified": 1610768494
 }

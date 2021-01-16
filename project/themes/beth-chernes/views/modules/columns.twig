@@ -1,0 +1,31 @@
+<section class="module-block module--columns">
+  <div class="container">
+    {% include "partials/header.twig" with {
+      title: item.module_header,
+      subTitle: item.module_subheader
+    } %}
+
+    <ul class="row align-items-stretch justify-content-center list-unstyled">
+      {% for details in item.displayItems %}
+      <li class="d-flex d-flex col col-12 col-md-6 col-lg-3">
+        <div class="d-flex flex-column justify-content-between column--card">
+          <header>
+            <a class="d-flex align-items-center justify-content-center" href="{{ details.call_to_action.link_url}}">
+              <i class="{{ details.icon }}"></i>
+            </a>
+          </header>
+          <div class="column-details">
+            <h3>{{ details.title }}</h3>
+            <div class="wysiwyg-content">
+              {{ details.content }}
+            </div>
+          </div>
+          <footer>
+            <a class="btn" href="{{ details.call_to_action.link_url }}">{{ details.call_to_action.link_text }}</a>
+          </footer>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
