@@ -71,6 +71,7 @@ class Theme extends Timber\Site {
 
 	public function register_menus() {
 		register_nav_menu( "top_menu", "Primary Menu" );
+		register_nav_menu( "footer_menu", "Footer Menu" );
 	}
 	
 	public function enqueue_styles() {
