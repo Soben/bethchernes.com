@@ -11254,7 +11254,40 @@ img {
   background-color: #4a4d4b;
   color: #fff;
   text-align: center;
-  padding: 30px 0;
+  padding: 1.875rem 0 1.5625rem;
+}
+.layout-footer nav.footer a,
+.layout-footer nav.footer a:visited {
+  font-weight: normal;
+  color: #fff;
+  text-decoration: underline;
+}
+.layout-footer nav.footer a:hover, .layout-footer nav.footer a:focus,
+.layout-footer nav.footer a:visited:hover,
+.layout-footer nav.footer a:visited:focus {
+  color: #bedcdf;
+  text-decoration: none;
+}
+.layout-footer nav.footer ul {
+  flex-direction: column;
+  justify-content: center;
+}
+.layout-footer nav.footer ul li {
+  margin-bottom: 0.3125rem;
+}
+@media (min-width: 764px) {
+  .layout-footer nav.footer ul {
+    flex-direction: row;
+  }
+  .layout-footer nav.footer ul li {
+    border-right: 2px solid #d3d5d4;
+    padding-right: 0.625rem;
+    margin-left: 0.625rem;
+  }
+  .layout-footer nav.footer ul li:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
 }
 
 .wpcf7 form.wpcf7-form .wpcf7-not-valid-tip {

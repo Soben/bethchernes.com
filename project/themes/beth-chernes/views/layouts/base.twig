@@ -52,7 +52,16 @@
     
     <footer class="layout-footer">
 			<div class="wrapper">
-				&copy; {{ "now"|date('Y') }} {{ copyright }}
+				<nav class="footer container">
+					<ul class="row list-unstyled">
+						<li>&copy; {{ "now"|date('Y') }} {{ copyright }}</li>
+						{% for item in menu_footer.items %}
+							<li class="{{ item.classes|join(' ') }}">
+								<a href="{{ item.link }}">{{ item.title }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</nav>
 			</div>
     </footer>
 

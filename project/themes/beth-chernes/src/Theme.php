@@ -71,6 +71,7 @@ class Theme extends Timber\Site {
 
 	public function register_menus() {
 		register_nav_menu( "top_menu", "Primary Menu" );
+		register_nav_menu( "footer_menu", "Footer Menu" );
 	}
 	
 	public function enqueue_styles() {
@@ -114,6 +115,7 @@ class Theme extends Timber\Site {
 	 */
 	public function add_to_context( $context ) {
 		$context["menu"] = new Timber\Menu( "top_menu" );
+		$context["menu_footer"] = new Timber\Menu( "footer_menu" );
 		$context["logo"] = new Timber\Image( get_field("logo", "options") );
 		$context["copyright"] = get_field("copyright", "options") ?: get_bloginfo("name");
 		$context["site"]  = $this;
