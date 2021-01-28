@@ -21,7 +21,7 @@
             </div>
           </div>
           <footer>
-            <a class="btn" href="{{ details.call_to_action.link_url }}" aria-label="{{ details.call_to_action.arial_label }}">{{ details.call_to_action.link_text }}</a>
+            <a class="btn" href="{{ details.call_to_action.link_url }}" aria-label="{{ details.call_to_action.arial_label|esc_attr }}">{{ details.call_to_action.link_text }}</a>
           </footer>
         </div>
       </li>

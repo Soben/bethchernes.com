@@ -38,7 +38,7 @@
   </div>
   {% if showReadMore == true %}
   <footer>
-    <a href="{{ linkURL }}" target="{{ linkTarget }}" aria-label="Read more about {{details.title}}">Read More</a>
+    <a href="{{ linkURL }}" target="{{ linkTarget }}" aria-label="Read more about {{details.title|esc_attr}}">Read More</a>
   </footer>
   {% endif %}
 </article>
