@@ -1,7 +1,7 @@
 <div class="social-links d-flex justify-content-center align-items-center">
   {% for current in links %}
     {% if current.link %}
-      <a href="{{ current.link }}" target="_blank" rel="nofollow" aria-label="{{ current.name }}"><i class="{{ current.icon }}"></i></a>
+      <a href="{{ current.link }}" target="_blank" rel="nofollow" aria-label="View {{ site.name }} on {{ current.name }}"><i class="{{ current.icon }}"></i></a>
     {% endif %}
   {% endfor %}
 </div>

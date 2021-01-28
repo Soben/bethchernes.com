@@ -14,7 +14,7 @@
 
 <article class="d-flex flex-column justify-content-between article-card">
   <header>
-    <a href="{{ linkURL }}" target="{{ linkTarget }}">
+    <a href="{{ linkURL }}" target="{{ linkTarget }}" aria-label="View {{ details.title|esc_attr }}">
       {% if details.thumbnail %}
         <img src="{{ details.thumbnail.src|resize(imageDimensions[0], imageDimensions[1])}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="{{ details.thumbnail.alt }}" loading="lazy" />
       {% else %}

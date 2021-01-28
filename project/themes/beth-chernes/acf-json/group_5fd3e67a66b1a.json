@@ -795,6 +795,25 @@
                                             "maxlength": ""
                                         },
                                         {
+                                            "key": "field_60025f622d424",
+                                            "label": "Aria Label",
+                                            "name": "aria_label",
+                                            "type": "text",
+                                            "instructions": "Hidden from design, but used for accessibility",
+                                            "required": 1,
+                                            "conditional_logic": 0,
+                                            "wrapper": {
+                                                "width": "",
+                                                "class": "",
+                                                "id": ""
+                                            },
+                                            "default_value": "",
+                                            "placeholder": "Learn more about X",
+                                            "prepend": "",
+                                            "append": "",
+                                            "maxlength": ""
+                                        },
+                                        {
                                             "key": "field_60025f792d423",
                                             "label": "Link URL",
                                             "name": "link_url",
