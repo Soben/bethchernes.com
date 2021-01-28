@@ -10,9 +10,9 @@
         <li class="testimonial">
           <figure class="testimonial__details quote">
               {% if details.thumbnail %}
-                <img class="testimonial__photo" src="{{ details.thumbnail.src|resize(150, 150)}}" width="150" height="150" alt="{{ details.thumbnail.alt }}" />
+                <img class="testimonial__photo" src="{{ details.thumbnail.src|resize(150, 150)}}" width="150" height="150" alt="{{ details.thumbnail.alt }}" loading="lazy" />
               {% else %}
-                <img class="testimonial__photo" src="https://placekitten.com/{{150}}/{{150}}" width="150" height="150" alt="No image found, displaying a kitten." />
+                <img class="testimonial__photo" src="https://placekitten.com/{{150}}/{{150}}" width="150" height="150" alt="No image found, displaying a kitten." loading="lazy" />
               {% endif %}
             <blockquote class="wysiwyg-content testimonial__quote">
               {{ details.content }}

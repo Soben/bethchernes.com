@@ -16,9 +16,9 @@
   <header>
     <a href="{{ linkURL }}" target="{{ linkTarget }}">
       {% if details.thumbnail %}
-        <img src="{{ details.thumbnail.src|resize(imageDimensions[0], imageDimensions[1])}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="{{ details.thumbnail.alt }}" />
+        <img src="{{ details.thumbnail.src|resize(imageDimensions[0], imageDimensions[1])}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="{{ details.thumbnail.alt }}" loading="lazy" />
       {% else %}
-        <img src="https://placekitten.com/{{imageDimensions[0]}}/{{imageDimensions[1]}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="No image found, displaying a kitten." />
+        <img src="https://placekitten.com/{{imageDimensions[0]}}/{{imageDimensions[1]}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="No image found, displaying a kitten." loading="lazy" />
       {% endif %}
     </a>
 
