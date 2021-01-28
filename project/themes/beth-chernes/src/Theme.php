@@ -16,12 +16,12 @@ class Theme extends Timber\Site {
 		add_filter( "timber/context", [$this, "add_to_context"] );
 		add_filter( "timber/twig", [$this, "add_to_twig"] );
 		add_filter( "get_the_archive_title", [$this, "cleanup_archive_title"] );
-		add_filter( 'style_loader_tag', [$this, 'preload_css'], 10, 4 );
+		// add_filter( "style_loader_tag", [$this, "preload_css"], 10, 4 );
 
-		if (! defined('WP_LOCAL_DEV') || ! WP_LOCAL_DEV) {
+		if (! defined("WP_LOCAL_DEV") || ! WP_LOCAL_DEV) {
 			// Hide ACF Admin Panel on Staging/Production
-			add_filter('acf/settings/show_admin', '__return_false');
-			add_filter('acf/settings/capability', function () { return 'do_not_allow'; });
+			add_filter("acf/settings/show_admin", "__return_false");
+			add_filter("acf/settings/capability", function () { return "do_not_allow"; });
 		}
 
 		// Actions
