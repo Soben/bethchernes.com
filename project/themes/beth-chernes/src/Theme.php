@@ -32,12 +32,19 @@ class Theme extends Timber\Site {
 		add_action( "init", [$this, "register_acf_fields"] );
 		add_action( "init", [$this, "register_shortcodes"] );
 		add_action( "widgets_init", [$this, "register_sidebars"] );
+		add_action( "wp_enqueue_scripts", [$this, "move_jquery"], 99 );
 		add_action( "wp_enqueue_scripts", [$this, "enqueue_styles"] );
 		add_action( "wp_enqueue_scripts", [$this, "enqueue_scripts"] );
 		add_action( "after_setup_theme", [$this, "register_menus"] );
 		add_action( "wp_print_scripts", [$this, "include_print_scripts"] );
 
 		parent::__construct();
+	}
+
+	public function move_jquery () {
+    wp_scripts()->add_data( "jquery", "group", 1 );
+    wp_scripts()->add_data( "jquery-core", "group", 1 );
+    wp_scripts()->add_data( "jquery-migrate", "group", 1 );
 	}
 
 	public function disable_emoji ()
