@@ -1,5 +1,12 @@
 .module-block {
 
+  &.module--text {
+    .wysiwyg-content {
+      max-width: remCalc(900px);
+      margin: 0 auto;
+    }
+  }
+
   &.module--columns {
 
     .column--card {

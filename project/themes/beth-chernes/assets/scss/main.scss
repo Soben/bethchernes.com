@@ -64,6 +64,15 @@ img {
     }
   }
 
+  .content-block {
+    &.content-block--main {
+      .wysiwyg-content {
+        max-width: remCalc(900px);
+        margin: 0 auto;
+      }
+    }
+  }
+
   .column-sidebar {
     a,
     a:visited {

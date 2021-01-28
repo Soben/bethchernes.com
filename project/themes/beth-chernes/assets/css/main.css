@@ -11241,6 +11241,10 @@ img {
   text-transform: uppercase;
   font-weight: bold;
 }
+#content .content-block.content-block--main .wysiwyg-content {
+  max-width: 56.25rem;
+  margin: 0 auto;
+}
 #content .column-sidebar a,
 #content .column-sidebar a:visited {
   color: #555b6e;
@@ -11580,6 +11584,10 @@ form textarea {
   text-transform: lowercase;
 }
 
+.module-block.module--text .wysiwyg-content {
+  max-width: 56.25rem;
+  margin: 0 auto;
+}
 .module-block.module--columns .column--card {
   width: 100%;
   text-align: center;
