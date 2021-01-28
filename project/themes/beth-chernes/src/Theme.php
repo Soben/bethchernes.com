@@ -15,6 +15,13 @@ class Theme extends Timber\Site {
 		// Filters
 		add_filter( "timber/context", [$this, "add_to_context"] );
 		add_filter( "timber/twig", [$this, "add_to_twig"] );
+		add_filter( "get_the_archive_title", [$this, "cleanup_archive_title"] );
+
+		if (! defined('WP_LOCAL_DEV') || ! WP_LOCAL_DEV) {
+			// Hide ACF Admin Panel on Staging/Production
+			add_filter('acf/settings/show_admin', '__return_false');
+			add_filter('acf/settings/capability', function () { return 'do_not_allow'; });
+		}
 
 		// Actions
 		add_action( "after_setup_theme", [$this, "theme_supports"] );
@@ -27,7 +34,6 @@ class Theme extends Timber\Site {
 		add_action( "wp_enqueue_scripts", [$this, "enqueue_scripts"] );
 		add_action( "after_setup_theme", [$this, "register_menus"] );
 		add_action( "wp_print_scripts", [$this, "include_print_scripts"] );
-		add_filter( "get_the_archive_title", [$this, "cleanup_archive_title"] );
 
 		parent::__construct();
 	}
@@ -146,6 +152,9 @@ class Theme extends Timber\Site {
 	public function add_to_twig( $twig ) {
 		// $twig->addExtension( new Twig\Extension\StringLoaderExtension() );
 		// $twig->addFilter( new Twig\TwigFilter( "myfoo", [$this, "myfoo"] ) );
+		$twig->addFilter( new Timber\Twig_Filter('esc_attr', function($title) {
+			return esc_attr( $title );
+		}));
 		return $twig;
 	}
 }
