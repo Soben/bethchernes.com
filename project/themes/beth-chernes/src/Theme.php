@@ -8,7 +8,7 @@ use Twig;
 class Theme extends Timber\Site {
  
 	static $THEME_NAME = "beth-chernes";
-	static $VERSION = "2021.01.27";
+	static $VERSION = "2021.01.28";
 	
 	/** Register */
 	public function __construct() {
@@ -16,6 +16,7 @@ class Theme extends Timber\Site {
 		add_filter( "timber/context", [$this, "add_to_context"] );
 		add_filter( "timber/twig", [$this, "add_to_twig"] );
 		add_filter( "get_the_archive_title", [$this, "cleanup_archive_title"] );
+		add_filter( 'style_loader_tag', [$this, 'preload_css'], 10, 4 );
 
 		if (! defined('WP_LOCAL_DEV') || ! WP_LOCAL_DEV) {
 			// Hide ACF Admin Panel on Staging/Production
@@ -85,10 +86,23 @@ class Theme extends Timber\Site {
 	}
 	
 	public function enqueue_scripts() {
-		wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", [], "5.15.1" );
+		wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", [], "5.15.1", true );
 		wp_enqueue_script( "flickity", get_stylesheet_directory_uri() . "/assets/js/vendor/flickity.js", ["jquery"], "2.2.1", true );
 		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", ["jquery", "flickity", "font-awesome"], self::$VERSION, true );
 	}
+
+	public function preload_css($html, $handle, $href, $media) {
+		if (is_admin()) {
+			return $html;
+		}
+		
+		$html = <<<EOT
+			<link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" id="{$handle}" href="{$href}" type="text/css" media="{$media}" />
+		EOT;
+		
+		return $html;
+	}
+	
 	
 	public function register_acf_fields() {
 		if (!function_exists("acf_add_options_page")) {
