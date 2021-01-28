@@ -27,7 +27,7 @@ Currently, the site is using [Docker](https://docker.com) for both local develop
 
 1. Checkout Repo
 1. Copy `.env.sample` as `.env` and add database credentials.
-  * If you're using an nginx proxy, add a `VIRTUAL_HOSTS` value 
+  * If you're using an nginx proxy, add a `VIRTUAL_HOST` entry and value 
 1. Copy `docker/local/docker-compose.yml` to the root of the project. Make necessary changes.
 1. Run `docker-compose up` and the site will (default) be accessible at http://localhost:3030
 
