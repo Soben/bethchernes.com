@@ -11,7 +11,8 @@ class Theme extends Timber\Site {
 	static $VERSION = "2021.01.29";
 	
 	/** Register */
-	public function __construct() {
+	public function __construct()
+	{
 		// Filters
 		add_filter( "timber/context", [$this, "add_to_context"] );
 		add_filter( "timber/twig", [$this, "add_to_twig"] );
@@ -145,7 +146,8 @@ class Theme extends Timber\Site {
 		add_filter( "wp_resource_hints", [$this, "disable_emojis_remove_dns_prefetch"], 10, 2 );
 	}
 
-	public function disable_emojis_tinymce( $plugins ) {
+	public function disable_emojis_tinymce( $plugins )
+	{
 		if ( is_array( $plugins ) ) {
 			return array_diff( $plugins, array( "wpemoji" ) );
 		} else {
@@ -153,7 +155,8 @@ class Theme extends Timber\Site {
 		}
 	}
 	 
-	public function disable_emojis_remove_dns_prefetch( $urls, $relation_type ) {
+	public function disable_emojis_remove_dns_prefetch( $urls, $relation_type )
+	{
 		if ( "dns-prefetch" == $relation_type ) {
 			/** This filter is documented in wp-includes/formatting.php */
 			$emoji_svg_url = apply_filters( "emoji_svg_url", "https://s.w.org/images/core/emoji/2/svg/" );
@@ -163,7 +166,8 @@ class Theme extends Timber\Site {
 		return $urls;
 	}
 
-	public function cleanup_archive_title( $title ) {
+	public function cleanup_archive_title( $title )
+	{
     if ( is_category() ) {
         $title = single_cat_title( "", false );
     } elseif ( is_tag() ) {
@@ -183,39 +187,46 @@ class Theme extends Timber\Site {
     return $title;
 	}
 
-	public function include_print_scripts() {
+	public function include_print_scripts()
+	{
 		if ( (!is_admin()) && is_singular() && comments_open() && get_option("thread_comments") ) {
 			wp_enqueue_script( "comment-reply" );
 		}
 	}
 
-	public function register_sidebars() {
+	public function register_sidebars()
+	{
 		Sidebars\Primary::register();
 	}
 
-	public function register_shortcodes() {
+	public function register_shortcodes()
+	{
 		Shortcodes\Button::register();
 		Shortcodes\Icon::register();
 		Shortcodes\Highlight::register();
 		Shortcodes\Social::register();
 	}
 
-	public function register_menus() {
+	public function register_menus()
+	{
 		register_nav_menu( "top_menu", "Primary Menu" );
 		register_nav_menu( "footer_menu", "Footer Menu" );
 	}
 	
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 		wp_enqueue_style( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/css/main.css", [], self::$VERSION );
 	}
 	
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 		wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", [], "5.15.1", true );
 		wp_enqueue_script( "flickity", get_stylesheet_directory_uri() . "/assets/js/vendor/flickity.js", ["jquery"], "2.2.1", true );
 		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", ["jquery", "flickity", "font-awesome"], self::$VERSION, true );
 	}
 
-	public function preload_css($html, $handle, $href, $media) {
+	public function preload_css($html, $handle, $href, $media)
+	{
 		if (is_admin()) {
 			return $html;
 		}
@@ -228,7 +239,8 @@ class Theme extends Timber\Site {
 	}
 	
 	
-	public function register_acf_fields() {
+	public function register_acf_fields()
+	{
 		if (!function_exists("acf_add_options_page")) {
 			return;
 		}
@@ -243,13 +255,16 @@ class Theme extends Timber\Site {
 	}
 
 	/** Custom Post Types */
-	public function register_post_types() {
+	public function register_post_types()
+	{
 		PostTypes\Portfolio::registerCPT();
 		PostTypes\Services::registerCPT();
 		PostTypes\Testimonials::registerCPT();
 	}
+
 	/** Custom Taxonomies */
-	public function register_taxonomies() {
+	public function register_taxonomies()
+	{
 
 	}
 
@@ -257,7 +272,8 @@ class Theme extends Timber\Site {
 	 *
 	 * @param string $context
 	 */
-	public function add_to_context( $context ) {
+	public function add_to_context( $context )
+	{
 		$context["devMode"] = $this->is_dev();
 		$context["menu"] = new Timber\Menu( "top_menu" );
 		$context["menu_footer"] = new Timber\Menu( "footer_menu" );
@@ -268,7 +284,8 @@ class Theme extends Timber\Site {
 		return $context;
 	}
 
-	public function theme_supports() {
+	public function theme_supports()
+	{
 		add_theme_support( "title-tag" );
 		add_theme_support( "post-thumbnails" );
 		add_theme_support( "menus" );
@@ -288,7 +305,8 @@ class Theme extends Timber\Site {
 	 *
 	 * @param string $twig get extension.
 	 */
-	public function add_to_twig( $twig ) {
+	public function add_to_twig( $twig )
+	{
 		// $twig->addExtension( new Twig\Extension\StringLoaderExtension() );
 		// $twig->addFilter( new Twig\TwigFilter( "myfoo", [$this, "myfoo"] ) );
 		$twig->addFilter( new Timber\Twig_Filter('esc_attr', function($title) {
