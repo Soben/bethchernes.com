@@ -39,7 +39,7 @@ In an effort to keep things as simple as possible, currently only does any devel
 
 #### Active Development
 
-Make sure you set `WP_LOCAL_DEV` in your `.env` to `true`. This will disable cache and Google Analytics
+If `WP_DEBUG` is enabled, .htaccess cache policy and Google Analytics will be disabled.
 
 ```bash
 $ make watch

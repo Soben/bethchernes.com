@@ -44,7 +44,7 @@ class Theme extends Timber\Site {
 
 	protected function is_dev()
 	{
-		return defined("WP_LOCAL_DEV") && WP_LOCAL_DEV;
+		return (defined("WP_DEBUG") && WP_DEBUG);
 	}
 
 	public function modify_htaccess()
@@ -258,6 +258,7 @@ class Theme extends Timber\Site {
 	 * @param string $context
 	 */
 	public function add_to_context( $context ) {
+		$context["devMode"] = $this->is_dev();
 		$context["menu"] = new Timber\Menu( "top_menu" );
 		$context["menu_footer"] = new Timber\Menu( "footer_menu" );
 		$context["logo"] = new Timber\Image( get_field("logo", "options") );
