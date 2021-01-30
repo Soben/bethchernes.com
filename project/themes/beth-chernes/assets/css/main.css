@@ -11316,6 +11316,13 @@ form textarea {
   border: 1px solid #000;
   border-radius: 0.25rem;
 }
+form label sup {
+  color: #800020;
+  font-weight: bold;
+  font-size: 100%;
+  position: revert;
+  padding-left: 0.1875rem;
+}
 .layout-header {
   background-color: #fff;
   box-shadow: 0 4px 4px 0 #d3d5d4;
