@@ -18,15 +18,10 @@ class Theme extends Timber\Site {
 		add_filter( "get_the_archive_title", [$this, "cleanup_archive_title"] );
 		// add_filter( "style_loader_tag", [$this, "preload_css"], 10, 4 );
 
-		if (! defined("WP_LOCAL_DEV") || ! WP_LOCAL_DEV) {
-			// Hide ACF Admin Panel on Staging/Production
-			add_filter("acf/settings/show_admin", "__return_false");
-			add_filter("acf/settings/capability", function () { return "do_not_allow"; });
-		}
-
 		// Actions
 		add_action( "after_setup_theme", [$this, "theme_supports"] );
 		add_action( "init", [$this, "disable_emoji"]);
+		add_action( "init", [$this, "modify_htaccess"]);
 		add_action( "init", [$this, "register_post_types"] );
 		add_action( "init", [$this, "register_taxonomies"] );
 		add_action( "init", [$this, "register_acf_fields"] );
@@ -38,7 +33,97 @@ class Theme extends Timber\Site {
 		add_action( "after_setup_theme", [$this, "register_menus"] );
 		add_action( "wp_print_scripts", [$this, "include_print_scripts"] );
 
+		// Non-Development Mode
+		if ( ! $this->is_dev() ) {
+			add_filter("acf/settings/show_admin", "__return_false");
+			add_filter("acf/settings/capability", function () { return "do_not_allow"; });
+		}
+
 		parent::__construct();
+	}
+
+	protected function is_dev()
+	{
+		return defined("WP_LOCAL_DEV") && WP_LOCAL_DEV;
+	}
+
+	public function modify_htaccess()
+	{
+		$htaccessFile = wp_normalize_path( ABSPATH . '.htaccess' );
+		$uniqueString 	= 'BCCACHE';
+		
+		if ( file_exists( $htaccessFile ) ) {
+
+			if ( is_readable( $htaccessFile ) && is_writable( $htaccessFile ) ) {
+				if ( ! $this->is_dev() ) {
+					// Non-Development
+					$this->add_cache_policy($htaccessFile, $uniqueString);
+				} else {
+					$this->remove_cache_policy($htaccessFile, $uniqueString);
+				}
+			}
+		}
+	}
+
+	protected function add_cache_policy($file, $key)
+	{
+		$contents 	= file_get_contents( $file );
+		$contentExists= false;
+
+		if ( strpos( $contents, $key ) !== false ) {
+			$contentExists = true;
+		}
+
+		if ( ! $contentExists ) {
+			$contents = $contents . $this->cache_policy($key);
+
+			file_put_contents( $file, $contents );
+		}
+	}
+
+	protected function remove_cache_policy($file, $key)
+	{
+		$contents 			= file_get_contents( $file );
+		$contentExists 	= false;
+
+		if ( strpos( $contents, $key ) !== false ) {
+			$contentExists = true;
+		}
+
+		if ( $contentExists ) {
+
+			// Code found, remove them.
+			$pattern 		= "/#\s?{$key}START.*?{$key}END/s";
+			$contents 	= preg_replace( $pattern, '', $contents );
+			$contents 	= preg_replace( "/\n+/",PHP_EOL, $contents );
+
+			file_put_contents( $file, $contents );
+		}
+	}
+
+	protected function cache_policy($key)
+	{
+			$rules  = PHP_EOL . PHP_EOL;
+			$rules .= "# {$key}START Browser Caching" . PHP_EOL;
+			$rules .= "<IfModule mod_expires.c>" . PHP_EOL;
+			$rules .= "ExpiresActive On" . PHP_EOL;
+			$rules .= "ExpiresByType image/gif \"access 1 year\"" . PHP_EOL;
+			$rules .= "ExpiresByType image/jpg \"access 1 year\"" . PHP_EOL;
+			$rules .= "ExpiresByType image/jpeg \"access 1 year\"" . PHP_EOL;
+			$rules .= "ExpiresByType image/png \"access 1 year\"" . PHP_EOL;
+			$rules .= "ExpiresByType image/x-icon \"access 1 year\"" . PHP_EOL;
+			$rules .= "ExpiresByType text/css \"access 1 month\"" . PHP_EOL;
+			$rules .= "ExpiresByType text/javascript \"access 1 month\"" . PHP_EOL;
+			$rules .= "ExpiresByType text/html \"access 1 month\"" . PHP_EOL;
+			$rules .= "ExpiresByType application/javascript \"access 1 month\"" . PHP_EOL;
+			$rules .= "ExpiresByType application/x-javascript \"access 1 month\"" . PHP_EOL;
+			$rules .= "ExpiresByType application/xhtml-xml \"access 1 month\"" . PHP_EOL;
+			$rules .= "ExpiresByType application/pdf \"access 1 month\"" . PHP_EOL;
+			$rules .= "ExpiresDefault \"access 1 month\"" . PHP_EOL;
+			$rules .= "</IfModule>" . PHP_EOL;
+			$rules .= "# END Caching {$key}END" . PHP_EOL;
+
+			return $rules;
 	}
 
 	public function move_jquery () {
