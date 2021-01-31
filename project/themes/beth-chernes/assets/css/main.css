@@ -11134,6 +11134,8 @@ h1, h2, h3, h4, h5, h6 {
 .wysiwyg-content ul, #content .column-sidebar ul {
   list-style: none;
   counter-reset: ul-list;
+  padding: 0;
+  margin: 15px 0 15px 15px;
 }
 .wysiwyg-content ul li, #content .column-sidebar ul li {
   position: relative;
@@ -11155,6 +11157,7 @@ h1, h2, h3, h4, h5, h6 {
 .wysiwyg-content ol, #content .column-sidebar ol {
   list-style: none;
   counter-reset: ol-list;
+  margin: 15px 0 15px 15px;
 }
 .wysiwyg-content ol li, #content .column-sidebar ol li {
   position: relative;

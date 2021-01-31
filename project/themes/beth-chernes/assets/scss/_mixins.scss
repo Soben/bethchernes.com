@@ -1,11 +1,16 @@
+$li-padding-left: 20px;
+$list-margin: 15px 0 15px 15px;
+
 %ul-override {
   list-style: none;
   counter-reset: ul-list;
+  padding: 0;
+  margin: $list-margin;
 
   li {
     position: relative;
     counter-increment: ol-list;
-    padding-left: 20px;
+    padding-left: $li-padding-left;
     margin: 12px 0;
 
     &:before {
@@ -24,11 +29,12 @@
 %ol-override {
   list-style: none;
   counter-reset: ol-list;
+  margin: $list-margin;
 
   li {
     position: relative;
     counter-increment: ol-list;
-    padding-left: 20px;
+    padding-left: $li-padding-left;
     margin: 12px 0;
 
     &:before {
