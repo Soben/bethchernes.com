@@ -63,6 +63,9 @@ function poutine_processModules( $postID )
         }
         $current["displayItems"] = Timber\Timber::get_posts($args);
         break;
+      case "columns":
+        $current["displayItems"] = $current["columns"]["items"];
+        break;
       case "testimonials":
         $args = [
           "posts_per_page" => 3,

@@ -11244,6 +11244,10 @@ img {
   text-transform: uppercase;
   font-weight: bold;
 }
+#content .content-block.content-block--main .wysiwyg-content {
+  max-width: 56.25rem;
+  margin: 0 auto;
+}
 #content .column-sidebar a,
 #content .column-sidebar a:visited {
   color: #555b6e;
@@ -11257,7 +11261,40 @@ img {
   background-color: #4a4d4b;
   color: #fff;
   text-align: center;
-  padding: 30px 0;
+  padding: 1.875rem 0 1.5625rem;
+}
+.layout-footer nav.footer a,
+.layout-footer nav.footer a:visited {
+  font-weight: normal;
+  color: #fff;
+  text-decoration: underline;
+}
+.layout-footer nav.footer a:hover, .layout-footer nav.footer a:focus,
+.layout-footer nav.footer a:visited:hover,
+.layout-footer nav.footer a:visited:focus {
+  color: #bedcdf;
+  text-decoration: none;
+}
+.layout-footer nav.footer ul {
+  flex-direction: column;
+  justify-content: center;
+}
+.layout-footer nav.footer ul li {
+  margin-bottom: 0.3125rem;
+}
+@media (min-width: 764px) {
+  .layout-footer nav.footer ul {
+    flex-direction: row;
+  }
+  .layout-footer nav.footer ul li {
+    border-right: 2px solid #d3d5d4;
+    padding-right: 0.625rem;
+    margin-left: 0.625rem;
+  }
+  .layout-footer nav.footer ul li:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
 }
 
 .wpcf7 form.wpcf7-form .wpcf7-not-valid-tip {
@@ -11269,11 +11306,25 @@ img {
 .wpcf7 form.wpcf7-form.invalid .wpcf7-response-output {
   border-color: #800020;
 }
+.wpcf7 form.wpcf7-form .ajax-loader {
+  display: none;
+}
+.wpcf7 form.wpcf7-form .ajax-loader.is-active {
+  display: inline-block;
+}
+
 form input,
 form select,
 form textarea {
   border: 1px solid #000;
   border-radius: 0.25rem;
+}
+form label sup {
+  color: #800020;
+  font-weight: bold;
+  font-size: 100%;
+  position: revert;
+  padding-left: 0.1875rem;
 }
 .layout-header {
   background-color: #fff;
@@ -11543,6 +11594,89 @@ form textarea {
   text-transform: lowercase;
 }
 
+.module-block.module--text .wysiwyg-content {
+  max-width: 56.25rem;
+  margin: 0 auto;
+}
+.module-block.module--columns .column--card {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1.875rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+.module-block.module--columns .column--card header a {
+  border-radius: 50%;
+  width: 12.5rem;
+  height: 12.5rem;
+  margin: 0 auto 1.875rem;
+  background-color: #bedcdf;
+  color: #555b6e;
+}
+.module-block.module--columns .column--card header a svg {
+  width: 65%;
+  height: 65%;
+}
+.module-block.module--columns .column--card .column-details {
+  flex-basis: 100%;
+}
+.module-block.module--columns .column--card footer {
+  justify-self: flex-end;
+}
+.module-block.module--columns .column--card:hover header a {
+  background-color: #555b6e;
+  color: #bedcdf;
+}
+.module-block.module--cta {
+  background-color: #bedcdf;
+  text-align: center;
+  color: #555b6e;
+  padding: 3.75rem 0;
+  font-size: 1.875rem;
+}
+.module-block.module--cta .container .cta--content {
+  flex-basis: 40%;
+}
+.module-block.module--cta .container .cta--button .btn, .module-block.module--cta .container .cta--button body.blog .column-main article footer a, body.blog .column-main article footer .module-block.module--cta .container .cta--button a,
+.module-block.module--cta .container .cta--button body.tag .column-main article footer a,
+body.tag .column-main article footer .module-block.module--cta .container .cta--button a,
+.module-block.module--cta .container .cta--button body.category .column-main article footer a,
+body.category .column-main article footer .module-block.module--cta .container .cta--button a,
+.module-block.module--cta .container .cta--button body.archive .column-main article footer a,
+body.archive .column-main article footer .module-block.module--cta .container .cta--button a, .module-block.module--cta .container .cta--button nav.pagination ul li .page-number, nav.pagination ul li .module-block.module--cta .container .cta--button .page-number, .module-block.module--cta .container .cta--button .wpcf7 form.wpcf7-form .wpcf7-submit, .wpcf7 form.wpcf7-form .module-block.module--cta .container .cta--button .wpcf7-submit, .module-block.module--cta .container .cta--button form input[type=submit], form .module-block.module--cta .container .cta--button input[type=submit],
+.module-block.module--cta .container .cta--button form button,
+form .module-block.module--cta .container .cta--button button {
+  font-size: 1.5625rem;
+  background-color: #f9f9f9;
+  color: #555b6e;
+}
+.module-block.module--cta .container .cta--button .btn:focus, .module-block.module--cta .container .cta--button body.blog .column-main article footer a:focus, body.blog .column-main article footer .module-block.module--cta .container .cta--button a:focus,
+.module-block.module--cta .container .cta--button body.tag .column-main article footer a:focus,
+body.tag .column-main article footer .module-block.module--cta .container .cta--button a:focus,
+.module-block.module--cta .container .cta--button body.category .column-main article footer a:focus,
+body.category .column-main article footer .module-block.module--cta .container .cta--button a:focus,
+.module-block.module--cta .container .cta--button body.archive .column-main article footer a:focus,
+body.archive .column-main article footer .module-block.module--cta .container .cta--button a:focus, .module-block.module--cta .container .cta--button nav.pagination ul li .page-number:focus, nav.pagination ul li .module-block.module--cta .container .cta--button .page-number:focus, .module-block.module--cta .container .cta--button .wpcf7 form.wpcf7-form .wpcf7-submit:focus, .wpcf7 form.wpcf7-form .module-block.module--cta .container .cta--button .wpcf7-submit:focus, .module-block.module--cta .container .cta--button form input[type=submit]:focus, form .module-block.module--cta .container .cta--button input[type=submit]:focus,
+.module-block.module--cta .container .cta--button form button:focus,
+form .module-block.module--cta .container .cta--button button:focus, .module-block.module--cta .container .cta--button .btn:hover, .module-block.module--cta .container .cta--button body.blog .column-main article footer a:hover, body.blog .column-main article footer .module-block.module--cta .container .cta--button a:hover,
+.module-block.module--cta .container .cta--button body.tag .column-main article footer a:hover,
+body.tag .column-main article footer .module-block.module--cta .container .cta--button a:hover,
+.module-block.module--cta .container .cta--button body.category .column-main article footer a:hover,
+body.category .column-main article footer .module-block.module--cta .container .cta--button a:hover,
+.module-block.module--cta .container .cta--button body.archive .column-main article footer a:hover,
+body.archive .column-main article footer .module-block.module--cta .container .cta--button a:hover, .module-block.module--cta .container .cta--button nav.pagination ul li .page-number:hover, nav.pagination ul li .module-block.module--cta .container .cta--button .page-number:hover, .module-block.module--cta .container .cta--button .wpcf7 form.wpcf7-form .wpcf7-submit:hover, .wpcf7 form.wpcf7-form .module-block.module--cta .container .cta--button .wpcf7-submit:hover, .module-block.module--cta .container .cta--button form input[type=submit]:hover, form .module-block.module--cta .container .cta--button input[type=submit]:hover,
+.module-block.module--cta .container .cta--button form button:hover,
+form .module-block.module--cta .container .cta--button button:hover {
+  background-color: #555b6e;
+  color: #f9f9f9;
+}
+@media (min-width: 925px) {
+  .module-block.module--cta .container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
 .module-block.module--testimonials .testimonial-list .testimonial {
   width: 100%;
   /* full width */

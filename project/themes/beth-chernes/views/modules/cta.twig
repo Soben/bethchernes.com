@@ -1,0 +1,14 @@
+<section class="module-block module--cta">
+  <div class="container">
+
+    {% if item.cta.content %}
+      <div class="cta--content">
+        {{ item.cta.content }}
+      </div>
+    {% endif %}
+
+    <div class="cta--button">
+      <a class="btn" href="{{ item.cta.button_link }}">{{ item.cta.button_text }}</a>
+    </div>
+  </div>
+</section>

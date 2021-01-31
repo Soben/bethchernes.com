@@ -8,4 +8,9 @@
 /project/uploads/*
 !/project/uploads/.gitkeep
 
+/project/plugins/hello.php
+
+/project/themes/*
+!/project/themes/beth-chernes
+
 node_modules

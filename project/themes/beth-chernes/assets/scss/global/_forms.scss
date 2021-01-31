@@ -17,6 +17,14 @@
     .wpcf7-submit {
       @extend .btn;
     }
+
+    .ajax-loader {
+      display: none;
+
+      &.is-active {
+        display: inline-block;
+      }
+    }
   }
 }
 
@@ -27,6 +35,17 @@ form {
     border: 1px solid $black;
     border-radius: 0.25rem;
   }
+
+  label {
+    sup {
+      color: $burgundy;
+      font-weight: bold;
+      font-size: 100%;
+      position: revert;
+      padding-left: remCalc(3px);
+    }
+  }
+
   input[type=submit],
   button {
     @extend .btn;
