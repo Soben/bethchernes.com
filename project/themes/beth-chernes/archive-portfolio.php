@@ -22,7 +22,7 @@ foreach ($taxonomiesToDisplay as $current) {
         'terms'    => $currentTermDetails->ID,
       ],
     ],
-    'posts_per_page' => 6,
+    'posts_per_page' => -1,
   ];;
 
   array_push($portfolioItemsByTerm, [
