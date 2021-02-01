@@ -11538,7 +11538,7 @@ form label sup {
   box-shadow: 0 4px 4px 0 #d3d5d4;
 }
 .layout-header .navbar-brand {
-  max-width: 75%;
+  max-width: 65%;
 }
 @media (min-width: 768px) {
   .layout-header .navbar-brand {
@@ -11670,6 +11670,10 @@ form label sup {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+.wysiwyg-content .alignright,
+.wysiwyg-content .alignleft {
+  max-width: 40%;
 }
 .wysiwyg-content .shortcode-icon {
   color: #7c9eb2;

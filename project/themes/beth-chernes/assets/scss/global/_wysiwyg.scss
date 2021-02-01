@@ -7,6 +7,11 @@
   a .alignright {float:right; margin:0 0 1em 1em}
   a .alignleft {float:left; margin:0 1em 1em 0}
   a .aligncenter {display: block; margin-left: auto; margin-right: auto}
+
+  .alignright,
+  .alignleft {
+    max-width: 40%;
+  }
   
   .shortcode-icon {
     color: $blue;
