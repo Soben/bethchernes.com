@@ -27,6 +27,7 @@ class Theme extends Timber\Site {
 		add_action( "init", [$this, "register_taxonomies"] );
 		add_action( "init", [$this, "register_acf_fields"] );
 		add_action( "init", [$this, "register_shortcodes"] );
+		add_filter( "pre_get_posts", [$this, "pre_get_posts"]);
 		add_action( "widgets_init", [$this, "register_sidebars"] );
 		add_action( "wp_enqueue_scripts", [$this, "move_jquery"], 99 );
 		add_action( "wp_enqueue_scripts", [$this, "enqueue_styles"] );
@@ -41,6 +42,13 @@ class Theme extends Timber\Site {
 		}
 
 		parent::__construct();
+	}
+
+	function pre_get_posts ($query)
+	{
+		if ( $query->is_main_query() && $query->is_search ) {
+			$query->set("post_type", "post");
+		}
 	}
 
 	protected function is_dev()

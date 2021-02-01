@@ -17,7 +17,7 @@
                   {% if post.thumbnail %}
                     <img src="{{ post.thumbnail.src|resize(750, 450)}}" width="{{750}}" height="{{450}}" alt="{{ post.thumbnail.alt }}" loading="lazy" />
                   {% else %}
-                    <img src="https://placekitten.com/{{750}}/{{450}}" width="{{750}}" height="{{450}}" alt="No image found, displaying a kitten." loading="lazy" />
+                    <img src="{{ function('poutine_fallbackImage') }}" width="{{740}}" height="{{494}}" aria-role="none" alt="No image found." loading="lazy" />
                   {% endif %}
 
                   {% include "partials/content/meta.twig" with { 'details' : post } %}

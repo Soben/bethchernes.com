@@ -5,6 +5,11 @@ require_once( __DIR__ . '/inc/wordpress.php' );
 
 new Poutine\BethChernes\Theme();
 
+function poutine_fallbackImage()
+{
+  return get_stylesheet_directory_uri() . "/assets/images/fallback.png";
+}
+
 function poutine_getSocialLinks()
 {
   return [
