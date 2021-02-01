@@ -45,7 +45,7 @@ class Theme extends Timber\Site {
 
 	protected function is_dev()
 	{
-		return (defined("WP_DEBUG") && WP_DEBUG);
+		return true; // ((int)getenv("POUTINE_LOCAL_DEV") === 1);
 	}
 
 	public function modify_htaccess()
