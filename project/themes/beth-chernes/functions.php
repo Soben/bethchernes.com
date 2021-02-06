@@ -61,10 +61,10 @@ function poutine_processModules( $postID )
         $args = [
           "posts_per_page" => 3,
           "post_type" => "post",
-          "orderby" => "post__in",
         ];
         if ( $current["posts"]["show_latest"] === false ) {
           $args["post__in"] = $current["posts"]["items"];
+          $args["orderby"] = "post__in";
         }
         $current["displayItems"] = Timber\Timber::get_posts($args);
         break;
@@ -84,10 +84,10 @@ function poutine_processModules( $postID )
           $args = [
             "posts_per_page" => 3,
             "post_type" => Poutine\BethChernes\PostTypes\Portfolio::$slug,
-            "orderby" => "post__in",
           ];
           if ( $current["portfolio"]["show_latest"] === false ) {
             $args["post__in"] = $current["portfolio"]["items"];
+            $args["orderby"] = "post__in";
           }
           $current["displayItems"] = Timber\Timber::get_posts($args);
           break;
