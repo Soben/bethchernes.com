@@ -4,7 +4,7 @@
 
 <article class="d-flex flex-column justify-content-between article-card">
   <header>
-    <a href="{{ details.link }}" aria-label="Read more about '{{ details.title|esc_attr }}'">
+    <a href="{{ details.get_field('portfolio_url') }}" target="_blank" rel="noopener" aria-label="Read more about '{{ details.title|esc_attr }}'">
       {% if details.thumbnail %}
         <img src="{{ details.thumbnail.src|resize(imageDimensions[0], imageDimensions[1])}}" width="{{imageDimensions[0]}}" height="{{imageDimensions[1]}}" alt="{{ details.thumbnail.alt }}" loading="lazy" />
       {% else %}
@@ -17,7 +17,7 @@
     {% endif %}
   </header>
   <div class="post-details">
-    <h3><a href="{{ details.link }}">{{ details.title }}</a></h3>
+    <h3><a href="{{ details.get_field('portfolio_url') }}" target="_blank" rel="noopener">{{ details.title }}</a></h3>
     <div class="wysiwyg-content">
       {% if details.post_excerpt %}
         {{ details.post_excerpt }}
@@ -28,7 +28,7 @@
   </div>
   {% if showReadMore == true %}
   <footer>
-    <a href="{{ details.link }}" aria-label="Read more about '{{details.title|esc_attr}}'">Read More</a>
+    <a href="{{ details.get_field('portfolio_url') }}" target="_blank" rel="noopener" aria-label="Read more about '{{details.title|esc_attr}}'">Read More</a>
   </footer>
   {% endif %}
 </article>

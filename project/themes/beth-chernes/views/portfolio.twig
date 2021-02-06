@@ -22,10 +22,8 @@
                       <ul class="row align-items-stretch list-unstyled">
                         {% for entry in details.entries %}
                           <li class="d-flex col col-12 col-md-6 col-lg-4 mt-4">
-                            {% include "partials/content/post.twig" with {
+                            {% include "partials/content/portfolio-item.twig" with {
                               'details' : entry,
-                              'linkTarget' : '_blank',
-                              'linkOverride' : entry.get_field('portfolio_url'),
                             } %}
                           </li>
                         {% endfor %}
