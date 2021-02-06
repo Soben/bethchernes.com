@@ -37,14 +37,28 @@ class Theme extends Timber\Site {
 
 		// Non-Development Mode
 		if ( ! $this->is_dev() ) {
-			add_filter("acf/settings/show_admin", "__return_false");
-			add_filter("acf/settings/capability", function () { return "do_not_allow"; });
+			add_filter( "acf/settings/show_admin", "__return_false" );
+			add_filter( "acf/settings/capability", function () {
+				return "do_not_allow";
+			} );
+
+			add_filter( "pre_site_transient_update_core", [$this, "remove_core_updates"] ); //hide updates for WordPress itself
+			add_filter( "pre_site_transient_update_plugins", [$this, "remove_core_updates"] ); //hide updates for all plugins
+			add_filter( "pre_site_transient_update_themes", [$this, "remove_core_updates"] ); //hide updates for all themes
 		}
 
 		parent::__construct();
 	}
 
-	function pre_get_posts ($query)
+	public function remove_core_updates(){
+		global $wp_version;
+		return (object)[
+			"last_checked"		=> time(),
+			"version_checked"	=> $wp_version,
+		];
+	}
+
+	public function pre_get_posts ($query)
 	{
 		if ( $query->is_main_query() && $query->is_search ) {
 			$query->set("post_type", "post");
