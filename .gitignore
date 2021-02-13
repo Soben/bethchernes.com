@@ -13,4 +13,4 @@
 /project/themes/*
 !/project/themes/beth-chernes
 
-node_modules
+/project/themes/beth-chernes/node_modules
