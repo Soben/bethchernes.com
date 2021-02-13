@@ -23,22 +23,17 @@ function poutine_imageOverridePages()
   return ( is_single() || is_front_page() || is_page() );
 }
 
-add_action( "wpseo_opengraph_image", "poutine_yoast_addOpengraphImagesIfMissing" );
-function poutine_yoast_addOpengraphImagesIfMissing ( $image, $presenter = null )
+add_action( "wpseo_add_opengraph_additional_images", "poutine_yoast_addOpengraphImagesIfMissing" );
+function poutine_yoast_addOpengraphImagesIfMissing ( $container )
 {
-
-  if (poutine_imageOverridePages() && !$image) {
+  if (poutine_imageOverridePages() && count($container->get_images()) <= 0) {
     list ($mastheadImageURL, $featuredImageURL) = poutine_getImages();
     if ($featuredImageURL) {
-      return $featuredImageURL;
-    }
-
-    if ($mastheadImageURL) {
-      return $mastheadImageURL;
+      $container->add_image($featuredImageURL);
+    } else  if ($mastheadImageURL) {
+      $container->add_image($mastheadImageURL);
     }
   }
-
-  return $image;
 }
 
 add_filter( "wpseo_twitter_image", "poutine_yoast_overrideTwitterImageIfMissing" );
