@@ -2,7 +2,7 @@ version: "3.1"
 
 services:
   web:
-    image: wordpress:5.6.1
+    image: wordpress:5.8.2
     restart: always
     expose:
       - 80
@@ -19,6 +19,7 @@ services:
       - "./project/uploads:/var/www/html/wp-content/uploads:rw"
       - "./project/themes:/var/www/html/wp-content/themes:rw"
       - "./project/plugins:/var/www/html/wp-content/plugins:rw"
+      - "./project/upgrade:/var/www/html/wp-content/upgrade:rw"
 
 networks:
   default:

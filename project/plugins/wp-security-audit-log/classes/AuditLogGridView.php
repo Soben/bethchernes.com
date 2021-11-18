@@ -5,7 +5,7 @@
  * CLass file for audit log list view.
  *
  * @since 1.0.0
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -20,7 +20,7 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
  * This view is included in Audit Log Viewer Page.
  *
  * @see Views/AuditLog.php
- * @package Wsal
+ * @package wsal
  */
 class WSAL_AuditLogGridView extends WP_List_Table {
 
@@ -78,14 +78,22 @@ class WSAL_AuditLogGridView extends WP_List_Table {
 	private $item_meta = array();
 
 	/**
+	 * @var WSAL_Views_AuditLog
+	 * @since 4.3.2
+	 */
+	private $audit_log_view;
+
+	/**
 	 * Method: Constructor.
 	 *
-	 * @param object   $plugin     - Instance of WpSecurityAuditLog.
+	 * @param WpSecurityAuditLog $plugin - Instance of WpSecurityAuditLog.
+	 * @param WSAL_Views_AuditLog $audit_log_view Audit log view.
 	 * @param stdClass $query_args - Events query arguments.
 	 */
-	public function __construct( $plugin, $query_args ) {
-		$this->_plugin    = $plugin;
-		$this->query_args = $query_args;
+	public function __construct( $plugin, $audit_log_view, $query_args ) {
+		$this->_plugin        = $plugin;
+		$this->audit_log_view = $audit_log_view;
+		$this->query_args     = $query_args;
 
 		parent::__construct(
 			array(
@@ -213,31 +221,6 @@ class WSAL_AuditLogGridView extends WP_List_Table {
 			}
 		}
 
-		// Switch to live or archive DB.
-		if ( $this->_plugin->settings()->IsArchivingEnabled() ) {
-			if (
-				( 'top' === $which && $this->_plugin->settings()->is_infinite_scroll() )
-				|| ! $this->_plugin->settings()->is_infinite_scroll()
-			) {
-				$selected    = 'live';
-				$selected_db = get_transient( 'wsal_wp_selected_db' );
-				if ( $selected_db && 'archive' === $selected_db ) {
-					$selected = 'archive';
-				}
-				?>
-				<div class="wsal-ssa wsal-db">
-					<select class="wsal-db" onchange="WsalDBChange(value);">
-						<option value="live" <?php echo ( 'live' == $selected ) ? 'selected="selected"' : false; ?>>
-							<?php esc_html_e( 'Live Database', 'wp-security-audit-log' ); ?>
-						</option>
-						<option value="archive" <?php echo ( 'archive' == $selected ) ? 'selected="selected"' : false; ?>>
-							<?php esc_html_e( 'Archive Database', 'wp-security-audit-log' ); ?>
-						</option>
-					</select>
-				</div>
-				<?php
-			}
-		}
 	}
 
 	/**
@@ -388,26 +371,30 @@ class WSAL_AuditLogGridView extends WP_List_Table {
 
 			case 'code':
 				$code  = $this->_plugin->alerts->GetAlert( $item->alert_id );
-				$code  = $code ? $code->code : 0;
+				$code  = $code ? $code->severity : 0;
 				$const = $this->_plugin->constants->get_constant_to_display( $code );
 
-				return '<a class="tooltip" href="#" data-tooltip="' . esc_html( $const->name ) . '"><span class="log-type log-type-' . $const->value . '"></span></a>';
+				$css_classes = ['log-type', 'log-type-' . $const->value ];
+				if (property_exists($const, 'css')) {
+					array_push($css_classes, 'log-type-' . $const->css);
+				}
+				return '<a class="tooltip" href="#" data-tooltip="' . esc_html( $const->name ) . '"><span class="' . implode( ' ', $css_classes ) . '"></span></a>';
 			case 'site':
 				$info = get_blog_details( $item->site_id, true );
 				return ! $info ? ( 'Unknown Site ' . $item->site_id )
 					: ( '<a href="' . esc_attr( $info->siteurl ) . '">' . esc_html( $info->blogname ) . '</a>' );
 			case 'mesg':
-				ob_start();
-				// login, logout and failed login has no message attached.
+				// login, logout and failed login have no message attached.
 				if ( ! in_array( $item->alert_id, array( 1000, 1001, 1002 ), true ) ) {
-					?>
-					<table id="Event<?php echo absint( $item->id ); ?>">
-						<td class="wsal-grid-text-header"><?php esc_html_e( 'Message:', 'alm-' ); ?></td>
-						<td class="wsal-grid-text-data"><?php echo $item->GetMessage( array( $this->_plugin->settings, 'meta_formatter' ), false, $this->item_meta[ $item->getId() ] ); ?></td>
-					</table>
-					<?php
+					$event_meta = $this->item_meta[ $item->getId() ];
+					$result = '<table id="Event' .  absint( $item->id ) .  '">';
+					$result .= '<td class="wsal-grid-text-header">' . esc_html__( 'Message:', 'wp-security-audit-log' ) . '</td>';
+					$result .= '<td class="wsal-grid-text-data">' . $item->GetMessage( $event_meta ) . '</td>';
+					$result .= '</table>';
+					$result .= $this->audit_log_view->maybe_build_teaser_html( $event_meta );
+					return $result;
 				}
-				return ob_get_clean();
+				return '';
 			case 'info':
 				$eventdate = $item->created_on
                     ? WSAL_Utilities_DateTimeFormatter::instance()->getFormattedDateTime($item->created_on, 'date' )
@@ -417,7 +404,7 @@ class WSAL_AuditLogGridView extends WP_List_Table {
                     ? WSAL_Utilities_DateTimeFormatter::instance()->getFormattedDateTime($item->created_on, 'time' )
                     : '<i>' . __( 'Unknown', 'wp-security-audit-log' ) . '</i>';
 
-				$username = $item->GetUsername( $this->item_meta[ $item->getId() ] ); // Get username.
+				$username = WSAL_Utilities_UsersUtils::GetUsername( $this->item_meta[ $item->getId() ] ); // Get username.
 				$user     = get_user_by( 'login', $username ); // Get user.
 				if ( empty( $this->name_type ) ) {
 					$this->name_type = $this->_plugin->settings()->get_type_username();
@@ -426,27 +413,14 @@ class WSAL_AuditLogGridView extends WP_List_Table {
 				// Check if the username and user exists.
 				if ( $username && $user ) {
 
-					// Checks for display name.
-					if ( 'display_name' === $this->name_type && ! empty( $user->display_name ) ) {
-						$display_name = $user->display_name;
-					} elseif (
-						'first_last_name' === $this->name_type
-						&& ( ! empty( $user->first_name ) || ! empty( $user->last_name ) )
-					) {
-						$display_name = $user->first_name . ' ' . $user->last_name;
-					} else {
-						$display_name = $user->user_login;
-					}
+					$display_name = WSAL_Utilities_UsersUtils::get_display_label( $this->_plugin, $user );
+					$user_edit_link = admin_url( 'user-edit.php?user_id=' . $user->ID );
+					
+					// Additional user info tooltip.
+					$tooltip = WSAL_Utilities_UsersUtils::get_tooltip_user_content( $user );
 
-					if ( class_exists( 'WSAL_SearchExtension' ) ) {
-						$tooltip = esc_attr__( 'Show me all activity by this User', 'wp-security-audit-log' );
+					$uhtml = '<a class="tooltip" data-tooltip="' . esc_attr( $tooltip ) . '" data-user="' . $user->user_login . '" href="' . $user_edit_link . '" target="_blank">' . esc_html( $display_name ) . '</a>';
 
-						$uhtml = '<a class="search-user" data-tooltip="' . $tooltip . '" data-user="' . $user->user_login . '" href="' . admin_url( 'user-edit.php?user_id=' . $user->ID )
-							. '" target="_blank">' . esc_html( $display_name ) . '</a>';
-					} else {
-						$uhtml = '<a href="' . admin_url( 'user-edit.php?user_id=' . $user->ID )
-						. '" target="_blank">' . esc_html( $display_name ) . '</a>';
-					}
 
 					$roles = $item->GetUserRoles( $this->item_meta[ $item->getId() ] );
 					if ( is_array( $roles ) && count( $roles ) ) {
@@ -816,13 +790,6 @@ class WSAL_AuditLogGridView extends WP_List_Table {
 	 * @return array
 	 */
 	public function query_events( $paged = 0 ) {
-		if ( $this->_plugin->settings()->IsArchivingEnabled() ) {
-			// Switch to Archive DB.
-			$selected_db = get_transient( 'wsal_wp_selected_db' );
-			if ( $selected_db && 'archive' === $selected_db ) {
-				$this->_plugin->settings()->SwitchToArchiveDB();
-			}
-		}
 
 		// TO DO: Get rid of OccurrenceQuery and use the Occurence Model.
 		$query = new WSAL_Models_OccurrenceQuery();

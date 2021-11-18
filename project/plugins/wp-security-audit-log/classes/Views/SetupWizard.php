@@ -5,7 +5,7 @@
  * WSAL setup class file.
  *
  * @since 3.2.3
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -555,7 +555,7 @@ final class WSAL_Views_SetupWizard {
 		?>
 		<form method="post" class="wsal-setup-form">
 			<?php wp_nonce_field( 'wsal-step-frontend-register' ); ?>
-			<h4><?php esc_html_e( 'Can visitors register for a user on your website?', 'wp-security-audit-log' ); ?></h4>
+			<h4><?php esc_html_e( 'Can visitors register as a user on your website?', 'wp-security-audit-log' ); ?></h4>
 			<fieldset>
 				<label for="wsal-frontend-events-register-yes">
 					<input id="wsal-frontend-events-register-yes" name="wsal-frontend-register" type="radio" value="1">
@@ -725,7 +725,12 @@ final class WSAL_Views_SetupWizard {
 			</li>
 		</ul>
 
-		<p><?php echo wp_kses( __( 'We trust this plugin meets all your activity log requirements. Should you encounter any problems, have feature requests or would like to share some feedback, <a href="https://wpactivitylog.com/contact/?utm_source=plugin&utm_medium=referral&utm_campaign=WSAL&utm_content=wizard+configuration" rel="noopener noreferrer" target="_blank">please get in touch!</a>', 'wp-security-audit-log' ), $this->wsal->allowed_html_tags ); ?></p>
+		<?php
+			// Link to contact form.
+			$help_page = 'https://wpactivitylog.com/contact/?utm_source=plugin&utm_medium=referral&utm_campaign=WSAL&utm_content=settings+pages';
+		?>
+
+		<p><?php echo wp_kses( __( 'We trust this plugin meets all your activity log requirements. Should you encounter any problems, have feature requests or would like to share some feedback', 'wp-security-audit-log' ), $this->wsal->allowed_html_tags ); ?>  <a href="<?php echo esc_url( $help_page ); ?>" rel="noopener noreferrer" target="_blank"><?php esc_html_e( 'please get in touch!', 'wp-security-audit-log' ); ?></a></p>
 
 		<form method="post" class="wsal-setup-form">
 			<?php wp_nonce_field( 'wsal-step-finish' ); ?>

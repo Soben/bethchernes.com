@@ -5,7 +5,7 @@
  * Files sensors class file.
  *
  * @since 1.0.0
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -21,8 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 2046 User changed a file using the theme editor
  * 2051 User changed a file using the plugin editor
  *
- * @package Wsal
- * @subpackage Sensors
+ * @package wsal
+ * @subpackage sensors
  */
 class WSAL_Sensors_Files extends WSAL_AbstractSensor {
 
@@ -52,13 +52,14 @@ class WSAL_Sensors_Files extends WSAL_AbstractSensor {
 		$post_array = filter_input_array( INPUT_POST );
 
 		$action = isset( $post_array['action'] ) ? $post_array['action'] : '';
-		if ( 'upload-theme' !== $action && 'upload-plugin' !== $action ) {
+		if ( 'upload-theme' !== $action && 'upload-plugin' !== $action ) {			
 			$file = get_attached_file( $attachment_id );
 			$this->plugin->alerts->Trigger(
 				2010, array(
-					'AttachmentID' => $attachment_id,
-					'FileName'     => basename( $file ),
-					'FilePath'     => dirname( $file ),
+					'AttachmentID'  => $attachment_id,
+					'FileName'      => basename( $file ),
+					'FilePath'      => dirname( $file ),
+					'AttachmentUrl' => get_attachment_link( $attachment_id ),
 				)
 			);
 		}

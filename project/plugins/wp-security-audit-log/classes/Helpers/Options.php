@@ -5,7 +5,7 @@
  * Option Model gets and sets the options from the main WP options table.
  *
  * @since   4.0.2
- * @package Wsal
+ * @package wsal
  */
 
 namespace WSAL\Helpers;
@@ -110,22 +110,25 @@ class Options {
 	}
 
 	/**
-	 * Deletes an option from the WP options table.
+	 * Deletes a plugin option from the WP options table.
 	 *
-	 * NOTE: This is just a straight wrapper around the core function - if the
-	 * item is prefixed then pass the prefix in the option name.
-	 *
-	 * @method delete_option
 	 * @since  4.0.2
-	 * @param  string $option_name Name of the option to delete.
+	 * @param  string $option_name Name of the option to delete (including the prefix).
 	 * @return bool
 	 */
 	public function delete_option( $option_name = '' ) {
+
 		if (is_multisite()) {
 			switch_to_blog(get_main_network_id());
 		}
 
-		$result = \delete_option( $option_name );
+		$actual_option_name = $option_name;
+		if ( ! preg_match( '/\A' . preg_quote( $this->prefix ) . '/', $option_name ) ) {
+			//  prepend prefix if not already present
+			$actual_option_name = $this->prefix . $option_name;
+		}
+
+		$result = \delete_option( $actual_option_name );
 
 		if (is_multisite()) {
 			restore_current_blog();
@@ -133,51 +136,6 @@ class Options {
 
 		return $result;
 	}
-
-	/**
-	 * Get options by prefix (notifications stored in json format).
-	 *
-	 * @param string $opt_prefix - Prefix.
-	 * @return array|null - Options.
-	 */
-	public function GetNotificationsSetting( $opt_prefix ) {
-		global $wpdb;
-		$prepared_query	= $wpdb->prepare(
-		"SELECT * FROM {$wpdb->base_prefix}options WHERE option_name LIKE %s;",
-		$opt_prefix . '%%'
-		);
-		return $wpdb->get_results($prepared_query);
-	}
-
-	/**
-	 * @param int $id Notification ID.
-	 *
-	 * @return array|object|void|null
-	 * @since 4.1.3
-	 */
-	public function GetNotification($id) {
-		global $wpdb;
-		$prepared_query = $wpdb->prepare("SELECT * FROM {$wpdb->options} WHERE option_id = %d LIMIT 1;", $id);
-		return $wpdb->get_row( $prepared_query );
-	}
-
-	/**
-	 * Number of options start with prefix.
-	 *
-	 * @param string $opt_prefix - Prefix.
-	 * @return integer Indicates the number of items.
-	 */
-	public function CountNotifications( $opt_prefix ) {
-		global $wpdb;
-
-		$prepared_query	= $wpdb->prepare(
-			"SELECT COUNT(option_id) FROM {$wpdb->options} WHERE option_name LIKE %s;",
-			$opt_prefix . '%%'
-		);
-		return (int) $wpdb->get_var( $prepared_query );
-
-	}
-
 	/**
 	 * Static function for retrieving an option value statically.
 	 *
@@ -300,5 +258,25 @@ class Options {
 			$bool = self::string_to_bool( $bool );
 		}
 		return true === $bool ? 'yes' : 'no';
+	}
+
+	/**
+	 * Create neat email/sms string to display in the event.
+	 *
+	 * @param  string $email
+	 * @param  string $sms
+	 * @return string
+	 */
+	public static function create_recipient_string( $email, $sms ) {
+		$recipient = ( isset( $email ) ) ? $email : '';
+		if ( isset(  $sms ) && ! empty(  $sms ) ) {
+			// Only add seperator if needed.
+			if ( ! empty( $recipient ) ) {
+				$recipient .= ' | ';
+			}
+			$recipient .= $sms;
+		}
+
+		return $recipient;
 	}
 }

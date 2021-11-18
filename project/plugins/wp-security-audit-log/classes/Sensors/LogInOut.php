@@ -5,7 +5,7 @@
  * Log In & Out sensor class file.
  *
  * @since 1.0.0
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -23,8 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 1004 Login blocked
  * 4003 User has changed his or her password
  *
- * @package Wsal
- * @subpackage Sensors
+ * @package wsal
+ * @subpackage sensors
  */
 class WSAL_Sensors_LogInOut extends WSAL_AbstractSensor {
 
@@ -196,14 +196,13 @@ class WSAL_Sensors_LogInOut extends WSAL_AbstractSensor {
 			1000,
 			$alert_data,
 			/**
-			 * @param WSAL_AlertManager$manager
+			 * @param WSAL_AlertManager $manager
+			 *
 			 * @return bool
 			 */
 			function ( $manager ) {
 				//  don't fire if the user is changing their password via admin profile page
-				return ! $manager->WillOrHasTriggered( 4003 )
-				       //   ...or if the login has been triggered somewhere else (most likely a front-end login)
-				       && ! $manager->WillOrHasTriggered( 1000, 2 );
+				return ! $manager->WillOrHasTriggered( 4003 );
 			}
 		);
 
@@ -343,6 +342,10 @@ class WSAL_Sensors_LogInOut extends WSAL_AbstractSensor {
 		$username       = sanitize_user( $username );
 		$new_alert_code = 1003;
 		$user           = get_user_by( 'login', $username );
+		// If we still dont have the user, lets look for them using there email address.
+		if ( empty( $user ) ) {
+			$user = get_user_by( 'email', $username );
+		}
 		$site_id        = ( function_exists( 'get_current_blog_id' ) ? get_current_blog_id() : 0 );
 		if ( $user ) {
 			$new_alert_code = 1002;
@@ -537,7 +540,13 @@ class WSAL_Sensors_LogInOut extends WSAL_AbstractSensor {
 	 * @param object $errors Current WP_errors objtect.
 	 * @param object $user   User making the request.
 	 */
-	public function event_user_requested_pw_reset( $errors, $user ) {
+	public function event_user_requested_pw_reset( $errors, $user = null ) {
+		
+		// If we dont have the user. do nothing.
+		if ( is_null( $user ) || ! isset( $user->roles ) ) {
+			return;
+		}
+		
 		$user_roles = $this->plugin->settings()->GetCurrentUserRoles( $user->roles );
 		$this->plugin->alerts->Trigger(
 			1010,

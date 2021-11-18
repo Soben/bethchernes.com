@@ -5,7 +5,7 @@
  * System activity sensor class file.
  *
  * @since 1.0.0
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -40,8 +40,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 6017 Modified the list of keywords for comments moderation
  * 6018 Modified the list of keywords for comments blacklisting
  *
- * @package Wsal
- * @subpackage Sensors
+ * @package wsal
+ * @subpackage sensors
  */
 class WSAL_Sensors_System extends WSAL_AbstractSensor {
 
@@ -128,6 +128,31 @@ class WSAL_Sensors_System extends WSAL_AbstractSensor {
 		$actype = '';
 		if ( ! empty( $server_array['SCRIPT_NAME'] ) ) {
 			$actype = basename( $server_array['SCRIPT_NAME'], '.php' );
+		}
+
+		if ( isset( $post_array['action'] ) && 'toggle-auto-updates' == $post_array['action']  ) {
+			$event_id = ( 'theme' == $post_array['type'] ) ? 5029 : 5028;
+
+			if ( 'theme' == $post_array['type'] ) {
+				$all_themes       = wp_get_themes();
+				$our_theme        = $all_themes[$post_array['asset']];
+				$install_location = $our_theme->get_template_directory();
+				$name             = $our_theme->Name;
+			} else if ( 'plugin' == $post_array['type'] ) {
+				$all_plugins      = get_plugins();
+				$our_plugin       = $all_plugins[$post_array['asset']];
+				$install_location = plugin_dir_path( WP_PLUGIN_DIR . '/' . $post_array['asset'] );
+				$name             = $our_plugin['Name'];
+			}
+
+			$this->plugin->alerts->Trigger(
+				$event_id,
+				array(
+					'install_directory' => $install_location,
+					'name'              => $name,
+					'EventType'         => ( 'enable' == $post_array['state'] ) ? 'enabled' : 'disabled',
+				)
+			);
 		}
 
 		$is_option_page      = 'options' === $actype;
@@ -359,6 +384,34 @@ class WSAL_Sensors_System extends WSAL_AbstractSensor {
 					'updates_status' => $status,
 				)
 			);
+		}
+
+		// Site Language changed.
+		if ( $is_option_page
+			&& wp_verify_nonce( $post_array['_wpnonce'], 'general-options' )
+			&& isset( $post_array['WPLANG'] ) ) {
+			// Is there a better way to turn the language into a "nice name"?
+			require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+			$available_translations = wp_get_available_translations();
+
+			// When English (United States) is selected, the WPLANG post entry is empty so lets account for this.
+			$wplang_setting = get_option( 'WPLANG' );
+			$previous_value = ( ! empty( $wplang_setting ) ) ? $wplang_setting : 'en-US';
+			$new_value      = ( ! empty( $post_array['WPLANG'] ) ) ? $post_array['WPLANG'] : 'en-US';
+
+			// Now lets turn these into a nice, native name - the same as shown to the user when choosing a language.
+			$previous_value = ( isset( $available_translations[$previous_value] ) ) ? $available_translations[$previous_value]['native_name'] : 'English (United States)';
+			$new_value      = ( isset( $available_translations[$new_value] ) ) ? $available_translations[$new_value]['native_name'] : 'English (United States)';
+
+			if ( $previous_value !== $new_value ) {
+				$this->plugin->alerts->Trigger(
+					6045,
+					array(
+						'previous_value' => $previous_value,
+						'new_value'      => $new_value,
+					)
+				);
+			}
 		}
 	}
 

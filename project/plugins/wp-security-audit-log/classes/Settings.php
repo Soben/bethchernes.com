@@ -4,7 +4,7 @@
  *
  * WSAL settings class.
  *
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * This class is the actual controller of the Settings Page.
  *
- * @package Wsal
+ * @package wsal
  */
 class WSAL_Settings {
 
@@ -85,11 +85,18 @@ class WSAL_Settings {
 	protected $_excluded_roles = array();
 
 	/**
-	 * Custom fields excluded from monitoring.
+	 * Custom post meta fields excluded from monitoring.
 	 *
 	 * @var array
 	 */
-	protected $_excluded_custom = array();
+	protected $_excluded_post_meta = array();
+
+	/**
+	 * Custom user meta fields excluded from monitoring.
+	 *
+	 * @var array
+	 */
+	protected $_excluded_user_meta = array();
 
 	/**
 	 * Custom Post Types excluded from monitoring.
@@ -184,7 +191,7 @@ class WSAL_Settings {
 	 * @return boolean
 	 */
 	public function is_admin_bar_notif() {
-		return ! $this->_plugin->GetGlobalSetting( 'disable-admin-bar-notif' );
+		return ! $this->_plugin->GetGlobalBooleanSetting( 'disable-admin-bar-notif', true );
 	}
 
 	/**
@@ -195,7 +202,7 @@ class WSAL_Settings {
 	 * @param boolean $newvalue - True if enabled.
 	 */
 	public function set_admin_bar_notif( $newvalue ) {
-		$this->_plugin->SetGlobalSetting( 'disable-admin-bar-notif', ! $newvalue );
+		$this->_plugin->SetGlobalBooleanSetting( 'disable-admin-bar-notif', ! $newvalue );
 	}
 
 	/**
@@ -331,6 +338,18 @@ class WSAL_Settings {
 	}
 
 	public function SetPruningDateEnabled( $enabled ) {
+
+		$old_setting = $this->_plugin->GetGlobalBooleanSetting( 'pruning-date-e', false );
+		$enable = \WSAL\Helpers\Options::string_to_bool( $enabled );
+		if ( $old_setting !== $enable ) {
+			$event_id = 6052;
+			$alert_data = [
+				'new_setting' => ( $enable ) ? 'Delete events older than ' . $this->_pruning = $this->_plugin->GetGlobalSetting( 'pruning-date' ) . ' ' . $this->_plugin->GetGlobalSetting( 'pruning-unit', 'months' ) : 'Keep all data',
+				'previous_setting' => ( $old_setting ) ? 'Delete events older than ' . $this->_pruning = $this->_plugin->GetGlobalSetting( 'pruning-date' ) . ' ' . $this->_plugin->GetGlobalSetting( 'pruning-unit', 'months' ) : 'Keep all data',
+			];
+			$this->_plugin->alerts->Trigger( $event_id, $alert_data );
+		}
+
 		$this->_plugin->SetGlobalBooleanSetting( 'pruning-date-e', $enabled );
 	}
 
@@ -361,6 +380,16 @@ class WSAL_Settings {
 	 * @param bool $enable - Enable/Disable.
 	 */
 	public function set_login_page_notification( $enable ) {
+		//Only trigger an event if an actual changes is made.
+		$old_setting = $this->_plugin->GetGlobalBooleanSetting( 'login_page_notification', false );
+		$enable = \WSAL\Helpers\Options::string_to_bool( $enable );
+		if ( $old_setting !== $enable ) {
+			$event_id = 6046;
+			$alert_data = [
+				'EventType' => ( $enable ) ? 'enabled' : 'disabled',
+			];
+			$this->_plugin->alerts->Trigger( $event_id, $alert_data );
+		}
 		$this->_plugin->SetGlobalBooleanSetting( 'login_page_notification', $enable );
 	}
 
@@ -380,6 +409,10 @@ class WSAL_Settings {
 	 */
 	public function set_login_page_notification_text( $text ) {
 		$text = wp_kses( $text, $this->_plugin->allowed_html_tags );
+		$old_setting = $this->_plugin->GetGlobalSetting( 'login_page_notification_text' );
+		if ( ! empty( $old_setting ) && ! empty( $text ) && ! is_null( $old_setting ) && $old_setting !== $text ) {
+			$this->_plugin->alerts->Trigger( 6047 );
+		}
 		$this->_plugin->SetGlobalSetting( 'login_page_notification_text', $text );
 	}
 
@@ -432,6 +465,15 @@ class WSAL_Settings {
 	 * @param bool $enabled
 	 */
 	public function SetIncognito( $enabled ) {
+		$old_value = $this->_plugin->GetGlobalSetting( 'hide-plugin' );
+		$old_value = ( $old_value === "yes" ) ? true : false;
+		if ( $old_value !== $enabled ) {
+			$alert_data = [
+				'EventType' => ( $enabled ) ? 'enabled' : 'disabled',
+			];
+			$this->_plugin->alerts->Trigger( 6051, $alert_data );
+		}
+
 		$this->_plugin->SetGlobalBooleanSetting( 'hide-plugin', $enabled );
 	}
 
@@ -452,6 +494,39 @@ class WSAL_Settings {
 	 * @param array $users_or_roles – Users/Roles.
 	 */
 	public function SetAllowedPluginViewers( $users_or_roles ) {
+
+		$old_value      = $this->_plugin->GetGlobalSetting( 'plugin-viewers' );
+		$changes        = $this->determine_added_and_removed_items( $old_value, implode( ',', $users_or_roles ) );
+
+		if ( ! empty( $changes[ 'added' ] ) ) {
+			foreach ( $changes[ 'added' ] as $user ) {
+				$this->_plugin->alerts->Trigger(
+					6050,
+					array(
+						'user'           => $user,
+						'previous_users' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'added',
+					)
+				);
+			}
+		}
+
+		if ( ! empty( $changes[ 'removed' ] ) && ! empty( $old_value ) ) {
+			foreach ( $changes[ 'removed' ] as $user ) {
+				if ( ! empty( $user ) ) {
+					$this->_plugin->alerts->Trigger(
+						6050,
+						array(
+							'user'           => $user,
+							'previous_users' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+							'EventType'      => 'removed',
+						)
+					);
+				}
+			}
+		}
+
+
 		$this->_viewers = $users_or_roles;
 		$this->_plugin->SetGlobalSetting( 'plugin-viewers', implode( ',', $this->_viewers ) );
 	}
@@ -473,6 +548,16 @@ class WSAL_Settings {
 	 * @since 3.2.3
 	 */
 	public function set_restrict_plugin_setting( $setting ) {
+		$old_value = $this->_plugin->GetGlobalSetting( 'restrict-plugin-settings', 'only_admins' );
+
+		if ( ! is_null( $old_value ) && $old_value !== $setting ) {
+			$alert_data = [
+				'new_setting' => ucfirst( str_replace( '_', ' ', $setting ) ),
+				'previous_setting' => ucfirst( str_replace( '_', ' ', $old_value  ) ),
+			];
+			$this->_plugin->alerts->Trigger( 6049, $alert_data );
+		}
+
 		$this->_plugin->SetGlobalSetting( 'restrict-plugin-settings', $setting );
 	}
 
@@ -698,6 +783,14 @@ class WSAL_Settings {
 	}
 
 	public function SetMainIPFromProxy( $enabled ) {
+		$old_value = $this->_plugin->GetGlobalBooleanSetting( 'use-proxy-ip' );
+		$enabled = \WSAL\Helpers\Options::string_to_bool( $enabled );
+		if ( $old_value !== $enabled ) {
+			$alert_data = [
+				'EventType' => ( $enabled ) ? 'enabled' : 'disabled',
+			];
+			$this->_plugin->alerts->Trigger( 6048, $alert_data );
+		}
 		$this->_plugin->SetGlobalBooleanSetting( 'use-proxy-ip', $enabled );
 	}
 
@@ -747,6 +840,7 @@ class WSAL_Settings {
 			'HTTP_X_FORWARDED_FOR',
 			'HTTP_X_FORWARDED',
 			'HTTP_X_CLUSTER_CLIENT_IP',
+			'X-ORIGINAL-FORWARDED-FOR',
 			'HTTP_FORWARDED_FOR',
 			'HTTP_FORWARDED',
 			'REMOTE_ADDR',
@@ -827,6 +921,35 @@ class WSAL_Settings {
 	 * Users excluded from monitoring.
 	 */
 	public function SetExcludedMonitoringUsers( $users ) {
+
+		$old_value             = $this->_plugin->GetGlobalSetting( 'excluded-users', [] );
+		$changes               = $this->determine_added_and_removed_items( $old_value, implode( ',', $users ) );
+
+		if ( ! empty( $changes[ 'added' ] ) ) {
+			foreach ( $changes[ 'added' ] as $user ) {
+				$this->_plugin->alerts->Trigger(
+					6053,
+					array(
+						'user'           => $user,
+						'previous_users' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'added',
+					)
+				);
+			}
+		}
+		if ( ! empty( $changes[ 'removed' ] ) && ! empty( $old_value ) ) {
+			foreach ( $changes[ 'removed' ] as $user ) {
+				$this->_plugin->alerts->Trigger(
+					6053,
+					array(
+						'user'           => $user,
+						'previous_users' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'removed',
+					)
+				);
+			}
+		}
+
 		$this->_excluded_users = $users;
 		$this->_plugin->SetGlobalSetting( 'excluded-users', esc_html( implode( ',', $this->_excluded_users ) ) );
 	}
@@ -845,6 +968,36 @@ class WSAL_Settings {
 	 * @since 2.6.7
 	 */
 	public function set_excluded_post_types( $post_types ) {
+
+		$old_value         = $this->_plugin->GetGlobalSetting( 'custom-post-types', [] );
+		$changes           = $this->determine_added_and_removed_items( $old_value, implode( ',', $post_types ) );
+
+		if ( ! empty( $changes[ 'added' ] ) ) {
+			foreach ( $changes[ 'added' ] as $post_type ) {
+				$this->_plugin->alerts->Trigger(
+					6056,
+					array(
+						'post_type'      => $post_type,
+						'previous_types' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'added',
+					)
+				);
+			}
+		}
+
+		if ( ! empty( $changes[ 'removed' ] ) && ! empty( $old_value ) ) {
+			foreach ( $changes[ 'removed' ] as $post_type ) {
+				$this->_plugin->alerts->Trigger(
+					6056,
+					array(
+						'post_type'      => $post_type,
+						'previous_types' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'removed',
+					)
+				);
+			}
+		}
+
 		$this->_post_types = $post_types;
 		$this->_plugin->SetGlobalSetting( 'custom-post-types', esc_html( implode( ',', $this->_post_types ) ) );
 	}
@@ -867,8 +1020,38 @@ class WSAL_Settings {
 	 * @param array $roles - Array of roles.
 	 */
 	public function SetExcludedMonitoringRoles( $roles ) {
+
+		// Trigger alert.
+		$old_value             = $this->_plugin->GetGlobalSetting( 'excluded-roles', [] );
+		$changes               = $this->determine_added_and_removed_items( $old_value, implode( ',', $roles ) );
+
+		if ( ! empty( $changes[ 'added' ] ) ) {
+			foreach ( $changes[ 'added' ] as $user ) {
+				$this->_plugin->alerts->Trigger(
+					6054,
+					array(
+						'role'           => $user,
+						'previous_users' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'added',
+					)
+				);
+			}
+		}
+		if ( ! empty( $changes[ 'removed' ] ) && ! empty( $old_value ) ) {
+			foreach ( $changes[ 'removed' ] as $user ) {
+				$this->_plugin->alerts->Trigger(
+					6054,
+					array(
+						'role'           => $user,
+						'previous_users' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'removed',
+					)
+				);
+			}
+		}
+
 		$this->_excluded_roles = $roles;
-		$this->_plugin->SetGlobalSetting( 'excluded-roles', esc_html( implode( ',', $this->_excluded_roles ) ) );
+		$this->_plugin->SetGlobalSetting( 'excluded-roles', esc_html( implode( ',', $roles ) ) );
 	}
 
 	/**
@@ -882,25 +1065,146 @@ class WSAL_Settings {
 	}
 
 	/**
-	 * Custom fields excluded from monitoring.
+	 * Updates custom post meta fields excluded from monitoring.
+	 *
+	 * @param array $custom
 	 */
-	public function SetExcludedMonitoringCustom( $custom ) {
-		$this->_excluded_custom = $custom;
-		$this->_plugin->SetGlobalSetting( 'excluded-custom', esc_html( implode( ',', $this->_excluded_custom ) ) );
+	public function SetExcludedPostMetaFields( $custom ) {
+		$old_value             = $this->GetExcludedPostMetaFields();
+		$changes               = $this->determine_added_and_removed_items( $old_value, implode( ',', $custom ) );
+
+		if ( ! empty( $changes[ 'added' ] ) ) {
+			foreach ( $changes[ 'added' ] as $custom_field ) {
+				$this->_plugin->alerts->Trigger(
+					6057,
+					array(
+						'custom_field'    => $custom_field,
+						'previous_fields' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'added',
+					)
+				);
+			}
+		}
+
+		if ( ! empty( $changes[ 'removed' ] ) && ! empty( $old_value ) ) {
+			foreach ( $changes[ 'removed' ] as $custom_field ) {
+				$this->_plugin->alerts->Trigger(
+					6057,
+					array(
+						'custom_field'    => $custom_field,
+						'previous_fields' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'removed',
+					)
+				);
+			}
+		}
+
+		$this->_excluded_post_meta = $custom;
+		$this->_plugin->SetGlobalSetting( 'excluded-post-meta', esc_html( implode( ',', $this->_excluded_post_meta ) ) );
 	}
 
-	public function GetExcludedMonitoringCustom() {
-		if ( empty( $this->_excluded_custom ) ) {
-			$this->_excluded_custom = array_unique( array_filter( explode( ',', $this->_plugin->GetGlobalSetting( 'excluded-custom' ) ) ) );
-			asort( $this->_excluded_custom );
+	/**
+	 * Retrieves a list of post meta fields excluded from monitoring.
+	 *
+	 * @return array
+	 */
+	public function GetExcludedPostMetaFields() {
+		if ( empty( $this->_excluded_post_meta ) ) {
+			$this->_excluded_post_meta = array_unique( array_filter( explode( ',', $this->_plugin->GetGlobalSetting( 'excluded-post-meta' ) ) ) );
+			asort( $this->_excluded_post_meta );
 		}
-		return $this->_excluded_custom;
+		return $this->_excluded_post_meta;
+	}
+
+	/**
+	 * Updates custom user meta fields excluded from monitoring.
+	 *
+	 * @param array $custom
+	 *
+	 * @since 4.3.2
+	 */
+	public function SetExcludedUserMetaFields( $custom ) {
+
+		$old_value             = $this->GetExcludedUserMetaFields();
+		$changes               = $this->determine_added_and_removed_items( $old_value, implode( ',', $custom ) );
+
+		if ( ! empty( $changes[ 'added' ] ) ) {
+			foreach ( $changes[ 'added' ] as $custom_field ) {
+				$this->_plugin->alerts->Trigger(
+					6058,
+					array(
+						'custom_field'    => $custom_field,
+						'previous_fields' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'added',
+					)
+				);
+			}
+		}
+
+		if ( ! empty( $changes[ 'removed' ] ) && ! empty( $old_value ) ) {
+			foreach ( $changes[ 'removed' ] as $custom_field ) {
+				$this->_plugin->alerts->Trigger(
+					6058,
+					array(
+						'custom_field'    => $custom_field,
+						'previous_fields' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'      => 'removed',
+					)
+				);
+			}
+		}
+
+		$this->_excluded_user_meta = $custom;
+		$this->_plugin->SetGlobalSetting( 'excluded-user-meta', esc_html( implode( ',', $this->_excluded_user_meta ) ) );
+	}
+
+	/**
+	 * Retrieves a list of user meta fields excluded from monitoring.
+	 *
+	 * @return array
+	 * @since 4.3.2
+	 */
+	public function GetExcludedUserMetaFields() {
+		if ( empty( $this->_excluded_user_meta ) ) {
+			$this->_excluded_user_meta = array_unique( array_filter( explode( ',', $this->_plugin->GetGlobalSetting( 'excluded-user-meta' ) ) ) );
+			asort( $this->_excluded_user_meta );
+		}
+
+		return $this->_excluded_user_meta;
 	}
 
 	/**
 	 * IP excluded from monitoring.
 	 */
 	public function SetExcludedMonitoringIP( $ip ) {
+		$old_value          = $this->_plugin->GetGlobalSetting( 'excluded-ip', [] );
+		$changes            = $this->determine_added_and_removed_items( $old_value, implode( ',', $ip ) );
+
+		if ( ! empty( $changes[ 'added' ] ) ) {
+			foreach ( $changes[ 'added' ] as $user ) {
+				$this->_plugin->alerts->Trigger(
+					6055,
+					array(
+						'ip'           => $user,
+						'previous_ips' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'    => 'added',
+					)
+				);
+			}
+		}
+		if ( ! empty( $changes[ 'removed' ] ) && ! empty( $old_value ) ) {
+			foreach ( $changes[ 'removed' ] as $user ) {
+				$this->_plugin->alerts->Trigger(
+					6055,
+					array(
+						'ip'           => $user,
+						'previous_ips' => ( empty( $old_value ) ) ? $this->tidy_blank_values( $old_value ) : str_replace( ',', ', ', $old_value ),
+						'EventType'    => 'removed',
+					)
+				);
+			}
+		}
+
 		$this->_excluded_ip = $ip;
 		$this->_plugin->SetGlobalSetting( 'excluded-ip', esc_html( implode( ',', $this->_excluded_ip ) ) );
 	}
@@ -940,19 +1244,13 @@ class WSAL_Settings {
 
 		// Check if the time format does not have seconds.
 		if ( stripos( $time_format, 's' ) === false ) {
-			if ( stripos( $time_format, '.v' ) !== false ) {
-				$time_format = str_replace( '.v', '', $result );
-			}
 			$time_format .= ':s'; // Add seconds to time format.
-			$time_format .= '.$$$'; // Add milliseconds to time format.
-		} else {
-			// Check if the time format does have milliseconds.
-			if ( stripos( $time_format, '.v' ) !== false ) {
-				$time_format = str_replace( '.v', '.$$$', $result );
-			} else {
-				$time_format .= '.$$$';
-			}
 		}
+
+		if ($this->get_show_milliseconds()) {
+			$time_format .= '.$$$'; // Add milliseconds to time format.
+		}
+
 
 		if ( $has_am_pm ) {
 			$time_format .= preg_replace( '/\s/', $use_nb_space_for_am_pm ? '&\n\b\s\p;' : ' ', $am_pm_fraction );
@@ -1055,14 +1353,6 @@ class WSAL_Settings {
 	 */
 	public function set_type_username( $newvalue ) {
 		$this->_plugin->SetGlobalSetting( 'type_username', $newvalue );
-	}
-
-	public function GetAdapterConfig( $name_field, $default_value = false ) {
-		return $this->_plugin->GetGlobalSetting( $name_field, $default_value );
-	}
-
-	public function SetAdapterConfig( $name_field, $newvalue ) {
-		$this->_plugin->SetGlobalSetting( $name_field, trim( $newvalue ) );
 	}
 
 	/**
@@ -1210,31 +1500,6 @@ class WSAL_Settings {
 		return $this->_plugin->GetGlobalSetting( 'log-visitor-failed-login-limit', 10 );
 	}
 
-	public function IsArchivingEnabled() {
-		return $this->_plugin->GetGlobalSetting( 'archiving-e' );
-	}
-
-	/**
-	 * Switch to Archive DB if is enabled.
-	 */
-	public function SwitchToArchiveDB() {
-		if ( $this->IsArchivingEnabled() ) {
-			$archive_type       = $this->_plugin->GetGlobalSetting( 'archive-type' );
-			$archive_user       = $this->_plugin->GetGlobalSetting( 'archive-user' );
-			$password           = $this->_plugin->GetGlobalSetting( 'archive-password' );
-			$archive_name       = $this->_plugin->GetGlobalSetting( 'archive-name' );
-			$archive_hostname   = $this->_plugin->GetGlobalSetting( 'archive-hostname' );
-			$archive_baseprefix = $this->_plugin->GetGlobalSetting( 'archive-base-prefix' );
-			$archive_ssl        = $this->_plugin->GetGlobalSetting( 'archive-ssl', false );
-			$archive_cc         = $this->_plugin->GetGlobalSetting( 'archive-client-certificate', false );
-			$archive_ssl_ca     = $this->_plugin->GetGlobalSetting( 'archive-ssl-ca', false );
-			$archive_ssl_cert   = $this->_plugin->GetGlobalSetting( 'archive-ssl-cert', false );
-			$archive_ssl_key    = $this->_plugin->GetGlobalSetting( 'archive-ssl-key', false );
-			$config             = WSAL_Connector_ConnectorFactory::GetConfigArray( $archive_type, $archive_user, $password, $archive_name, $archive_hostname, $archive_baseprefix, $archive_ssl, $archive_cc, $archive_ssl_ca, $archive_ssl_cert, $archive_ssl_key );
-			$this->_plugin->getConnector( $config )->getAdapter( 'Occurrence' );
-		}
-	}
-
 
 	/**
 	 * Method: Get Token Type.
@@ -1251,8 +1516,18 @@ class WSAL_Settings {
 			$users[] = $obj->user_login;
 		}
 
+		// Check if the token matched users.
+		if ( in_array( $token, $users ) ) {
+			return 'user';
+		}
+
 		// Get user roles.
 		$roles = array_keys( get_editable_roles() );
+
+		// Check if the token matched user roles.
+		if ( in_array( $token, $roles ) ) {
+			return 'role';
+		}
 
 		// Get custom post types.
 		$post_types = get_post_types( array(), 'names', 'and' );
@@ -1263,16 +1538,6 @@ class WSAL_Settings {
 			foreach ( $network_cpts as $cpt ) {
 				$post_types[ $cpt ] = $cpt;
 			}
-		}
-
-		// Check if the token matched users.
-		if ( in_array( $token, $users ) ) {
-			return 'user';
-		}
-
-		// Check if the token matched user roles.
-		if ( in_array( $token, $roles ) ) {
-			return 'role';
 		}
 
 		// Check if the token matched post types.
@@ -1393,395 +1658,6 @@ class WSAL_Settings {
 	}
 
 	/**
-	 * Method: Meta data formatter.
-	 *
-	 * @param string  $name - Name of the data.
-	 * @param mixed   $value - Value of the data.
-	 * @param integer $occ_id - Event occurrence ID.
-	 * @param mixed   $highlight - Highlight format.
-	 * @param mixed   $meta_context - Context for formatting.
-	 *
-	 * @return string
-	 * @throws Freemius_Exception
-	 */
-	public function meta_formatter( $name, $value, $occ_id = null, $highlight = null, $meta_context = false ) {
-
-		// Setup the correct context.
-		$meta_context = ( $highlight && 'daily-report' === $highlight ) ? $highlight : $meta_context;
-
-		// Define wrapper html based on context of message.
-		switch ( $meta_context ) {
-			case 'reports':
-			case 'sms':
-				$highlight_start_tag = '';
-				$highlight_end_tag   = '';
-				$is_url_shortner     = $this->_plugin->GetGlobalBooleanSetting( 'is-url-shortner' );
-				break;
-			case 'slack':
-				$highlight_start_tag = '*';
-				$highlight_end_tag   = '*';
-				break;
-			case 'daily-report':
-				$highlight_start_tag = '<span style="color: #149247;">';
-				$highlight_end_tag   = '</span>';
-				break;
-			default:
-				$highlight_start_tag = '<strong>';
-				$highlight_end_tag   = '</strong>';
-		}
-
-		// Reassign the variable tags based on context.
-		switch ( true ) {
-			case '%Message%' == $name:
-				return esc_html( $value );
-
-			case '%CommentLink%' == $name:
-			case '%CommentMsg%' == $name:
-				switch ( $meta_context ) {
-					case 'sms':
-						return wp_strip_all_tags( $value );
-						break;
-					case 'reports':
-						return strip_tags( $value );
-						break;
-					default:
-						return $value;
-				}
-
-			case '%MetaLink%' == $name:
-				if ( ! empty( $value ) ) {
-					switch ( $meta_context ) {
-						case 'sms':
-						case 'reports':
-						case 'slack':
-							return '';
-					}
-					return $highlight_start_tag . "<a href=\"#\" data-disable-custom-nonce='" . wp_create_nonce( 'disable-custom-nonce' . $value ) . "' onclick=\"return WsalDisableCustom(this, '" . $value . "');\"> Exclude Custom Field from the Monitoring</a>" . $highlight_end_tag;
-				} else {
-					return '';
-				}
-
-			case '%RevisionLink%' === $name:
-				$check_value = (string) $value;
-				if ( 'NULL' !== $check_value ) {
-					switch ( $meta_context ) {
-						case 'sms':
-							$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-							return esc_html( ' Navigate to this URL to view the changes: ' . $url );
-							break;
-						case 'reports':
-							return esc_html( ' Navigate to this URL to view the changes ' . $value );
-							break;
-						case 'slack':
-							return ' Click <' . esc_url( $value ) . '|here> to see the content changes.';
-							break;
-						default:
-							return $highlight_start_tag . '<a target="_blank" href="' . esc_url( $value ) . '">' . __( 'View the content changes', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-					}
-				}
-				return false;
-
-			case '%EditorLinkPage%' == $name:
-				if ( 'sms' === $meta_context ) {
-					$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-					return ' View the page: ' . esc_url( $url );
-				}
-				return $highlight_start_tag . '<a target="_blank" href="' . esc_url( $value ) . '">' . __( 'View page in the editor', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-
-			case '%EditorLinkPost%' == $name:
-				switch ( $meta_context ) {
-					case 'sms':
-						$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-						return ' View the post: ' . esc_url( $url );
-						break;
-					case 'reports':
-						return ' View the post: ' . esc_url( $value );
-						break;
-					case 'slack':
-						return ' View the <' . esc_url( $value ) . '|post>';
-						break;
-					default:
-						return $highlight_start_tag . '<a target="_blank" href="' . esc_url( $value ) . '">' . __( 'View post in the editor', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-				}
-
-			case '%EditorLinkOrder%' == $name:
-				switch ( $meta_context ) {
-					case 'sms':
-						$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-						return ' View the order: ' . esc_url( $url );
-						break;
-					case 'slack':
-						return ' <' . esc_url( $value ) . '|View Order>';
-						break;
-					default:
-						return $highlight_start_tag. '<a target="_blank" href="' . esc_url( $value ) . '">' . __( 'View Order', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-				}
-
-			case '%CategoryLink%' == $name:
-			case '%cat_link%' == $name:
-			case '%ProductCatLink%' == $name:
-				switch ( $meta_context ) {
-					case 'sms':
-						$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-						return ' View the category: ' . esc_url( $url );
-						break;
-					case 'slack':
-						return ' View the <' . esc_url( $value ) . '|category>';
-						break;
-					default:
-						return $highlight_start_tag . '<a target="_blank" href="' . esc_url( $value ) . '">' . __( 'View category', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-				}
-
-			case '%TagLink%' == $name:
-				switch ( $meta_context ) {
-					case 'sms':
-						$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-						return ' View the tag: ' . esc_url( $url );
-						break;
-					case 'reports':
-						return ' View the tag: ' . esc_url( $value );
-						break;
-					case 'slack':
-						return ' View the <' . esc_url( $value ) . '|tag>';
-						break;
-					default:
-						return $highlight_start_tag . '<a target="_blank" href="' . esc_url( $value ) . '">' . __( 'View tag', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-				}
-
-			case '%EditUserLink%' === $name:
-				if ( 'NULL' !== $value ) {
-					return $highlight_start_tag . '<a href="' . $value . '" target="_blank">' . __( 'User profile page', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-				}
-				return '';
-
-			case in_array( $name, array( '%MetaValue%', '%MetaValueOld%', '%MetaValueNew%' ) ):
-				return $highlight_start_tag . (
-					strlen( $value ) > 50 ? ( esc_html( substr( $value, 0, 50 ) ) . '&hellip;' ) : esc_html( $value )
-				) . $highlight_end_tag;
-
-			case '%ClientIP%' == $name:
-			case '%IPAddress%' == $name:
-				if ( is_string( $value ) ) {
-					return $highlight_start_tag . str_replace( array( '"', '[', ']' ), '', $value ) . $highlight_end_tag;
-				} else {
-					return '<i>unknown</i>';
-				}
-
-			case '%PostUrlIfPlublished%' === $name:
-				// get connection.
-				$db_config = WSAL_Connector_ConnectorFactory::GetConfig(); // Get DB connector configuration.
-				$connector = $this->_plugin->getConnector( $db_config ); // Get connector for DB.
-				$wsal_db   = $connector->getConnection(); // Get DB connection.
-				// get values needed.
-				$meta_adapter = new WSAL_Adapters_MySQL_Meta( $wsal_db );
-				$post_id      = $meta_adapter->LoadByNameAndOccurrenceId( 'PostID', $occ_id );
-				$occ_post     = ( isset( $post_id['value'] ) ) ? get_post( $post_id['value'] ) : null;
-				// start with an empty string.
-				$return_value = '';
-				if ( null !== $occ_post && 'publish' === $occ_post->post_status ) {
-					$post_permalink = get_permalink( $occ_post->ID );
-					switch ( $meta_context ) {
-						case 'sms':
-							$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $post_permalink ) : $post_permalink;
-							$return_value = ' URL: ' . esc_url( $url );
-							break;
-						case 'reports':
-							$return_value = ' URL: ' . esc_url( $post_permalink );
-							break;
-						case 'slack':
-							$return_valuen = ' URL <' . esc_url( $post_permalink ) . '|tag>';
-							break;
-						default:
-							$return_value  = '<br>URL: ' . $highlight_start_tag . '<a href="' . esc_url( $post_permalink ) . '" title="' . esc_attr( $occ_post->post_title ) . '" target="_blank">' . esc_html( $post_permalink ) . '</a>' . $highlight_end_tag;
-					}
-				}
-				return $return_value;
-
-			case '%MenuUrl%' === $name:
-				// get connection.
-				$db_config = WSAL_Connector_ConnectorFactory::GetConfig(); // Get DB connector configuration.
-				$connector = $this->_plugin->getConnector( $db_config ); // Get connector for DB.
-				$wsal_db   = $connector->getConnection(); // Get DB connection.
-
-				// get values needed.
-				$meta_adapter = new WSAL_Adapters_MySQL_Meta( $wsal_db );
-				$event_data   = $meta_adapter->LoadByNameAndOccurrenceId( 'MenuID', $occ_id );
-				$menu_id      = $event_data['value'];
-
-				// start with an empty string.
-				$return_value = '';
-
-				if ( null !== $menu_id ) {
-					$menu_url = add_query_arg(
-						array(
-							'action' => 'edit',
-							'menu'   => $menu_id,
-						),
-						admin_url( 'nav-menus.php' )
-					);
-					switch ( $meta_context ) {
-						case 'sms':
-							$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $menu_url ) : $menu_url;
-							$return_value = ' View Menu: ' . esc_url( $url );
-							break;
-						case 'slack':
-							$return_valuen = ' View Menu <' . esc_url( $menu_url ) . '|tag>';
-							break;
-						default:
-							$return_value = '<br>' . $highlight_start_tag . '<a href="' . esc_url( $menu_url ) . '" title="' . esc_html__( 'View Menu', 'wp-security-audit-log' ) . '" target="_blank">' . esc_html__( 'View Menu', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-					}
-				}
-				return $return_value;
-
-			case '%LogFileLink%' === $name: // Failed login file link.
-				return '';
-
-			case '%Attempts%' === $name: // Failed login attempts.
-				$check_value = (int) $value;
-				if ( 0 === $check_value ) {
-					return '';
-				} else {
-					return $value;
-				}
-
-			case '%LogFileText%' === $name: // Failed login file text.
-				if ( 'slack' === $meta_context || 'reports' === $meta_context || 'sms' === $meta_context ) {
-					return '';
-				}
-				return $highlight_start_tag . '<a href="javascript:;" onclick="download_failed_login_log( this )" data-download-nonce="' . esc_attr( wp_create_nonce( 'wsal-download-failed-logins' ) ) . '" title="' . esc_html__( 'Download the log file.', 'wp-security-audit-log' ) . '">' . esc_html__( 'Download the log file.', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-
-			case strncmp( $value, 'http://', 7 ) === 0:
-			case strncmp( $value, 'https://', 8 ) === 0:
-				switch ( $meta_context ) {
-					case 'reports':
-						return esc_html( $value );
-						break;
-					case 'sms':
-						$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-						return esc_url( $url );
-						break;
-					case 'slack' :
-						return '<' . esc_html( $value ) . '|' . esc_html( $value ) . '>';
-						break;
-					default:
-						$updated_line = apply_filters( 'wsal_link_filter', $value, $name );
-						if ( $updated_line !== $value ) {
-							return $updated_line;
-						} else {
-							return '<a href="' . esc_html( $value ) . '" title="' . esc_html( $value ) . '" target="_blank">' . esc_html( $value ) . '</a>';
-						}
-				}
-
-			case in_array( $name, array( '%PostStatus%', '%ProductStatus%' ), true ):
-				if ( ! empty( $value ) && 'publish' === $value ) {
-					return $highlight_start_tag . esc_html__( 'published', 'wp-security-audit-log' ) . $highlight_end_tag;
-				} else {
-					return $highlight_start_tag . esc_html( $value ) . $highlight_end_tag;
-				}
-
-			case '%multisite_text%' === $name:
-				if ( $this->_plugin->IsMultisite() && $value ) {
-					$site_info = get_blog_details( $value, true );
-					if ( $site_info ) {
-						if ( 'slack' === $meta_context ) {
-							return ' on site <' . esc_url( $site_info->siteurl ) . '|' . esc_html( $site_info->blogname ) . '>';
-						} else {
-							return ' on site ' . $highlight_start_tag . '<a href="' . esc_url( $site_info->siteurl ) . '">' . esc_html( $site_info->blogname ) . '</a>' . $highlight_end_tag;
-						}
-					}
-					return;
-				}
-				return;
-
-			case '%ReportText%' === $name:
-				return;
-
-			case '%ChangeText%' === $name:
-				return;
-
-			case '%ScanError%' === $name:
-				if ( 'NULL' === $value ) {
-					return false;
-				}
-				if ( 'slack' === $meta_context ) {
-					return ' with errors. ' . sprintf( __( 'Contact us on %s for assistance', 'wp-security-audit-log' ), '<mailto:support@wpsecurityauditlog.com|support@wpsecurityauditlog.com>' );
-				}
-				/* translators: Mailto link for support. */
-				return ' with errors. ' . sprintf( __( 'Contact us on %s for assistance', 'wp-security-audit-log' ), '<a href="mailto:support@wpsecurityauditlog.com" target="_blank">support@wpsecurityauditlog.com</a>' );
-
-			case '%TableNames%' === $name:
-				$value = str_replace( ',', ', ', $value );
-				return $highlight_start_tag . esc_html( $value ) . $highlight_end_tag;
-
-			case '%FileSettings%' === $name:
-				$file_settings_args = array(
-					'page' => 'wsal-settings',
-					'tab'  => 'file-changes',
-				);
-				$file_settings      = add_query_arg( $file_settings_args, admin_url( 'admin.php' ) );
-				switch ( $meta_context ) {
-					case 'sms':
-						$file_settings = $this->is_url_shortner ? $this->plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-						return esc_html__( 'plugin settings', 'wp-security-audit-log' ) . ': ' . $file_settings;
-						break;
-					case 'slack':
-						return '<' . esc_url( $file_settings ) . '|' . esc_html__( 'plugin settings', 'wp-security-audit-log' ) . '>';
-						break;
-					default:
-						return $highlight_start_tag . '<a href="' . esc_url( $file_settings ) . '">' . esc_html__( 'Increase maximum file size limit', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-				}
-
-			case '%ContactSupport%' === $name:
-				switch ( $meta_context ) {
-					case 'sms':
-						$value = 'https://wpactivitylog.com/contact/';
-						$url   = $this->is_url_shortner ? $this->plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-						return esc_html__( 'contact our support', 'wp-security-audit-log' ) . ': ' . $url;
-						break;
-					case 'slack':
-						return '<https://wpactivitylog.com/contact|' . esc_html__( 'contact our support', 'wp-security-audit-log' ) . '>';
-						break;
-				}
-				return $highlight_start_tag . '<a href="https://wpactivitylog.com/contact/" target="_blank">' . esc_html__( 'Contact Support', 'wp-security-audit-log' ) . '</a>' . $highlight_end_tag;
-
-			case '%LineBreak%' === $name:
-				switch ( $meta_context ) {
-					case 'reports':
-					case 'slack':
-					case 'sms':
-						return '';
-				}
-				return '<br>';
-
-			case '%PluginFile%' === $name:
-				return $highlight_start_tag . dirname( $value ) . $highlight_end_tag;
-
-			case '%LinkFile%' == $name:
-				switch ( $meta_context ) {
-					case 'sms':
-						$url = $is_url_shortner ? $this->_plugin->wsalCommon->shorten_url_bitly( $value ) : $value;
-						return 'To view the requests open the log file ' . esc_url( $url );
-						break;
-					case 'slack':
-						return 'Click <' . esc_url( add_query_arg( 'page', 'wsal-togglealerts', admin_url( 'admin.php' ) ) ) . '|here> to log such requests to file';
-						break;
-					default:
-						return '<br>To view the requests open the log file ' . esc_url( $value );
-				}
-
-			case '%URL%' == $name:
-				if ( 'sms' === $meta_context ) {
-					return '.';
-				}
-
-			default:
-				// if we didn't get a match already try get one via a filter.
-				$filtered_formatted_value = apply_filters( 'wsal_meta_formatter_custom_formatter', $value, $name );
-				return ( $value !== $filtered_formatted_value ) ? $filtered_formatted_value : $highlight_start_tag . esc_html( $value ) . $highlight_end_tag;
-		}
-	}
-
-	/**
 	 * Method: Get view site id.
 	 *
 	 * @since 3.2.4
@@ -1871,23 +1747,6 @@ class WSAL_Settings {
 		global $wpdb;
 		$sql = 'SELECT COUNT(*) FROM ' . $wpdb->blogs;
 		return (int) $wpdb->get_var( $sql );
-	}
-
-	/**
-	 * Method: Meta data formatter.
-	 *
-	 * @param string $name - Name of the data.
-	 * @param mixed $value - Value of the data.
-	 * @param integer $occ_id - Event occurrence ID.
-	 * @param mixed $highlight - Highlight format.
-	 *
-	 * @return string
-	 * @throws Freemius_Exception
-	 * @since 3.3
-	 *
-	 */
-  public function slack_meta_formatter( $name, $value, $occ_id, $highlight ) {
-		return $this->_plugin->settings()->meta_formatter( $name, $value, $occ_id, $highlight, 'slack' );
 	}
 
 	/**
@@ -2203,7 +2062,40 @@ class WSAL_Settings {
 	}
 
 	public function delete_mainwp_enforced_settings() {
-		$this->_plugin->DeleteSettingByName( WpSecurityAuditLog::OPTIONS_PREFIX . 'mainwp_enforced_settings' );
+		$this->_plugin->DeleteGlobalSetting( 'mainwp_enforced_settings' );
 	}
 
+	public function determine_added_and_removed_items( $old_value, $value ) {
+		$old_value = ( ! is_array( $old_value ) ) ? explode( ',', $old_value ) : $old_value;
+		$value =  ( ! is_array( $value ) ) ? explode( ',', $value ) : $value;
+		$return = [];
+		$return[ 'removed' ] = array_filter( array_diff( $old_value, $value ) );
+		$return[ 'added' ]   = array_filter( array_diff( $value, $old_value ) );
+
+		return $return;
+	}
+
+	public function tidy_blank_values( $value ) {
+		return ( empty( $value ) ) ? __( 'None provided', 'wp-security-audit-log' ) : $value;
+  }
+
+	/**
+	 * Retrieves current database version.
+	 *
+	 * @return int Current database version number.
+	 * @since 4.3.2
+	 */
+	public function get_database_version() {
+		return (int) $this->_plugin->GetGlobalSetting( 'db_version', 0 );
+	}
+
+	/**
+	 * Updates the current database version.
+	 *
+	 * @param int $version Database version number.
+	 * @since 4.3.2
+	 */
+	public function set_database_version( $version ) {
+		$this->_plugin->SetGlobalSetting( 'db_version', $version );
+	}
 }

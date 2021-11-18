@@ -3,7 +3,7 @@
 /**
  * Utility class for handling request inputs.
  *
- * @package Wsal
+ * @package wsal
  * @since 4.1.4
  */
 class WSAL_Utilities_RequestUtils {
@@ -21,5 +21,29 @@ class WSAL_Utilities_RequestUtils {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Simple check for validating a URL, it must start with http:// or https://.
+	 * and pass FILTER_VALIDATE_URL validation.
+	 *
+	 * @param string $url to check.
+	 *
+	 * @return bool
+	 *
+	 * @since 4.2.1
+	 */
+	public static function is_valid_url( $url ) {
+		// Must start with http:// or https://.
+		if ( 0 !== strpos( $url, 'http://' ) && 0 !== strpos( $url, 'https://' ) ) {
+			return false;
+		}
+
+		// Must pass validation.
+		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }

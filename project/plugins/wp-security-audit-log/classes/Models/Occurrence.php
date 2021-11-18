@@ -5,7 +5,7 @@
  * Occurrence model is the model for the Occurrence adapter,
  * used for get the alert, set the meta fields, etc.
  *
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Occurrence model is the model for the Occurrence adapter,
  * used for get the alert, set the meta fields, etc.
  *
- * @package Wsal
+ * @package wsal
  */
 class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 
@@ -53,6 +53,7 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 	 * Is read.
 	 *
 	 * @var bool
+	 * @deprecated 4.3.2
 	 */
 	public $is_read = false;
 
@@ -60,6 +61,7 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 	 * Is migrated.
 	 *
 	 * @var bool
+	 * @deprecated 4.3.2
 	 */
 	public $is_migrated = false;
 
@@ -69,6 +71,11 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 	 * @var string
 	 */
 	protected $adapterName = 'Occurrence';
+
+	/**
+	 * @var string
+	 */
+	public $_cachedMessage;
 
 	/**
 	 * Returns the alert related to this occurrence.
@@ -89,18 +96,20 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 	/**
 	 * Returns the value of a meta item.
 	 *
-	 * @see WSAL_Adapters_MySQL_Occurrence::GetNamedMeta()
 	 * @param string $name - Name of meta item.
-	 * @param mixed  $default - Default value returned when meta does not exist.
+	 * @param mixed $default - Default value returned when meta does not exist.
+	 *
 	 * @return mixed The value, if meta item does not exist $default returned.
+	 * @see WSAL_Adapters_MySQL_Occurrence::GetNamedMeta()
 	 */
 	public function GetMetaValue( $name, $default = array() ) {
 		// Get meta adapter.
 		$meta = $this->getAdapter()->GetNamedMeta( $this, $name );
-		return maybe_unserialize( $meta['value'] );
+		if ( is_null( $meta ) || ! array_key_exists( 'value', $meta ) ) {
+			return $default;
+		}
 
-		// TO DO: re-introduce add is loaded check before running query
-		// return $meta->IsLoaded() ? $meta->value : $default;
+		return maybe_unserialize( $meta['value'] );
 	}
 
 	/**
@@ -162,27 +171,24 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 	/**
 	 * Gets alert message.
 	 *
-	 * @see WSAL_Alert::GetMessage()
+	 * @param array $meta - Occurrence meta array.
+	 * @param string $context Message context.
 	 *
-	 * @param callable|null $meta_formatter - (Optional) Meta formatter callback.
-	 * @param mixed         $highlight      - (Optional) Highlight format.
-	 * @param array         $meta           - Occurrence meta array.
 	 * @return string Full-formatted message.
+	 * @throws Freemius_Exception
+	 * @see WSAL_Alert::GetMessage()
 	 */
-	public function GetMessage( $meta_formatter = null, $highlight = false, $meta = null ) {
-		if ( ! isset( $this->_cachedmessage ) ) {
-			// Get correct message entry.
-			if ( $this->is_migrated ) {
-				$this->_cachedmessage = $this->GetMetaValue( 'MigratedMesg', false );
-			}
-			if ( ! $this->is_migrated || ! $this->_cachedmessage ) {
-				$this->_cachedmessage = $this->GetAlert()->mesg;
+	public function GetMessage( $meta = null, $context = false ) {
+		if ( ! isset( $this->_cachedMessage ) ) {
+			// message caching
+			if ( ! $this->_cachedMessage ) {
+				$this->_cachedMessage = $this->GetAlert()->mesg;
 			}
 			// Fill variables in message.
 			$meta_array   = null === $meta ? $this->GetMetaArray() : $meta;
 			$alert_object = $this->GetAlert();
 			if ( null !== $alert_object && method_exists( $alert_object, 'GetMessage' ) ) {
-				$this->_cachedmessage = $alert_object->GetMessage( $meta_array, $meta_formatter, $this->_cachedmessage, $this->getId(), $highlight );
+				$this->_cachedMessage = $alert_object->GetMessage( $meta_array, $this->_cachedMessage, $this->getId(), $context );
 			} else {
 				/**
 				 * Reaching this point means we have an event we don't know
@@ -220,7 +226,7 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 						return $message;
 					}
 				}
-				$this->_cachedmessage = isset( $cached_message ) ? $cached_message : sprintf(
+				$this->_cachedMessage = isset( $cached_message ) ? $cached_message : sprintf(
 					/* Translators: 1: html that opens a link, 2: html that closes a link. */
 					__( 'This type of activity / change is no longer monitored. You can create your own custom event IDs to keep a log of such change. Read more about custom events %1$shere%2$s.', 'wp-security-audit-log' ),
 					'<a href="https://wpactivitylog.com/support/kb/create-custom-events-wordpress-activity-log/" rel="noopener noreferrer" target="_blank">',
@@ -228,7 +234,7 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 				);
 			}
 		}
-		return $this->_cachedmessage;
+		return $this->_cachedMessage;
 	}
 
 	/**
@@ -253,41 +259,6 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 	 */
 	public function get_alert_id() {
 		return ( isset( $this->alert_id ) ) ? $this->alert_id : 0;
-	}
-
-	/**
-	 * Gets the username.
-	 *
-	 * @see WSAL_Adapters_MySQL_Occurrence::GetFirstNamedMeta()
-	 *
-	 * @param array $meta - Occurrence meta array.
-	 * @return string User's username.
-	 */
-	public function GetUsername( $meta = null ) {
-		if ( null === $meta ) {
-			$meta = $this->getAdapter()->GetFirstNamedMeta( $this, array( 'Username', 'CurrentUserID' ) );
-
-			if ( $meta ) {
-				switch ( true ) {
-					case 'Username' === $meta->name:
-						return $meta->value;
-					case 'CurrentUserID' === $meta->name:
-						$data = get_userdata( $meta->value );
-						return $data ? $data->user_login : null;
-					default:
-						//  fallback for any other cases would go here
-						break;
-				}
-			}
-		} else {
-			if ( isset( $meta['Username'] ) ) {
-				return $meta['Username'];
-			} elseif ( isset( $meta['CurrentUserID'] ) ) {
-				$data = get_userdata( $meta['CurrentUserID'] );
-				return $data ? $data->user_login : null;
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -330,6 +301,15 @@ class WSAL_Models_Occurrence extends WSAL_Models_ActiveRecord {
 			return $this->GetMetaValue( 'CurrentUserRoles', array() );
 		}
 		return isset( $meta['CurrentUserRoles'] ) ? $meta['CurrentUserRoles'] : array();
+	}
+
+	/**
+	 * Gets the username.
+	 *
+	 * @return string User's username.
+	 */
+	public function GetUsername() {
+		return WSAL_Utilities_UsersUtils::GetUsername( $this->GetMetaArray() );
 	}
 
 	/**

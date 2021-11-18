@@ -5,7 +5,7 @@
  * Comments sensor class file.
  *
  * @since 1.0.0
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -27,8 +27,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 2098 User permanently deleted a comment
  * 2099 User posted a comment
  *
- * @package Wsal
- * @subpackage Sensors
+ * @package wsal
+ * @subpackage sensors
  */
 class WSAL_Sensors_Comments extends WSAL_AbstractSensor {
 
@@ -157,7 +157,7 @@ class WSAL_Sensors_Comments extends WSAL_AbstractSensor {
 					'PostStatus'  => $post->post_status,
 					'CommentID'   => $comment->comment_ID,
 					'Date'        => $comment->comment_date,
-					'CommentLink' => '<a target="_blank" href="' . $comment_link . '">' . $comment->comment_date . '</a>',
+					'CommentLink' => $comment_link
 				);
 
 				// Get user data.
@@ -175,7 +175,6 @@ class WSAL_Sensors_Comments extends WSAL_AbstractSensor {
 					// Set the fields.
 					$fields['Username']         = $user_data->user_login;
 					$fields['CurrentUserRoles'] = $user_roles;
-					$fields['CommentMsg']       = sprintf( 'Posted a comment in response to the post <strong>%s</strong>', $post->post_title );
 					$this->plugin->alerts->Trigger( 2099, $fields );
 				}
 			}

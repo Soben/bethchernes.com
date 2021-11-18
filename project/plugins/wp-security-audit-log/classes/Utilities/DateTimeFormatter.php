@@ -4,7 +4,7 @@
  *
  * Singleton utility class used for formatting date and time strings.
  *
- * @package Wsal
+ * @package wsal
  * @since 4.2.0
  */
 
@@ -129,7 +129,7 @@ class WSAL_Utilities_DateTimeFormatter {
 		//  timezone adjustment
 		$timezone_adjusted_timestamp = $do_timezone_offset ? $timestamp + $this->gmt_offset_sec : $timestamp;
 
-		//  milliseconds in format
+		//  milliseconds in format (this is probably not necessary, but we keep it just to be 100% sure)
 		if ( ! $this->show_milliseconds ) {
 			// remove the milliseconds placeholder from format string.
 			$format = str_replace( '.$$$', '', $format );
@@ -149,23 +149,5 @@ class WSAL_Utilities_DateTimeFormatter {
 
 		return $result;
 
-	}
-
-	/**
-	 * Make clone magic method private, so nobody can clone instance.
-	 */
-	private function __clone() {
-	}
-
-	/**
-	 * Make sleep magic method private, so nobody can serialize instance.
-	 */
-	private function __sleep() {
-	}
-
-	/**
-	 * Make wakeup magic method private, so nobody can unserialize instance.
-	 */
-	private function __wakeup() {
 	}
 }

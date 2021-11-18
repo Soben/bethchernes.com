@@ -2,8 +2,7 @@ version: "3.1"
 
 services:
   wordpress:
-    image: wordpress:5.6.1
-    restart: always
+    image: wordpress:5.8.2
     ports:
       - 3030:80
     environment:
@@ -16,10 +15,10 @@ services:
       - "./project/uploads:/var/www/html/wp-content/uploads:rw"
       - "./project/themes:/var/www/html/wp-content/themes:rw"
       - "./project/plugins:/var/www/html/wp-content/plugins:rw"
+      - "./project/upgrade:/var/www/html/wp-content/upgrade:rw"
 
   db:
     image: mysql:5.7
-    restart: always
     ports:
       - 4306:3306
     environment:

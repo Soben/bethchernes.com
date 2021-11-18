@@ -5,7 +5,7 @@
  * Provides the allowed plugins data as well as a render method to display the
  * items inside of a table with install/actiavte buttons.
  *
- * @package Wsal
+ * @package wsal
  * @since 4.0.1
  */
 
@@ -142,6 +142,9 @@ if ( ! class_exists( 'WSAL_PluginInstallAndActivate' ) ) {
 			// runs through a filter so it can be added to programatically.
 			// NOTE: this means when using we need to test it's still an array.
 			$installable_plugins = apply_filters( 'wsal_filter_installable_plugins', $plugins );
+
+			// Sort them into a a nice order.
+			array_multisort( array_column( $installable_plugins, 'title' ), SORT_ASC, $installable_plugins );
 
 			return $installable_plugins;
 		}

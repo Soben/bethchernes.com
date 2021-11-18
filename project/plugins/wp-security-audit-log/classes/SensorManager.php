@@ -5,7 +5,7 @@
  * Sensor manager class file.
  *
  * @since 1.0.0
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * This class loads all the sensors and initialize them.
  *
- * @package Wsal
+ * @package wsal
  */
 final class WSAL_SensorManager extends WSAL_AbstractSensor {
 
@@ -283,7 +283,7 @@ final class WSAL_SensorManager extends WSAL_AbstractSensor {
 					break;
 
 				case 'LogInOut':
-					if ( is_user_logged_in() || empty( $frontend_events['login'] ) ) {
+					if ( empty( $frontend_events['login'] ) ) {
 						$load_sensor = false;
 					}
 					break;

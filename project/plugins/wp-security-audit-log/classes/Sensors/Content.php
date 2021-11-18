@@ -5,7 +5,7 @@
  * Content sensor class file.
  *
  * @since 1.0.0
- * @package Wsal
+ * @package wsal
  */
 
 // Exit if accessed directly.
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 5019 A plugin created a post
  * 5025 A plugin deleted a post
  *
- * @package Wsal
+ * @package wsal
  */
 class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 
@@ -101,8 +101,8 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 		add_action( 'pre_delete_term', array( $this, 'check_taxonomy_term_deletion' ), 10, 2 );
 		add_filter( 'wp_update_term_data', array( $this, 'event_update_term_data' ), 10, 4 );
 		add_filter( 'add_post_metadata', array( $this, 'check_changed_meta' ), 10, 4 );
-		add_filter( 'delete_post_metadata', array( $this, 'check_changed_meta' ), 10, 4 );
 		add_filter( 'updated_post_meta', array( $this, 'check_changed_meta' ), 10, 4 );
+		add_filter( 'delete_post_metadata', array( $this, 'check_deleted_meta' ), 10, 5 );
 
 
 		// Check if MainWP Child Plugin exists.
@@ -150,11 +150,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 
 		// Ignore updates from ignored custom post types.
 		if ( in_array( $post->post_type, $this->plugin->alerts->ignored_cpts, true ) ) {
-			return;
-		}
-
-		// Check other sensors.
-		if ( $this->check_other_sensors( $post ) ) {
 			return;
 		}
 
@@ -285,9 +280,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 	public function event_post_deleted( $post_id ) {
 		// Exclude CPTs from external plugins.
 		$post = get_post( $post_id );
-		if ( $this->check_other_sensors( $post ) ) {
-			return;
-		}
 
 		// Ignore attachments, revisions and menu items.
 		if ( ! in_array( $post->post_type, $this->plugin->alerts->ignored_cpts, true ) ) {
@@ -323,11 +315,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 	 */
 	public function event_post_trashed( $post_id ) {
 		$post = get_post( $post_id );
-
-		if ( $this->check_other_sensors( $post ) ) {
-			return;
-		}
-
 		if ( ! in_array( $post->post_type, $this->plugin->alerts->ignored_cpts, true ) ) {
 			$editor_link = $this->get_editor_link( $post );
 
@@ -353,11 +340,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 	 */
 	public function event_post_untrashed( $post_id ) {
 		$post = get_post( $post_id );
-
-		if ( $this->check_other_sensors( $post ) ) {
-			return;
-		}
-
 		if ( ! in_array( $post->post_type, $this->plugin->alerts->ignored_cpts, true ) ) {
 			$editor_link = $this->get_editor_link( $post );
 
@@ -457,10 +439,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 		$post = get_queried_object();
 
 		if ( is_user_logged_in() && ! is_admin() ) {
-			if ( $this->check_other_sensors( $post ) ) {
-				return $post->post_title;
-			}
-
 			$current_path = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : false;
 
 			if (
@@ -477,6 +455,18 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 				$post_data = $this->get_post_event_data( $post ); // Get event post data.
 
 				// Update post URL based on current actual path.
+				if ( $this->plugin->IsMultisite() && ! is_subdomain_install() ) {
+					//	for multisite using subfolders, remove the subfolder
+					$subdir_path = parse_url( home_url(), PHP_URL_PATH );
+					$escaped = str_replace( '/', '\/', preg_quote( $subdir_path ) );
+					$current_path = preg_replace( '/' . $escaped . '/', '', $current_path );
+				}
+
+				// Bail if this dont have this, as its probably an archive.
+				if ( ! isset( $post_data['PostUrl'] ) ) {
+					return;
+				}
+
 				$full_current_path = home_url( $current_path );
 				if ( $full_current_path !== $post_data['PostUrl'] ) {
 					$post_data['PostUrl'] = esc_url( $full_current_path );
@@ -683,10 +673,12 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 	 * @param int    $post_id    Post ID.
 	 * @param string $meta_key   Meta key.
 	 * @param mixed  $meta_value Meta value.
+	 * 
+	 * @return int $meta_id      ID of updated metadata entry.
 	 */
 	public function check_changed_meta( $meta_id, $post_id, $meta_key, $meta_value ) {
 		if ( ! $post_id ) {
-			return;
+			return $meta_id;
 		}
 
 		switch ( $meta_key ) {
@@ -697,8 +689,39 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 				$this->check_featured_image_change( $post_id, $meta_value );
 				break;
 			default:
-				// no other meta keys supported here.
+				return $meta_id;
 		}
+
+		return $meta_id;
+	}
+
+	/**
+	 * Check Page Template Update for delitions.
+	 *
+	 * @param bool|null $delete     Whether to allow metadata deletion of the given type.
+	 * @param int       $meta_id    ID of updated metadata entry.
+	 * @param int       $post_id    Post ID.
+	 * @param string    $meta_key   Meta key.
+	 * @param mixed     $meta_value Meta value.
+	 * 
+	 * @return bool|null $delete    Whether to allow metadata deletion of the given type.
+	 */
+	public function check_deleted_meta( $delete, $meta_id, $post_id, $meta_key, $meta_value ) {
+		if ( ! $post_id ) {
+			return $delete;
+		}
+
+		switch ( $meta_key ) {
+			case '_wp_page_template':
+				$this->check_template_change( $post_id, $meta_value );
+				break;
+			case '_thumbnail_id':
+				$this->check_featured_image_change( $post_id, $meta_value );
+				break;
+			default:
+			// no other meta keys supported here.
+		} 
+		return $delete; 
 	}
 
 	/**
@@ -752,6 +775,9 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 			$event_type = 'removed';
 		}
 
+		$previous_image = is_array( $previous_featured_image ) && array_key_exists( 'file', $previous_featured_image ) ? $previous_featured_image['file'] : __( 'No previous image', 'wp-security-audit-log' );
+		$new_image      = is_array( $new_featured_image ) && array_key_exists( 'file', $new_featured_image ) ? $new_featured_image['file'] : __( 'No image', 'wp-security-audit-log' );
+
 		$post          = get_post( $post_id );
 		$editor_link = $this->get_editor_link( $post );
 		$this->plugin->alerts->Trigger(
@@ -762,8 +788,8 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 				'PostTitle'          => $post->post_title,
 				'PostStatus'         => $post->post_status,
 				'PostDate'           => $post->post_date,
-				'previous_image'     => ( $previous_featured_image['file'] ) ? $previous_featured_image['file'] : __( 'No previous image', 'wp-security-audit-log' ),
-				'new_image'          => ( $new_featured_image['file'] ) ? $new_featured_image['file'] : __( 'No image', 'wp-security-audit-log' ),
+				'previous_image'     => $previous_image,
+				'new_image'          => $new_image,
 				$editor_link['name'] => $editor_link['value'],
 				'EventType'          => $event_type,
 			)
@@ -1327,10 +1353,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 	 * @return int|void
 	 */
 	public function check_modification_change( $post_id, $oldpost, $newpost, $modified ) {
-		if ( $this->check_other_sensors( $oldpost ) ) {
-			return;
-		}
-
 		if ( $this->check_title_change( $oldpost, $newpost ) ) {
 			return;
 		}
@@ -1394,7 +1416,7 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 
 				if ( 2002 === $event ) {
 					// If we reach this point, we no longer need to check if the content has changed as we already have an event to handle it.
-					// So trigger 2002 regardess and "something" has changed in the post, we just dont detect it elsewhere.
+					// So trigger 2002 regardless and "something" has changed in the post, we just dont detect it elsewhere.
 					$this->plugin->alerts->TriggerIf( $event, $event_data, array( $this, 'ignore_other_post_events' ) );
 				} else {
 					$this->plugin->alerts->Trigger( $event, $event_data );
@@ -1420,29 +1442,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Ignore post from BBPress, WooCommerce Plugin
-	 * Triggered on the Sensors
-	 *
-	 * @param WP_Post $post - The post.
-	 */
-	private function check_other_sensors( $post ) {
-		if ( empty( $post ) || ! isset( $post->post_type ) ) {
-			return false;
-		}
-		switch ( $post->post_type ) {
-			case 'forum':
-			case 'topic':
-			case 'reply':
-			case 'product':
-			case 'shop_order':
-			case 'shop_coupon':
-				return true;
-			default:
-				return false;
-		}
 	}
 
 	/**
@@ -1557,11 +1556,6 @@ class WSAL_Sensors_Content extends WSAL_AbstractSensor {
 	public function post_opened_in_editor( $post ) {
 		if ( empty( $post ) || ! $post instanceof WP_Post ) {
 			return;
-		}
-
-		// Check other sensors.
-		if ( $this->check_other_sensors( $post ) ) {
-			return $post;
 		}
 
 		$current_path = isset( $_SERVER['SCRIPT_NAME'] ) ? esc_url_raw( wp_unslash( $_SERVER['SCRIPT_NAME'] ) ) . '?post=' . $post->ID : false;
