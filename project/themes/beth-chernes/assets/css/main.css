@@ -11431,7 +11431,7 @@ form button:focus, .wpcf7 form.wpcf7-form .wpcf7-submit:focus,
   background-color: #800020;
 }
 
-img {
+img, figure {
   max-width: 100%;
   height: auto;
 }
