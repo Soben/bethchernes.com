@@ -412,7 +412,7 @@ class wfScanEngine {
 			$isFork = ($_GET['isFork'] == '1' ? true : false);
 			wfConfig::set('lowResourceScanWaitStep', !wfConfig::get('lowResourceScanWaitStep'));
 			if ($isFork && wfConfig::get('lowResourceScanWaitStep')) {
-				sleep($this->maxExecTime / 2);
+				sleep((int) round($this->maxExecTime / 2));
 				$this->fork(); //exits
 			}
 		}
@@ -1341,7 +1341,7 @@ class wfScanEngine {
 		$blogsToScan = self::getBlogsToScan('comments');
 		$wfdb = new wfDB();
 		foreach ($blogsToScan as $blog) {
-			$q1 = $wfdb->querySelect("select comment_ID from " . $blog['table'] . " where comment_approved=1");
+			$q1 = $wfdb->querySelect("select comment_ID from " . $blog['table'] . " where comment_approved=1 and not comment_type = 'order_note'");
 			foreach ($q1 as $idRow) {
 				$this->scanQueue .= pack('LL', $blog['blog_id'], $idRow['comment_ID']);
 			}

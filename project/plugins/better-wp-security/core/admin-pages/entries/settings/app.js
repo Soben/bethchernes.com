@@ -20,7 +20,7 @@ import { PluginArea } from '@wordpress/plugins';
  * Internal dependencies
  */
 import PageRegistration from './page-registration';
-import Pages, { Onboard, Settings } from './pages';
+import Pages, { Import, Onboard, Settings } from './pages';
 import { ConfigContext } from './utils';
 import { Main, Sidebar, ErrorRenderer } from './components';
 import useSearchProviders from './search';
@@ -59,6 +59,10 @@ export default function App( {
 										<Route
 											path="/:root(onboard)"
 											component={ Onboard }
+										/>
+										<Route
+											path="/:root(import)"
+											component={ Import }
 										/>
 
 										<Route path="/">

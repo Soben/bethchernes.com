@@ -3,6 +3,7 @@
  * Addons HTML View in Admin.
  *
  * @package wsal
+ * @subpackage views
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,31 +14,33 @@ $utm_params = array(
 	'utm_source'   => 'plugin',
 	'utm_medium'   => 'referral',
 	'utm_campaign' => 'WSAL',
+	'utm_content'  => 'sessions',
 );
+
 switch ( $this->hook_suffix ) {
-	case 'audit-log_page_wsal-loginusers':
-		$utm_params['utm_content'] = 'users+sessions';
+	case 'wp-activity-log_page_wsal-loginusers':
+		$utm_params['utm_content'] = 'sessions';
 		break;
-	case 'audit-log_page_wsal-reports':
+	case 'wp-activity-log_page_wsal-reports':
 		$utm_params['utm_content'] = 'reports';
 		break;
-	case 'audit-log_page_wsal-emailnotifications':
+	case 'wp-activity-log_page_wsal-emailnotifications':
 		$utm_params['utm_content'] = 'notifications';
 		break;
-	case 'audit-log_page_wsal-externaldb':
-		$utm_params['utm_content'] = 'db+integrations';
+	case 'wp-activity-log_page_wsal-externaldb':
+		$utm_params['utm_content'] = 'integrations';
 		break;
-	case 'audit-log_page_wsal-search':
+	case 'wp-activity-log_page_wsal-search':
 		$utm_params['utm_content'] = 'search';
 		break;
-    default:
-	    //  fallback for any other hook suffices would go here
-	    break;
+	default:
+		// Fallback for any other hook suffix would go here.
+		break;
 }
 // Links.
 $more_info = add_query_arg(
 	$utm_params,
-	'https://wpactivitylog.com/premium-features/'
+	'https://wpactivitylog.com/features/'
 );
 
 // Trial link arguments.
@@ -53,14 +56,14 @@ $buy_now_target = '';
 $trial_link     = add_query_arg( $trial_args, admin_url( 'admin.php' ) );
 
 // If user is not super admin and website is multisite then change the URL.
-if ( $this->_plugin->IsMultisite() && ! is_super_admin() ) {
+if ( $this->plugin->is_multisite() && ! is_super_admin() ) {
 	$buy_now        = 'https://wpactivitylog.com/pricing/';
 	$trial_link     = 'https://wpactivitylog.com/pricing/';
 	$buy_now_target = ' target="_blank"';
-} elseif ( $this->_plugin->IsMultisite() && is_super_admin() ) {
+} elseif ( $this->plugin->is_multisite() && is_super_admin() ) {
 	$buy_now    = add_query_arg( 'page', 'wsal-auditlog-pricing', network_admin_url( 'admin.php' ) );
 	$trial_link = add_query_arg( $trial_args, network_admin_url( 'admin.php' ) );
-} elseif ( ! $this->_plugin->IsMultisite() && ! current_user_can( 'manage_options' ) ) {
+} elseif ( $this->plugin->is_multisite() && ! current_user_can( 'manage_options' ) ) {
 	$buy_now        = 'https://wpactivitylog.com/pricing/';
 	$trial_link     = 'https://wpactivitylog.com/pricing/';
 	$buy_now_target = ' target="_blank"';

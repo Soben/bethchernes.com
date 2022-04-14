@@ -12,7 +12,7 @@ import '@wordpress/notices';
  * Internal dependencies
  */
 import { BelowToolbarSlot } from '@ithemes/security.dashboard.api';
-import '@ithemes/security-data';
+import '@ithemes/security.packages.data';
 import { useEventListener } from '@ithemes/security-hocs';
 import { useRegisterCards } from './cards';
 import AdminBar from './components/admin-bar';

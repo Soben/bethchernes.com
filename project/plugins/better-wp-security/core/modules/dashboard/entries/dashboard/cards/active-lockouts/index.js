@@ -49,7 +49,7 @@ function MasterRender( { master } ) {
 	);
 }
 
-const withLinks = memize( function ( lockouts, links ) {
+const withLinks = memize( function( lockouts, links ) {
 	return lockouts.map( ( lockout ) => ( {
 		...lockout,
 		links,
@@ -139,22 +139,22 @@ function ActiveLockouts( {
 			) }
 			{ selectedId > 0 &&
 				card._links[ 'ithemes-security:release-lockout' ] && (
-					<Footer>
-						<span className="itsec-card-footer__action">
-							<Button
-								isPrimary
-								isSmall
-								aria-disabled={ releasingIds.includes(
-									selectedId
-								) }
-								isBusy={ releasingIds.includes( selectedId ) }
-								onClick={ onRelease }
-							>
-								{ __( 'Release Lockout', 'better-wp-security' ) }
-							</Button>
-						</span>
-					</Footer>
-				) }
+				<Footer>
+					<span className="itsec-card-footer__action">
+						<Button
+							isPrimary
+							isSmall
+							aria-disabled={ releasingIds.includes(
+								selectedId
+							) }
+							isBusy={ releasingIds.includes( selectedId ) }
+							onClick={ onRelease }
+						>
+							{ __( 'Release Lockout', 'better-wp-security' ) }
+						</Button>
+					</span>
+				</Footer>
+			) }
 		</div>
 	);
 }

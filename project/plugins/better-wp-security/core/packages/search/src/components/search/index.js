@@ -130,7 +130,7 @@ export default forwardRef( function Search(
 	);
 } );
 
-const SearchResults = forwardRef( function (
+const SearchResults = forwardRef( function(
 	{ results, exitSearch, onPick },
 	ref
 ) {

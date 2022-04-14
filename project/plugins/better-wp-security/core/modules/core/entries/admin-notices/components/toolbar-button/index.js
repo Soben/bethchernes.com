@@ -17,7 +17,7 @@ import { useSelect } from '@wordpress/data';
 import Panel from '../panel';
 import './style.scss';
 
-export default function () {
+export default function() {
 	const [ isToggled, setIsToggled ] = useState( false );
 	const { notices, noticesLoaded } = useSelect(
 		( select ) => ( {

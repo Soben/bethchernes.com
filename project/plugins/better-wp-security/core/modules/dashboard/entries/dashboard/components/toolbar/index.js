@@ -14,7 +14,7 @@ import { useCanWrite, useConfigContext } from '../../utils';
 import EditCards from '../edit-cards';
 import './style.scss';
 
-export default function ( { dashboardId } ) {
+export default function( { dashboardId } ) {
 	const canWrite = useCanWrite();
 	const settingsUrl = useGlobalNavigationUrl( 'settings' );
 	const { canManage } = useConfigContext();
