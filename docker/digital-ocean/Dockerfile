@@ -22,4 +22,4 @@ RUN apt-get update && apt-get install -y vim nano
 WORKDIR /var/www/html
 
 # Spin up with the permissions modification first.
-CMD /etc/init.d/change-uid-gid.sh && apache2-foreground
+# CMD /etc/init.d/change-uid-gid.sh && apache2-foreground
