@@ -11,9 +11,9 @@
     "prettier": "prettier"
   },
   "devDependencies": {
-    "@prettier/plugin-php": "^0.16.0",
-    "prettier": "^2.2.1",
-    "sass": "^1.30.0"
+    "@prettier/plugin-php": "^0.16.3",
+    "prettier": "^2.6.2",
+    "sass": "^1.50.0"
   },
   "dependencies": {}
 }
