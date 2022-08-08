@@ -45,10 +45,37 @@
       }
     }
 
+    .dropdown-menu {
+      border: none;
+      margin-top: 0;
+      padding: 0;
+    }
+
     @media (min-width: 992px) {
       margin-top: 0;
       .nav-link {
         border-top: none;
+      }
+
+      .dropdown-menu {
+        margin-left: -1px;
+
+        .sub-nav-item {
+          .nav-link {
+            border-top: 1px solid $light-gray;
+            border-right: 1px solid $light-gray;
+            border-left: 1px solid $light-gray;
+            text-align: left;
+            min-width: 15rem;
+
+            &:hover,
+            &:focus {
+              border-top-color: $accent;
+              border-right-color: $accent;
+              border-left-color: $accent;
+            }
+          }
+        }
       }
     }
   }
