@@ -243,8 +243,9 @@ class Theme extends Timber\Site {
 	public function enqueue_scripts()
 	{
 		wp_enqueue_script( "font-awesome", "https://kit.fontawesome.com/2e5bb6538f.js", [], "5.15.1", true );
+		wp_enqueue_script( "bootstrap", get_stylesheet_directory_uri() . "/assets/js/vendor/bootstrap.js", ["jquery"], "4.5.3", true );
 		wp_enqueue_script( "flickity", get_stylesheet_directory_uri() . "/assets/js/vendor/flickity.js", ["jquery"], "2.2.1", true );
-		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", ["jquery", "flickity", "font-awesome"], self::$VERSION, true );
+		wp_enqueue_script( self::$THEME_NAME, get_stylesheet_directory_uri() . "/assets/js/main.js", ["jquery", "bootstrap", "flickity", "font-awesome"], self::$VERSION, true );
 	}
 
 	public function preload_css($html, $handle, $href, $media)
