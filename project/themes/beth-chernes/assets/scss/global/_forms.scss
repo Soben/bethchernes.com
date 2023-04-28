@@ -1,16 +1,16 @@
 .wpcf7 {
   form.wpcf7-form {
     .wpcf7-not-valid-tip {
-      color: $burgundy;
+      color: $secondary;
     }
 
     .wpcf7-response-output {
-      border-color: $highlight;
+      border-color: $accent;
     }
     
     &.invalid {
       .wpcf7-response-output {
-        border-color: $burgundy;
+        border-color: $secondary;
       }
     }
   
@@ -38,7 +38,7 @@ form {
 
   label {
     sup {
-      color: $burgundy;
+      color: $secondary;
       font-weight: bold;
       font-size: 100%;
       position: revert;

@@ -5,7 +5,7 @@ body.category,
 body.archive,
 body.single-post {
   .meta {
-    color: $dark-gray;
+    color: $dark-neutral;
 
     .meta__group {
       a {
@@ -31,7 +31,7 @@ body.single-post {
       }
 
       a {
-        color: $dark-gray;
+        color: $dark-neutral;
         font-weight: normal;
       }
     }
@@ -66,7 +66,7 @@ body.archive {
 body.single-post {
   .column-main {
     header {
-      border-bottom: 2px solid $light-gray;
+      border-bottom: 2px solid $light-neutral;
       padding-bottom: remCalc(10px);
       margin-bottom: remCalc(20px);
 
@@ -76,7 +76,7 @@ body.single-post {
     }
 
     footer.meta {
-      border-top: 2px solid $light-gray;
+      border-top: 2px solid $light-neutral;
       padding-top: remCalc(10px);
       margin-top: remCalc(20px);
     }

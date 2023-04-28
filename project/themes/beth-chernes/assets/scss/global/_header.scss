@@ -1,6 +1,6 @@
 .layout-header {
   background-color: $white;
-  box-shadow: 0 4px 4px 0 $gray;
+  box-shadow: 0 4px 4px 0 $neutral;
 
   .navbar-brand {
     max-width: 65%;
@@ -11,7 +11,7 @@
 
   .navbar-toggler {
     svg {
-      color: $dark-gray;
+      color: $dark-neutral;
     }
   }
 
@@ -33,10 +33,10 @@
       text-align: center;
       text-transform: uppercase;
       text-decoration: none;
-      border-top: 1px solid $light-gray;
+      border-top: 1px solid $light-neutral;
       font-weight: bold;
 
-      color: $dark-gray;
+      color: $dark-neutral;
 
       &:hover,
       &:focus {
@@ -62,9 +62,9 @@
 
         .sub-nav-item {
           .nav-link {
-            border-top: 1px solid $light-gray;
-            border-right: 1px solid $light-gray;
-            border-left: 1px solid $light-gray;
+            border-top: 1px solid $light-neutral;
+            border-right: 1px solid $light-neutral;
+            border-left: 1px solid $light-neutral;
             text-align: left;
             min-width: 15rem;
 

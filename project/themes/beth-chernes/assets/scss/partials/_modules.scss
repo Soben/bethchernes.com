@@ -21,8 +21,8 @@
           width: remCalc(200px);
           height: remCalc(200px);
           margin: 0 auto remCalc(30px); 
-          background-color: $highlight;
-          color: $blue-gray;
+          background-color: $accent;
+          color: $primary;
           
           svg {
             width: 65%;
@@ -42,8 +42,8 @@
       &:hover {
         header {
           a {
-            background-color: $blue-gray;
-            color: $highlight;
+            background-color: $primary;
+            color: $accent;
           }
         }
       }
@@ -51,9 +51,9 @@
   }
 
   &.module--cta {
-    background-color: $highlight;
+    background-color: $accent;
     text-align: center;
-    color: $blue-gray;
+    color: $primary;
     padding: remCalc(60px) 0;
     font-size: remCalc(30px);
 
@@ -67,11 +67,11 @@
         .btn {
           font-size: remCalc(25px);
           background-color: $off-white;
-          color: $blue-gray;
+          color: $primary;
 
           &:focus,
           &:hover {
-            background-color: $blue-gray;
+            background-color: $primary;
             color: $off-white;
           }
         }
@@ -107,7 +107,7 @@
 
           .testimonial__photo {
             max-width: remCalc(140px);
-            border: remCalc(5px) solid rgba($highlight, 0.8);
+            border: remCalc(5px) solid rgba($accent, 0.8);
             border-radius: 50%;
             margin-bottom: remCalc(20px);
           }
@@ -126,7 +126,7 @@
             }
 
             .testimonial__author-title {
-              color: $dark-gray;
+              color: $dark-neutral;
             }
           }
 
@@ -138,7 +138,7 @@
 
       &.flickity-enabled {
         .flickity-button {
-          color: $highlight;
+          color: $accent;
         }
 
         .flickity-page-dots {
