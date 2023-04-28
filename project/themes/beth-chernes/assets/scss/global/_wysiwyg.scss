@@ -14,10 +14,10 @@
   }
   
   .shortcode-icon {
-    color: $blue;
+    color: $primary;
 
     &--red {
-      color: $burgundy;
+      color: $secondary;
     }
 
     &--black {
@@ -25,7 +25,7 @@
     }
 
     &--gray {
-      color: $gray;
+      color: $neutral;
     }
   }
 

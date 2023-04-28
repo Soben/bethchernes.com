@@ -1,10 +1,10 @@
 .content-comments {
   margin-top: remCalc(20px);
   padding-top: remCalc(10px);
-  border-top: 2px solid $light-gray;
+  border-top: 2px solid $light-neutral;
 
   .comment-notes {
-    color: $burgundy;
+    color: $secondary;
   }
 
   textarea,
@@ -20,7 +20,7 @@
     margin-bottom: 0;
 
     .required {
-      color: $burgundy;
+      color: $secondary;
     }
   }
 
@@ -45,7 +45,7 @@
 
     .comment {
       padding-left: remCalc(20px);
-      border-left: 1px solid $light-gray;
+      border-left: 1px solid $light-neutral;
     }
 
     .comment-meta {
@@ -71,7 +71,7 @@
         margin-top: remCalc(-16px);
         margin-left: remCalc(55px);
         a {
-          color: $dark-gray;
+          color: $dark-neutral;
         }
       }
     }
@@ -92,7 +92,7 @@
 
   .comment-respond,
   #respond {
-    background-color: $light-gray;
+    background-color: $light-neutral;
     padding: remCalc(10px);
 
     #cancel-comment-reply-link {
