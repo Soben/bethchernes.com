@@ -40,8 +40,8 @@
 
       &:hover,
       &:focus {
-        background-color: rgba($accent, 0.1);
-        color: $accent;
+        background-color: rgba($secondary, 0.1);
+        color: $secondary;
       }
     }
 
@@ -70,9 +70,9 @@
 
             &:hover,
             &:focus {
-              border-top-color: $accent;
-              border-right-color: $accent;
-              border-left-color: $accent;
+              border-top-color: $secondary;
+              border-right-color: $secondary;
+              border-left-color: $secondary;
             }
           }
         }

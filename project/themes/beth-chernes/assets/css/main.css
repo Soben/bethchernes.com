@@ -11567,8 +11567,8 @@ form label sup {
   color: #8C756A;
 }
 .layout-header .navbar-nav .nav-link:hover, .layout-header .navbar-nav .nav-link:focus {
-  background-color: rgba(190, 220, 223, 0.1);
-  color: #BEDCDF;
+  background-color: rgba(159, 131, 154, 0.1);
+  color: #9F839A;
 }
 .layout-header .navbar-nav .dropdown-menu {
   border: none;
@@ -11593,9 +11593,9 @@ form label sup {
     min-width: 15rem;
   }
   .layout-header .navbar-nav .dropdown-menu .sub-nav-item .nav-link:hover, .layout-header .navbar-nav .dropdown-menu .sub-nav-item .nav-link:focus {
-    border-top-color: #BEDCDF;
-    border-right-color: #BEDCDF;
-    border-left-color: #BEDCDF;
+    border-top-color: #9F839A;
+    border-right-color: #9F839A;
+    border-left-color: #9F839A;
   }
 }
 
@@ -11956,7 +11956,7 @@ form .module-block.module--cta .container .cta--button button:hover {
   color: #BEDCDF;
 }
 .module-block.module--testimonials .testimonial-list.flickity-enabled .flickity-page-dots .dot {
-  background-color: #BEDCDF;
+  background-color: #9F839A;
 }
 .module-block.module--testimonials .testimonial-list.flickity-enabled .testimonial .testimonial__details {
   margin-top: 0;
@@ -12025,7 +12025,7 @@ nav.pagination ul li .page-number.current:hover {
 .social-links a:hover, .social-links a:focus {
   color: #fff;
   border-radius: 0.3125rem;
-  background-color: rgba(190, 220, 223, 0.4);
+  background-color: rgba(159, 131, 154, 0.4);
 }
 
 body.blog .meta,
