@@ -35,5 +35,5 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             chown 1001:123 -R /root/docker/sites/bethchernes.com
-            docker-compose -f /root/docker/sites/bethchernes.com/docker-compose.yml exec web chown www-data:www-data -R .
+            docker-compose -f /root/docker/sites/bethchernes.com/docker-compose.yml exec -T web chown www-data:www-data -R .
           
