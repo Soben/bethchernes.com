@@ -11,12 +11,12 @@
 a,
 a:visited {
   font-weight: bold;
-  color: $primary;
+  color: $dark-neutral;
   text-decoration: underline;
 
   &:hover,
   &:focus {
-    color: $primary;
+    color: $dark-neutral;
     text-decoration: none;
   }
 }
