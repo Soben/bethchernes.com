@@ -11466,21 +11466,21 @@ img, figure {
   color: #415E6B;
 }
 .layout-footer {
-  background-color: #8C756A;
-  color: #fff;
+  background-color: #BEDCDF;
+  color: #415E6B;
   text-align: center;
   padding: 1.875rem 0 1.5625rem;
 }
 .layout-footer nav.footer a,
 .layout-footer nav.footer a:visited {
   font-weight: normal;
-  color: #fff;
+  color: #415E6B;
   text-decoration: underline;
 }
 .layout-footer nav.footer a:hover, .layout-footer nav.footer a:focus,
 .layout-footer nav.footer a:visited:hover,
 .layout-footer nav.footer a:visited:focus {
-  color: #BEDCDF;
+  color: #000;
   text-decoration: none;
 }
 .layout-footer nav.footer ul {
@@ -11495,7 +11495,7 @@ img, figure {
     flex-direction: row;
   }
   .layout-footer nav.footer ul li {
-    border-right: 2px solid #E0E0DC;
+    border-right: 2px solid #415E6B;
     padding-right: 0.625rem;
     margin-left: 0.625rem;
   }
