@@ -11384,13 +11384,13 @@ h1, h2, h3, h4, h5, h6 {
 a,
 a:visited {
   font-weight: bold;
-  color: #BEDCDF;
+  color: #415E6B;
   text-decoration: underline;
 }
 a:hover, a:focus,
 a:visited:hover,
 a:visited:focus {
-  color: #BEDCDF;
+  color: #415E6B;
   text-decoration: none;
 }
 

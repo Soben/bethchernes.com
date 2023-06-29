@@ -11,12 +11,12 @@
 a,
 a:visited {
   font-weight: bold;
-  color: $accent;
+  color: $primary;
   text-decoration: underline;
 
   &:hover,
   &:focus {
-    color: $accent;
+    color: $primary;
     text-decoration: none;
   }
 }
