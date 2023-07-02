@@ -11612,6 +11612,7 @@ form label sup {
 }
 .masthead h1 {
   font-family: "Sansita Swashed", cursive;
+  font-style: italic;
   font-size: 3rem;
 }
 @media (min-width: 992px) {
