@@ -76,3 +76,13 @@
     }
   }
 }
+
+.home .masthead {
+  .subheader {
+    font-size: remCalc(36px);
+
+    @media (min-width: 992px) {
+      font-size: remCalc(48px);
+    }
+  }
+}

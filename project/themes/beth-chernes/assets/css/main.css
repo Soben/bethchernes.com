@@ -11667,6 +11667,15 @@ form label sup {
   }
 }
 
+.home .masthead .subheader {
+  font-size: 2.25rem;
+}
+@media (min-width: 992px) {
+  .home .masthead .subheader {
+    font-size: 3rem;
+  }
+}
+
 .wysiwyg-content .alignright {
   float: right;
   margin: 0 0 1em 1em;
