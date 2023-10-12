@@ -11335,7 +11335,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Playfair Display", cursive;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
 }
 
 .wysiwyg-content ul, #content .column-sidebar ul {
@@ -11610,7 +11611,7 @@ form label sup {
   background-size: cover;
 }
 .masthead h1 {
-  font-family: "Playfair Display", cursive;
+  font-family: "Playfair Display", serif;
   font-style: italic;
   font-size: 3rem;
 }

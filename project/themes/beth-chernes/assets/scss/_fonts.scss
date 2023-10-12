@@ -2,7 +2,7 @@
 
 $fontSansSerif: 'Lato', sans-serif;
 $fontHeaders: $fontSansSerif;
-$fontCursive: 'Playfair Display', cursive;
+$fontCursive: 'Playfair Display', serif;
 
 body {
   font-family: $fontSansSerif;
@@ -10,4 +10,5 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $fontCursive;
+  font-style: italic;
 }
