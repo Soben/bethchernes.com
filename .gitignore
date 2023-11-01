@@ -12,5 +12,6 @@
 
 /project/themes/*
 !/project/themes/beth-chernes
+!/project/themes/beth-gutenberg
 
 /project/themes/beth-chernes/node_modules

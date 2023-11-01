@@ -1,6 +1,8 @@
+install:
+	@cd project/themes/beth-gutenberg && yarn install
 watch:
-	@cd project/themes/beth-chernes && yarn watch
+	@cd project/themes/beth-gutenberg && yarn watch
 build:
-	@cd project/themes/beth-chernes && yarn build
+	@cd project/themes/beth-gutenberg && yarn build
 lint:
-	@cd project/themes/beth-chernes && yarn lint
+	@cd project/themes/beth-gutenberg && yarn lint

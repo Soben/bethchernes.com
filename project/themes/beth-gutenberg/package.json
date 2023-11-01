@@ -1,0 +1,20 @@
+{
+  "name": "beth-chernes",
+  "version": "2.0.0",
+  "main": "assets/js/main.js",
+  "repository": "https://github.com/soben/bethchernes.com",
+  "author": "Chris Lagasse <chrislagasse@protonmail.com",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "watch": "sass --watch assets/scss:assets/css",
+    "build": "sass assets/scss:assets/css",
+    "lint": "prettier"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.16.3",
+    "prettier": "^2.6.2",
+    "sass": "^1.50.0"
+  },
+  "dependencies": {}
+}
