@@ -6,15 +6,14 @@
   "author": "Chris Lagasse <chrislagasse@protonmail.com",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
-    "watch": "sass --watch assets/scss:assets/css",
-    "build": "sass assets/scss:assets/css",
-    "lint": "prettier"
+    "watch": "vite build --watch",
+    "build": "vite build"
   },
   "devDependencies": {
-    "@prettier/plugin-php": "^0.16.3",
-    "prettier": "^2.6.2",
-    "sass": "^1.50.0"
+    "sass": "^1.69.7",
+    "vite": "^5.0.11"
   },
   "dependencies": {}
 }
