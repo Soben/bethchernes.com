@@ -8,7 +8,7 @@ use Twig;
 class Theme extends Timber\Site {
  
 	static $THEME_NAME = "beth-chernes";
-	static $VERSION = "2023.10.12";
+	static $VERSION = "2024.02.29";
 	
 	/** Register */
 	public function __construct()
